@@ -1,8 +1,12 @@
 NAIKO
 
-(any1 help me create a logo)
 
-
+# Changed the git repo host 
+now it's hosted at gitlab 
+This GitHub repo will become beta+stable release only repo 
+new repo link 
+# https://gitlab.com/UnTamedFury/Naiko
+:)
 
 Aniyomi Fork with Yokai app UI
 
