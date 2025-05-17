@@ -2,8 +2,10 @@ NAIKO
 
 
 # Changed the git repo host 
-now it's hosted at gitlab 
-This GitHub repo will become beta+stable release only repo 
+now it's hosted at gitlab
+ 
+This GitHub repo will become beta+stable release only repo
+
 new repo link 
 # https://gitlab.com/UnTamedFury/Naiko
 :)
