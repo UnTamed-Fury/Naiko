@@ -1,71 +1,84 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <plurals name="update_check_notification_ext_updates">
+    <plurals name="extension_updates_available">
         <item quantity="one">1 наличен ъпдейт за разширение</item>
         <item quantity="other">%d налични ъпдейта за разширения</item>
-    </plurals>
-    <plurals name="notification_chapters_multiple_and_more">
-        <item quantity="one">Глави %1$s и още 1</item>
-        <item quantity="other">Глави %1$s и още %2$d</item>
-    </plurals>
-    <plurals name="notification_chapters_generic">
-        <item quantity="one">1 нова глава</item>
-        <item quantity="other">%1$d нови глави</item>
-    </plurals>
-    <plurals name="notification_new_chapters_summary">
-        <item quantity="one">За 1 заглавие</item>
-        <item quantity="other">За %d заглавия</item>
-    </plurals>
-    <plurals name="download_queue_summary">
-        <item quantity="one">1 оставаща</item>
-        <item quantity="other">%1$s оставащи</item>
-    </plurals>
-    <plurals name="lock_after_mins">
-        <item quantity="one">След 1 минута</item>
-        <item quantity="other">След %1$s минути</item>
     </plurals>
     <plurals name="restore_completed_message">
         <item quantity="one">Направено за %1$s с %2$s грешка</item>
         <item quantity="other">Направено за %1$s с %2$s грешки</item>
     </plurals>
-    <plurals name="num_categories">
+    <plurals name="category_plural">
         <item quantity="one">%d категория</item>
         <item quantity="other">%d категории</item>
     </plurals>
-    <plurals name="manga_num_chapters">
-        <item quantity="one">1 глава</item>
+    <plurals name="chapters_plural">
+        <item quantity="one">%1$s глава</item>
         <item quantity="other">%1$s глави</item>
     </plurals>
-    <plurals name="num_trackers">
-        <item quantity="one">1 тракер</item>
-        <item quantity="other">%d тракери</item>
+    <plurals name="remove_n_chapters">
+        <item quantity="one">Изтри %1$d изтеглената глава\?</item>
+        <item quantity="other">Изтри %1$d изтеглените глави\?</item>
     </plurals>
     <plurals name="missing_chapters_warning">
         <item quantity="one">Има 1 липсваща глава, източникът липса или е филтриран</item>
         <item quantity="other">Има %d липсващи глави, източникът липса или е филтриран</item>
     </plurals>
-    <plurals name="relative_time">
-        <item quantity="one">Вчера</item>
-        <item quantity="other">Преди %1$d дни</item>
+    <plurals name="copy_manga">
+        <item quantity="one">Копирайте %1$d%2$s манга\?</item>
+        <item quantity="other">Копирайте %1$d%2$sманги\?</item>
+    </plurals>
+    <plurals name="extensions_updated_plural">
+        <item quantity="one">Разширението е актуализирано</item>
+        <item quantity="other">%d разширения са актуализирани</item>
+    </plurals>
+    <plurals name="manga_migrated">
+        <item quantity="one">%d преместена манга</item>
+        <item quantity="other">%d преместени манги</item>
+    </plurals>
+    <plurals name="migrate_manga">
+        <item quantity="one">Миграция на %1$d%2$s манга\?</item>
+        <item quantity="other">Миграция на %1$d%2$s манги\?</item>
+    </plurals>
+    <plurals name="for_n_titles">
+        <item quantity="one">За %d заглавие</item>
+        <item quantity="other">За %d заглавия</item>
+    </plurals>
+    <plurals name="_updates_pending">
+        <item quantity="one">%d чакаща актуализация</item>
+        <item quantity="other">%d чакаща актуализации</item>
+    </plurals>
+    <plurals name="pages_plural">
+        <item quantity="one">%1$d страница</item>
+        <item quantity="other">%1$d страници</item>
+    </plurals>
+    <plurals name="notification_and_n_more">
+        <item quantity="one">и %1$d повече глава</item>
+        <item quantity="other">и %1$d повече глави</item>
+    </plurals>
+    <plurals name="deleted_chapters">
+        <item quantity="one">Една глава е премахната от източника:
+            \n%2$s
+            \nИзтриване на изтеглянето ѝ\?</item>
+        <item quantity="other">%1$s Няколко глави са премахнати от източника:
+            \n%2$s
+            \n
+            \nИзтриване на изтеглянето им\?</item>
+    </plurals>
+    <plurals name="cleanup_done">
+        <item quantity="one">Почистването е завършено. Премахната е папката %d</item>
+        <item quantity="other">Почистването е завършено. Премахнати са папките %d</item>
+    </plurals>
+    <plurals name="after_minutes">
+        <item quantity="one">След %1$s минута</item>
+        <item quantity="other">След %1$s минути</item>
+    </plurals>
+    <plurals name="cache_cleared">
+        <item quantity="one">Кешът е изчистен. %d файлът е изтрит</item>
+        <item quantity="other">Кешът е изчистен. %d файловете са изтрити</item>
     </plurals>
     <plurals name="next_unread_chapters">
         <item quantity="one">Следващата непрочетена глава</item>
         <item quantity="other">Следващите %d непрочетени глави</item>
-    </plurals>
-    <plurals name="day">
-        <item quantity="one">1 ден</item>
-        <item quantity="other">%d дни</item>
-    </plurals>
-    <plurals name="missing_chapters">
-        <item quantity="one">Липсваща %1$s глава</item>
-        <item quantity="other">Липсващи %1$s глави</item>
-    </plurals>
-    <plurals name="download_amount">
-        <item quantity="one">Следваща глава</item>
-        <item quantity="other">Следващи %d глави</item>
-    </plurals>
-    <plurals name="num_repos">
-        <item quantity="one">%d хранилище</item>
-        <item quantity="other">%d хранилища</item>
     </plurals>
 </resources>

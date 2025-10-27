@@ -1,8 +1,8 @@
 package eu.kanade.tachiyomi.ui.reader.viewer
 
+import android.app.Activity
 import android.content.Context
 import android.graphics.PointF
-import android.graphics.RectF
 import android.graphics.drawable.Animatable
 import android.graphics.drawable.BitmapDrawable
 import android.graphics.drawable.Drawable
@@ -11,12 +11,12 @@ import android.view.GestureDetector
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
+import android.view.WindowInsets
 import android.widget.FrameLayout
 import androidx.annotation.AttrRes
 import androidx.annotation.CallSuper
 import androidx.annotation.StyleRes
 import androidx.appcompat.widget.AppCompatImageView
-import androidx.core.os.postDelayed
 import androidx.core.view.isVisible
 import coil3.BitmapImage
 import coil3.asDrawable
@@ -29,20 +29,17 @@ import coil3.size.Precision
 import coil3.size.ViewSizeResolver
 import com.davemorrissey.labs.subscaleview.ImageSource
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView.EASE_IN_OUT_QUAD
-import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView.EASE_OUT_QUAD
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView.SCALE_TYPE_CENTER_INSIDE
 import com.github.chrisbanes.photoview.PhotoView
-import eu.kanade.domain.base.BasePreferences
 import eu.kanade.tachiyomi.data.coil.cropBorders
 import eu.kanade.tachiyomi.data.coil.customDecoder
+import eu.kanade.tachiyomi.ui.reader.viewer.pager.PagerConfig
 import eu.kanade.tachiyomi.ui.reader.viewer.webtoon.WebtoonSubsamplingImageView
+import eu.kanade.tachiyomi.util.system.DeviceUtil
+import eu.kanade.tachiyomi.util.system.ImageUtil
 import eu.kanade.tachiyomi.util.system.animatorDurationScale
-import eu.kanade.tachiyomi.util.view.isVisibleOnScreen
 import okio.BufferedSource
-import tachiyomi.core.common.util.system.ImageUtil
-import uy.kohesive.injekt.Injekt
-import uy.kohesive.injekt.api.get
+import yokai.domain.ui.settings.ReaderPreferences.CutoutBehaviour
 
 /**
  * A wrapper view for showing page image.
@@ -60,11 +57,7 @@ open class ReaderPageImageView @JvmOverloads constructor(
     private val isWebtoon: Boolean = false,
 ) : FrameLayout(context, attrs, defStyleAttrs, defStyleRes) {
 
-    private val alwaysDecodeLongStripWithSSIV by lazy {
-        Injekt.get<BasePreferences>().alwaysDecodeLongStripWithSSIV().get()
-    }
-
-    private var pageView: View? = null
+    protected var pageView: View? = null
 
     private var config: Config? = null
 
@@ -73,15 +66,11 @@ open class ReaderPageImageView @JvmOverloads constructor(
     var onScaleChanged: ((newScale: Float) -> Unit)? = null
     var onViewClicked: (() -> Unit)? = null
 
-    /**
-     * For automatic background. Will be set as background color when [onImageLoaded] is called.
-     */
-    var pageBackground: Drawable? = null
+    open fun onNeedsLandscapeZoom() { }
 
     @CallSuper
     open fun onImageLoaded() {
         onImageLoaded?.invoke()
-        background = pageBackground
     }
 
     @CallSuper
@@ -99,67 +88,6 @@ open class ReaderPageImageView @JvmOverloads constructor(
         onViewClicked?.invoke()
     }
 
-    open fun onPageSelected(forward: Boolean) {
-        with(pageView as? SubsamplingScaleImageView) {
-            if (this == null) return
-            if (isReady) {
-                landscapeZoom(forward)
-            } else {
-                setOnImageEventListener(
-                    object : SubsamplingScaleImageView.DefaultOnImageEventListener() {
-                        override fun onReady() {
-                            setupZoom(config)
-                            landscapeZoom(forward)
-                            this@ReaderPageImageView.onImageLoaded()
-                        }
-
-                        override fun onImageLoadError(e: Exception) {
-                            onImageLoadError()
-                        }
-                    },
-                )
-            }
-        }
-    }
-
-    private fun SubsamplingScaleImageView.landscapeZoom(forward: Boolean) {
-        if (config != null &&
-            config!!.landscapeZoom &&
-            config!!.minimumScaleType == SCALE_TYPE_CENTER_INSIDE &&
-            sWidth > sHeight &&
-            scale == minScale
-        ) {
-            handler?.postDelayed(500) {
-                val point = when (config!!.zoomStartPosition) {
-                    ZoomStartPosition.LEFT -> if (forward) {
-                        PointF(0F, 0F)
-                    } else {
-                        PointF(
-                            sWidth.toFloat(),
-                            0F,
-                        )
-                    }
-                    ZoomStartPosition.RIGHT -> if (forward) {
-                        PointF(sWidth.toFloat(), 0F)
-                    } else {
-                        PointF(
-                            0F,
-                            0F,
-                        )
-                    }
-                    ZoomStartPosition.CENTER -> center
-                }
-
-                val targetScale = height.toFloat() / sHeight.toFloat()
-                animateScaleAndCenter(targetScale, point)!!
-                    .withDuration(500)
-                    .withEasing(EASE_IN_OUT_QUAD)
-                    .withInterruptible(true)
-                    .start()
-            }
-        }
-    }
-
     fun setImage(drawable: Drawable, config: Config) {
         this.config = config
         if (drawable is Animatable) {
@@ -172,7 +100,6 @@ open class ReaderPageImageView @JvmOverloads constructor(
     }
 
     fun setImage(source: BufferedSource, isAnimated: Boolean, config: Config) {
-        this.config = config
         if (isAnimated) {
             prepareAnimatedImageView()
             setAnimatedImage(source, config)
@@ -188,60 +115,6 @@ open class ReaderPageImageView @JvmOverloads constructor(
             is AppCompatImageView -> it.dispose()
         }
         it.isVisible = false
-    }
-
-    /**
-     * Check if the image can be panned to the left
-     */
-    fun canPanLeft(): Boolean = canPan { it.left }
-
-    /**
-     * Check if the image can be panned to the right
-     */
-    fun canPanRight(): Boolean = canPan { it.right }
-
-    /**
-     * Check whether the image can be panned.
-     * @param fn a function that returns the direction to check for
-     */
-    private fun canPan(fn: (RectF) -> Float): Boolean {
-        (pageView as? SubsamplingScaleImageView)?.let { view ->
-            RectF().let {
-                view.getPanRemaining(it)
-                return fn(it) > 1
-            }
-        }
-        return false
-    }
-
-    /**
-     * Pans the image to the left by a screen's width worth.
-     */
-    fun panLeft() {
-        pan { center, view -> center.also { it.x -= view.width / view.scale } }
-    }
-
-    /**
-     * Pans the image to the right by a screen's width worth.
-     */
-    fun panRight() {
-        pan { center, view -> center.also { it.x += view.width / view.scale } }
-    }
-
-    /**
-     * Pans the image.
-     * @param fn a function that computes the new center of the image
-     */
-    private fun pan(fn: (PointF, SubsamplingScaleImageView) -> PointF) {
-        (pageView as? SubsamplingScaleImageView)?.let { view ->
-
-            val target = fn(view.center ?: return, view)
-            view.animateCenter(target)!!
-                .withEasing(EASE_OUT_QUAD)
-                .withDuration(250)
-                .withInterruptible(true)
-                .start()
-        }
     }
 
     private fun prepareNonAnimatedImageView() {
@@ -273,16 +146,38 @@ open class ReaderPageImageView @JvmOverloads constructor(
         addView(pageView, MATCH_PARENT, MATCH_PARENT)
     }
 
-    private fun SubsamplingScaleImageView.setupZoom(config: Config?) {
+    protected fun SubsamplingScaleImageView.setupZoom(config: Config?) {
         // 5x zoom
         maxScale = scale * MAX_ZOOM_SCALE
         setDoubleTapZoomScale(scale * 2)
 
-        when (config?.zoomStartPosition) {
-            ZoomStartPosition.LEFT -> setScaleAndCenter(scale, PointF(0F, 0F))
-            ZoomStartPosition.RIGHT -> setScaleAndCenter(scale, PointF(sWidth.toFloat(), 0F))
-            ZoomStartPosition.CENTER -> setScaleAndCenter(scale, center)
-            null -> {}
+        config ?: return
+
+        var centerV = 0f
+        when (config.zoomStartPosition) {
+            PagerConfig.ZoomType.Left -> {
+                setScaleAndCenter(scale, PointF(0f, 0f))
+            }
+            PagerConfig.ZoomType.Right -> {
+                setScaleAndCenter(scale, PointF(sWidth.toFloat(), 0f))
+                centerV = sWidth.toFloat()
+            }
+            PagerConfig.ZoomType.Center -> {
+                setScaleAndCenter(scale, center.also { it?.y = 0f })
+                centerV = center?.x ?: 0f
+            }
+        }
+        val insetInfo = config.insetInfo ?: return
+        val topInsets = insetInfo.topCutoutInset
+        val bottomInsets = insetInfo.bottomCutoutInset
+        if (insetInfo.cutoutBehavior == CutoutBehaviour.SHOW &&
+            topInsets + bottomInsets > 0 &&
+            insetInfo.scaleTypeIsFullFit
+        ) {
+            setScaleAndCenter(
+                scale,
+                PointF(centerV, (center?.y?.plus(topInsets)?.minus(bottomInsets) ?: 0f)),
+            )
         }
     }
 
@@ -290,15 +185,38 @@ open class ReaderPageImageView @JvmOverloads constructor(
         data: Any,
         config: Config,
     ) = (pageView as? SubsamplingScaleImageView)?.apply {
+        setDebug(config.debugMode)
         setDoubleTapZoomDuration(config.zoomDuration.getSystemScaledDuration())
         setMinimumScaleType(config.minimumScaleType)
         setMinimumDpi(1) // Just so that very small image will be fit for initial load
         setCropBorders(config.cropBorders)
+        if (config.insetInfo != null) {
+            val topInsets = config.insetInfo.topCutoutInset
+            val bottomInsets = config.insetInfo.bottomCutoutInset
+            setExtendPastCutout(
+                config.insetInfo.cutoutBehavior == CutoutBehaviour.SHOW &&
+                    config.insetInfo.scaleTypeIsFullFit && topInsets + bottomInsets > 0,
+            )
+            if ((config.insetInfo.cutoutBehavior != CutoutBehaviour.IGNORE || !config.insetInfo.scaleTypeIsFullFit) &&
+                config.insetInfo.isFullscreen
+            ) {
+                val insets: WindowInsets? = config.insetInfo.insets
+                setExtraSpace(
+                    0f,
+                    DeviceUtil.getCutoutHeight(context as? Activity, config.insetInfo.cutoutSupport).toFloat(),
+                    0f,
+                    if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.Q)
+                        insets?.displayCutout?.boundingRectBottom?.height()?.toFloat() ?: 0f
+                    else 0f,
+                )
+            }
+        }
         setOnImageEventListener(
             object : SubsamplingScaleImageView.DefaultOnImageEventListener() {
                 override fun onReady() {
+                    // 5x zoom
                     setupZoom(config)
-                    if (isVisibleOnScreen()) landscapeZoom(true)
+                    this@ReaderPageImageView.onNeedsLandscapeZoom()
                     this@ReaderPageImageView.onImageLoaded()
                 }
 
@@ -314,8 +232,9 @@ open class ReaderPageImageView @JvmOverloads constructor(
                 isVisible = true
             }
             is BufferedSource -> {
-                if (!isWebtoon || alwaysDecodeLongStripWithSSIV) {
-                    setHardwareConfig(ImageUtil.canUseHardwareBitmap(data))
+                // SSIV doesn't tile bitmaps, so if the image exceeded max texture size it won't load regardless.
+                if (!isWebtoon || ImageUtil.isMaxTextureSizeExceeded(data)) {
+                    setHardwareConfig(!ImageUtil.isHardwareThresholdExceeded(data))
                     setImage(ImageSource.inputStream(data.inputStream()))
                     isVisible = true
                     return@apply
@@ -428,15 +347,23 @@ open class ReaderPageImageView @JvmOverloads constructor(
         val zoomDuration: Int,
         val minimumScaleType: Int = SCALE_TYPE_CENTER_INSIDE,
         val cropBorders: Boolean = false,
-        val zoomStartPosition: ZoomStartPosition = ZoomStartPosition.CENTER,
+        val zoomStartPosition: PagerConfig.ZoomType = PagerConfig.ZoomType.Center,
         val landscapeZoom: Boolean = false,
+        val insetInfo: InsetInfo? = null,
+        val hingeGapSize: Int = 0,
+        val debugMode: Boolean = false,
     )
 
-    enum class ZoomStartPosition {
-        LEFT,
-        CENTER,
-        RIGHT,
-    }
+    data class InsetInfo(
+        val cutoutSupport: DeviceUtil.CutoutSupport,
+        val cutoutBehavior: CutoutBehaviour,
+        val topCutoutInset: Float,
+        val bottomCutoutInset: Float,
+        val scaleTypeIsFullFit: Boolean,
+        val isFullscreen: Boolean,
+        val isSplitScreen: Boolean,
+        val insets: WindowInsets?,
+    )
 }
 
 private const val MAX_ZOOM_SCALE = 5F

@@ -1,67 +1,64 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools" >
+    xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Internet -->
-    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 
-    <!-- Storage -->
-    <uses-permission
-        android:name="android.permission.MANAGE_EXTERNAL_STORAGE"
-        tools:ignore="ScopedStorage" />
-
     <!-- For background jobs -->
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
     <uses-permission android:name="android.permission.REQUEST_IGNORE_BATTERY_OPTIMIZATIONS" />
+    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
 
     <!-- For managing extensions -->
     <uses-permission android:name="android.permission.REQUEST_INSTALL_PACKAGES" />
     <uses-permission android:name="android.permission.REQUEST_DELETE_PACKAGES" />
     <uses-permission android:name="android.permission.UPDATE_PACKAGES_WITHOUT_USER_ACTION" />
+
     <!-- To view extension packages in API 30+ -->
-    <uses-permission
-        android:name="android.permission.QUERY_ALL_PACKAGES"
+    <uses-permission android:name="android.permission.QUERY_ALL_PACKAGES"
         tools:ignore="QueryAllPackagesPermission" />
 
+    <uses-permission android:name="com.android.launcher.permission.INSTALL_SHORTCUT" />
+    <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission
-        android:name="android.permission.READ_APP_SPECIFIC_LOCALES"
-        tools:ignore="ProtectedPermissions" />
-
-    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />
+    <uses-permission android:name="android.permission.READ_APP_SPECIFIC_LOCALES" />
 
     <application
         android:name=".App"
-        android:allowBackup="false"
-        android:enableOnBackInvokedCallback="true"
+        android:allowBackup="true"
+        android:fullBackupContent="@xml/backup_rules"
         android:hardwareAccelerated="true"
+        android:usesCleartextTraffic="true"
+        android:enableOnBackInvokedCallback="true"
         android:icon="@mipmap/ic_launcher"
+        android:supportsRtl="true"
+        android:roundIcon="@mipmap/ic_launcher_round"
         android:label="@string/app_name"
         android:largeHeap="true"
         android:localeConfig="@xml/locales_config"
-        android:networkSecurityConfig="@xml/network_security_config"
-        android:preserveLegacyExternalStorage="true"
-        android:requestLegacyExternalStorage="true"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Tachiyomi">
+        android:theme="@style/Theme.Tachiyomi"
+        android:networkSecurityConfig="@xml/network_security_config">
+
+        <activity
+            android:process=":error_handler"
+            android:name=".ui.crash.CrashActivity"
+            android:exported="true" />
 
         <activity
             android:name=".ui.main.MainActivity"
-            android:exported="true"
-            android:launchMode="singleTop"
-            android:windowSoftInputMode="adjustResize"
-            android:theme="@style/Theme.Tachiyomi.SplashScreen">
+            android:windowSoftInputMode="adjustNothing"
+            android:theme="@style/Theme.Tachiyomi.SplashScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
-            <!-- Deep link to add manga repos -->
+            <!-- Deep link to add repos -->
             <intent-filter android:label="@string/action_add_repo">
                 <action android:name="android.intent.action.VIEW" />
 
@@ -71,119 +68,33 @@
                 <data android:scheme="tachiyomi" />
                 <data android:host="add-repo" />
             </intent-filter>
-
-            <!-- Deep link to add manga repos -->
-            <intent-filter android:label="@string/action_add_repo">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="aniyomi" />
-                <data android:host="add-repo" />
-            </intent-filter>
-
-            <!-- Open backup files -->
-            <intent-filter android:label="@string/pref_restore_backup">
-                <action android:name="android.intent.action.VIEW" />
-
-                <category android:name="android.intent.category.DEFAULT" />
-                <category android:name="android.intent.category.BROWSABLE" />
-
-                <data android:scheme="file" />
-                <data android:scheme="content" />
-                <data android:host="*" />
-                <data android:mimeType="*/*" />
-                <!--
-                Work around Android's ugly primitive PatternMatcher
-                implementation that can't cope with finding a . early in
-                the path unless it's explicitly matched.
-
-                See https://stackoverflow.com/a/31028507
-                -->
-                <data android:pathPattern=".*\\.tachibk" />
-                <data android:pathPattern=".*\\..*\\.tachibk" />
-                <data android:pathPattern=".*\\..*\\..*\\.tachibk" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\.tachibk" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\.tachibk" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\.tachibk" />
-                <data android:pathPattern=".*\\..*\\..*\\..*\\..*\\..*\\..*\\.tachibk" />
-            </intent-filter>
-
-            <!--suppress AndroidDomInspection -->
-            <meta-data
-                android:name="android.app.shortcuts"
-                android:resource="@xml/shortcuts" />
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
         </activity>
-
         <activity
-            android:name=".crash.CrashActivity"
-            android:exported="false"
-            android:process=":error_handler" />
-
-
-        <activity
-            android:name=".ui.deeplink.anime.DeepLinkAnimeActivity"
-            android:exported="true"
-            android:label="@string/action_global_anime_search"
-            android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoDisplay">
+            android:name=".ui.main.SearchActivity"
+            android:theme="@style/Theme.Tachiyomi.SplashScreen"
+            android:label="@string/label_global_search"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.SEARCH" />
-                <action android:name="com.google.android.gms.actions.SEARCH_ACTION" />
+                <action android:name="com.google.android.gms.actions.SEARCH_ACTION"/>
 
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="eu.kanade.tachiyomi.ANIMESEARCH" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="android.intent.action.SEND" />
-                <category android:name="android.intent.category.DEFAULT" />
-                <data android:mimeType="text/plain" />
-            </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
-        </activity>
-
-        <activity
-            android:name=".ui.deeplink.manga.DeepLinkMangaActivity"
-            android:exported="true"
-            android:label="@string/action_global_manga_search"
-            android:launchMode="singleTask"
-            android:theme="@android:style/Theme.NoDisplay">
-            <intent-filter>
-                <action android:name="android.intent.action.SEARCH" />
-                <action android:name="com.google.android.gms.actions.SEARCH_ACTION" />
-
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="eu.kanade.tachiyomi.SEARCH" />
-                <category android:name="android.intent.category.DEFAULT" />
-            </intent-filter>
-            <intent-filter>
-                <action android:name="eu.kanade.tachiyomi.ANIMESEARCH" />
-                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.DEFAULT"/>
             </intent-filter>
             <intent-filter>
                 <action android:name="android.intent.action.SEND" />
                 <category android:name="android.intent.category.DEFAULT" />
                 <data android:mimeType="text/plain" />
             </intent-filter>
-
-            <meta-data
-                android:name="android.app.searchable"
-                android:resource="@xml/searchable" />
+            <meta-data android:name="android.app.searchable" android:resource="@xml/searchable"/>
         </activity>
-
-        <activity
-            android:name=".ui.reader.ReaderActivity"
-            android:exported="false"
-            android:launchMode="singleTask">
+        <activity android:name=".ui.reader.ReaderActivity"
+            android:theme="@style/Theme.Tachiyomi.SplashScreen"
+            android:exported="true">
             <intent-filter>
                 <action android:name="com.samsung.android.support.REMOTE_ACTION" />
             </intent-filter>
@@ -193,87 +104,82 @@
                 android:resource="@xml/s_pen_actions" />
         </activity>
         <activity
-            android:name=".ui.player.PlayerActivity"
-            android:autoRemoveFromRecents="true"
-            android:configChanges="orientation|screenLayout|screenSize|smallestScreenSize|keyboardHidden|keyboard|uiMode"
-            android:exported="false"
-            android:launchMode="singleTask"
-            android:resizeableActivity="true"
-            android:supportsPictureInPicture="true"
-            android:theme="@style/Theme.Tachiyomi">
-            <intent-filter>
-                <action android:name="com.samsung.android.support.REMOTE_ACTION" />
-            </intent-filter>
-
-            <meta-data android:name="com.samsung.android.support.REMOTE_ACTION"
-                android:resource="@xml/s_pen_actions"/>
-        </activity>
-        <activity
-            android:name=".ui.security.UnlockActivity"
-            android:exported="false"
-            android:theme="@style/Theme.Tachiyomi" />
-
-        <activity
             android:name=".ui.webview.WebViewActivity"
-            android:configChanges="uiMode|orientation|screenSize"
-            android:exported="false" />
-
+            android:configChanges="uiMode|orientation|screenSize"/>
         <activity
-            android:name=".extension.manga.util.MangaExtensionInstallActivity"
-            android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
+            android:name=".ui.security.BiometricActivity" />
         <activity
-            android:name=".extension.anime.util.AnimeExtensionInstallActivity"
-            android:exported="false"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
-
-        <activity
-            android:name=".ui.setting.track.TrackLoginActivity"
-            android:exported="true"
-            android:label="@string/track_activity_name">
+            android:name=".ui.setting.track.MyAnimeListLoginActivity"
+            android:label="MyAnimeList"
+            android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
 
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
 
-                <data android:scheme="aniyomi"/>
+                <data
+                    android:host="myanimelist-auth"
+                    android:scheme="yokai" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.setting.track.AnilistLoginActivity"
+            android:label="Anilist"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
 
-                <data android:host="myanimelist-auth" />
-                <data android:host="anilist-auth" />
-                <data android:host="bangumi-auth" />
-                <data android:host="shikimori-auth" />
-                <data android:host="simkl-auth"/>
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="anilist-auth"
+                    android:scheme="yokai" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.setting.track.ShikimoriLoginActivity"
+            android:label="Shikimori"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="shikimori-auth"
+                    android:scheme="yokai" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".ui.setting.track.BangumiLoginActivity"
+            android:label="Bangumi"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+
+                <data
+                    android:host="bangumi-auth"
+                    android:scheme="yokai" />
             </intent-filter>
         </activity>
 
-        <receiver
-            android:name=".data.notification.NotificationReceiver"
-            android:exported="false" />
+        <activity
+            android:name=".extension.util.ExtensionInstallActivity"
+            android:icon="@mipmap/ic_launcher"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
 
-        <service
-            android:name=".extension.manga.util.MangaExtensionInstallService"
-            android:exported="false"
-            android:foregroundServiceType="shortService" />
-
-        <service
-            android:name=".extension.anime.util.AnimeExtensionInstallService"
-            android:exported="false"
-            android:foregroundServiceType="shortService" />
-        <service
-            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
-            android:enabled="false"
-            android:exported="false">
-            <meta-data
-                android:name="autoStoreLocales"
-                android:value="true" />
-        </service>
-
-        <service
-            android:name="androidx.work.impl.foreground.SystemForegroundService"
-            android:foregroundServiceType="dataSync"
-            tools:node="merge" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesMenuActivity"
+            android:theme="@style/Theme.OSS" />
+        <activity
+            android:name="com.google.android.gms.oss.licenses.OssLicensesActivity"
+            android:theme="@style/Theme.OSS" />
 
         <provider
             android:name="androidx.core.content.FileProvider"
@@ -285,21 +191,73 @@
                 android:resource="@xml/provider_paths" />
         </provider>
 
+        <receiver
+            android:name=".data.notification.NotificationReceiver"
+            android:exported="false" />
+
+        <receiver
+            android:name=".extension.util.ExtensionInstallBroadcast"
+            android:exported="false" />
+
+        <receiver
+            android:name=".data.updater.AppUpdateBroadcast"
+            android:exported="false">
+            <intent-filter>
+                <action android:name="android.intent.action.MY_PACKAGE_REPLACED" />
+            </intent-filter>
+        </receiver>
+
+        <receiver
+            android:name=".appwidget.UpdatesGridGlanceReceiver"
+            android:enabled="@bool/glance_appwidget_available"
+            android:exported="false"
+            android:label="@string/updates">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/updates_grid_glance_widget_info" />
+        </receiver>
+
+        <service
+            android:name="androidx.work.impl.foreground.SystemForegroundService"
+            android:foregroundServiceType="dataSync"
+            tools:node="merge" />
+
+        <service
+            android:name="androidx.appcompat.app.AppLocalesMetadataHolderService"
+            android:enabled="false"
+            android:exported="false">
+            <meta-data
+                android:name="autoStoreLocales"
+                android:value="true" />
+        </service>
+
         <provider
             android:name="rikka.shizuku.ShizukuProvider"
             android:authorities="${applicationId}.shizuku"
+            android:multiprocess="false"
             android:enabled="true"
             android:exported="true"
-            android:multiprocess="false"
             android:permission="android.permission.INTERACT_ACROSS_USERS_FULL" />
 
-        <meta-data
-            android:name="android.webkit.WebView.EnableSafeBrowsing"
+        <!-- Loading global exception handler before crashlytics (order: 100) -->
+        <provider
+            android:name="eu.kanade.tachiyomi.AppProvider"
+            android:authorities="${applicationId}.yokai"
+            android:exported="false"
+            android:initOrder="101" />
+
+        <meta-data android:name="android.webkit.WebView.EnableSafeBrowsing"
             android:value="false" />
-        <meta-data
-            android:name="android.webkit.WebView.MetricsOptOut"
+        <meta-data android:name="android.webkit.WebView.MetricsOptOut"
             android:value="true" />
 
     </application>
+
+    <uses-sdk tools:overrideLibrary="rikka.shizuku.api"
+        tools:ignore="ManifestOrder" />
 
 </manifest>

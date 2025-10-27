@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<eu.kanade.tachiyomi.ui.reader.viewer.ReaderErrorView xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -18,14 +18,14 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/action_retry" />
+        android:text="@string/retry" />
 
     <eu.kanade.tachiyomi.ui.reader.viewer.ReaderButton
         android:id="@+id/action_open_in_web_view"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="8dp"
-        android:text="@string/action_open_in_web_view"
+        android:text="@string/open_in_webview"
         android:visibility="gone" />
 
-</LinearLayout>
+</eu.kanade.tachiyomi.ui.reader.viewer.ReaderErrorView>

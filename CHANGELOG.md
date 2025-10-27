@@ -2,143 +2,818 @@
 
 All notable changes to this project will be documented in this file.
 
-The format is a modified version of [Keep a Changelog](https://keepachangelog.com/en/1.1.0/), and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
-- `Added` - for new features.
-- `Changed ` - for changes in existing functionality.
-- `Improved` - for enhancement or optimization in existing functionality.
-- `Removed` - for now removed features.
-- `Fixed` - for any bug fixes.
-- `Other` - for technical stuff.
+The format is simplified version of [Keep a Changelog](https://keepachangelog.com/en/1.1.0/):
+- `Additions` - New features
+- `Changes` - Behaviour/visual changes
+- `Fixes` - Bugfixes
+- `Other` - Technical changes/updates
 
-## [v0.18.1.0] - 2025-10-02
-### Fixed
+## [Unreleased]
 
-- Fix list view resetting scroll upon exiting child ([@quickdesh](https://github.com/quickdesh)) ([#1982](https://github.com/aniyomiorg/aniyomi/pull/1982))
-- Fix episode number parsing ([@Secozzi](https://github.com/Secozzi)) ([#2096](https://github.com/aniyomiorg/aniyomi/pull/2096))
-- Fix tracking menu not opening on add to library ([@Secozzi](https://github.com/Secozzi)) ([#2098](https://github.com/aniyomiorg/aniyomi/pull/2098))
-- Fix stop/continue anime download button ([@Secozzi](https://github.com/Secozzi)) ([#2099](https://github.com/aniyomiorg/aniyomi/pull/2099))
-- Fix creating/restoring backups between mihon and aniyomi ([@Secozzi](https://github.com/Secozzi)) ([#2117](https://github.com/aniyomiorg/aniyomi/pull/2117))
+### Additions
+- Add random library sort
+- Add the ability to save search queries
+- Add toggle to enable/disable hide source on swipe (@Hiirbaf)
+- Add the ability to mark duplicate read chapters as read (@AntsyLich)
 
-### Added
+### Changes
+- Temporarily disable log file
+- Categories' header now show filtered count when you search the library when you have "Show number of items" enabled (@LeeSF03)
+- Chapter progress now saved everything the page is changed
 
-- Add support for new parameters from ext lib 16 ([@quickdesh](https://github.com/quickdesh)) ([#1982](https://github.com/aniyomiorg/aniyomi/pull/1982))
-- Add player settings to the main settings screen ([@jmir1](https://github.com/jmir1)) ([#2081](https://github.com/aniyomiorg/aniyomi/pull/2081))
-- Add seasons support ([@Secozzi](https://github.com/Secozzi)) ([#2095](https://github.com/aniyomiorg/aniyomi/pull/2095))
+### Fixes
+- Allow users to bypass onboarding's permission step if Shizuku is installed
+- Fix Recents page shows "No recent chapters" instead of a loading screen
+- Fix not fully loaded entries can't be selected on Library page
+- Fix certain Infinix devices being unable to use any "Open link in browser" actions, including tracker setup (@MajorTanya)
+- Fix source filter bottom sheet unable to be fully scrolled to the bottom
+- Prevent potential "Comparison method violates its general contract!" crash
+- Fix staggered grid cover being squashed for local source (@AwkwardPeak7)
+- Fix GPU crash when setting cover from downloaded chapters (@Angrevol)
 
-## [v0.18.0.1] - 2025-07-06
-### Fixed
-
-- Fix crash on migration ([@Secozzi](https://github.com/Secozzi)) ([#2079](https://github.com/aniyomiorg/aniyomi/pull/2079))
-
-## [v0.18.0.0] - 2025-07-05
-### Added
-
-- Set mpv's media-title property ([@Secozzi](https://github.com/Secozzi)) ([#1672](https://github.com/aniyomiorg/aniyomi/pull/1672))
-- Add mpvKt to external players ([@Secozzi](https://github.com/Secozzi)) ([#1674](https://github.com/aniyomiorg/aniyomi/pull/1674))
-- Add video filters ([@abdallahmehiz](https://github.com/abdallahmehiz)) ([#1698](https://github.com/aniyomiorg/aniyomi/pull/1698))
-- Show hours and minutes in relative time strings ([@jmir1](https://github.com/jmir1)) ([`1f3be7b`](https://github.com/aniyomiorg/aniyomi/commit/1f3be7b523136039b3b60213f2cee7959a9367d7))
-  - Fix some issues with relative date calculations ([@jmir1](https://github.com/jmir1)) ([`03e1ecd`](https://github.com/aniyomiorg/aniyomi/commit/03e1ecd75edd2ea15dc8732ffeab32c6af26b202))
-- Add better auto sub select ([@Secozzi](https://github.com/Secozzi)) ([#1706](https://github.com/aniyomiorg/aniyomi/pull/1706))
-- Copy the file location when using ext downloader ([@quickdesh](https://github.com/quickdesh)) ([#1758](https://github.com/aniyomiorg/aniyomi/pull/1758))
-- Replace player with mpvKt ([@Secozzi](https://github.com/Secozzi)) ([#1834](https://github.com/aniyomiorg/aniyomi/pull/1834), [#1855](https://github.com/aniyomiorg/aniyomi/pull/1855), [#1859](https://github.com/aniyomiorg/aniyomi/pull/1859), [#1860](https://github.com/aniyomiorg/aniyomi/pull/1860))
-  - Move player preferences to separate section ([@Secozzi](https://github.com/Secozzi)) ([#1819](https://github.com/aniyomiorg/aniyomi/pull/1819))
-- Implement video hosters ([@Secozzi](https://github.com/Secozzi)) ([#1892](https://github.com/aniyomiorg/aniyomi/pull/1892))
-- Add size slider for the "List Display" Mode ([@MavikBow](https://github.com/MavikBow)) ([#1906](https://github.com/aniyomiorg/aniyomi/pull/1906))
-  - Make the default list a set size and make browse list scale ([@MavikBow](https://github.com/MavikBow)) ([#1914](https://github.com/aniyomiorg/aniyomi/pull/1914))
-- Allow negative brightness values (dimming) ([@jmir1](https://github.com/jmir1)) ([#1915](https://github.com/aniyomiorg/aniyomi/pull/1915))
-- Add new lua functions for custom buttons ([@Secozzi](https://github.com/Secozzi)) ([#1980](https://github.com/aniyomiorg/aniyomi/pull/1980))
-- Use timestamps provided by extensions ([@Secozzi](https://github.com/Secozzi)) ([#1983](https://github.com/aniyomiorg/aniyomi/pull/1983))
-- Add titles to player sheets + consistency with More sheet ([@quickdesh](https://github.com/quickdesh)) ([#2015](https://github.com/aniyomiorg/aniyomi/pull/2015))
-- Add script & script-opts editor to player settings ([@Secozzi](https://github.com/Secozzi)) ([#2019](https://github.com/aniyomiorg/aniyomi/pull/2019))
-
-### Improved
-
-- Show "Now" instead of "0 minutes ago" ([@Secozzi](https://github.com/Secozzi)) ([#1715](https://github.com/aniyomiorg/aniyomi/pull/1715))
-- Add headers when using 1dm as external player ([@Secozzi](https://github.com/Secozzi)) ([#2032](https://github.com/aniyomiorg/aniyomi/pull/2032))
-
-### Fixed
-
-- Fix enhanced tracking for jellyfin ([@Secozzi](https://github.com/Secozzi)) ([#1656](https://github.com/aniyomiorg/aniyomi/pull/1656), [#1658](https://github.com/aniyomiorg/aniyomi/pull/1658))
-- Use different status strings for anime trackers ([@jmir1](https://github.com/jmir1)) ([`74b32a3`](https://github.com/aniyomiorg/aniyomi/commit/74b32a3a0b323ed2f6f7929e131dcb4901e7bf9b))
-- Fix Shikimori tracking for anime ([@jmir1](https://github.com/jmir1)) ([`58817c7`](https://github.com/aniyomiorg/aniyomi/commit/58817c724e2808072ff273329cee261d12084927))
-- Group updates by date and not time ([@jmir1](https://github.com/jmir1)) ([`c83ebf3`](https://github.com/aniyomiorg/aniyomi/commit/c83ebf322f48d41ca1ad0105262160ecb7cde991))
-- Fix airing time not showing ([@Secozzi](https://github.com/Secozzi)) ([#1720](https://github.com/aniyomiorg/aniyomi/pull/1720))
-- Don't invalidate anime downloads on startup ([@Secozzi](https://github.com/Secozzi)) ([#1753](https://github.com/aniyomiorg/aniyomi/pull/1753))
-- Fix hidden categories getting reset after delete/reorder ([@cuong-tran](https://github.com/cuong-tran)) ([#1780](https://github.com/aniyomiorg/aniyomi/pull/1780))
-- Fix episode progress not being saved and duplicate tracks ([@perokhe](https://github.com/perokhe)) ([#1784](https://github.com/aniyomiorg/aniyomi/pull/1784), [#1785](https://github.com/aniyomiorg/aniyomi/pull/1785))
-- Fix subtitle select not matching two letter language codes ([@Secozzi](https://github.com/Secozzi)) ([#1805](https://github.com/aniyomiorg/aniyomi/pull/1805))
-- Fix potential intent extra npe ([@quickdesh](https://github.com/quickdesh)) ([#1816](https://github.com/aniyomiorg/aniyomi/pull/1816))
-- Fix history date header duplication ([@quickdesh](https://github.com/quickdesh)) ([#1817](https://github.com/aniyomiorg/aniyomi/pull/1817))
-- Fix migrations not getting context correctly ([@Secozzi](https://github.com/Secozzi)) ([#1820](https://github.com/aniyomiorg/aniyomi/pull/1820))
-- Fix various issues due to replacing the player with mpvKt
-  - Fix gesture seeking not seeking to start and end ([@perokhe](https://github.com/perokhe)) ([#1865](https://github.com/aniyomiorg/aniyomi/pull/1865))
-  - Fix crash when opening player settings in tablet ui ([@Secozzi](https://github.com/Secozzi)) ([#1868](https://github.com/aniyomiorg/aniyomi/pull/1868))
-  - Fix episode list in player not respecting filters & crash when exiting while stuff is loading ([@Secozzi](https://github.com/Secozzi)) ([#1869](https://github.com/aniyomiorg/aniyomi/pull/1869))
-  - Fix episode being marked as seen at start ([@perokhe](https://github.com/perokhe)) ([#1871](https://github.com/aniyomiorg/aniyomi/pull/1871))
-  - Fix player not being paused when loading tracks after changing quality ([@Secozzi](https://github.com/Secozzi)) ([#1878](https://github.com/aniyomiorg/aniyomi/pull/1878))
-  - Fix lag when toggling player ui ([@Secozzi](https://github.com/Secozzi)) ([#1887](https://github.com/aniyomiorg/aniyomi/pull/1887))
-  - Fix audio selection not working on external audio tracks ([@Secozzi](https://github.com/Secozzi)) ([#1901](https://github.com/aniyomiorg/aniyomi/pull/1901))
-  - Reset "hide player controls time" when pressing custom button ([@Secozzi](https://github.com/Secozzi)) ([#1902](https://github.com/aniyomiorg/aniyomi/pull/1902))
-  - Don't unpause on share and save ([@Secozzi](https://github.com/Secozzi)) ([#1905](https://github.com/aniyomiorg/aniyomi/pull/1905))
-  - Fix player pausing with gesture seek ([@perokhe](https://github.com/perokhe)) ([#1916](https://github.com/aniyomiorg/aniyomi/pull/1916))
-  - Fix potential npe issues with mpv-lib ([@Secozzi](https://github.com/Secozzi)) ([#1921](https://github.com/aniyomiorg/aniyomi/pull/1921))
-  - Dismiss chapter sheet on chapter select ([@Secozzi](https://github.com/Secozzi)) ([#1976](https://github.com/aniyomiorg/aniyomi/pull/1976))
-  - Fix some issues caused by [`10e28cc`](https://github.com/aniyomiorg/aniyomi/commit/10e28cc4092758cf38d27cc14aadf539698738f2) ([@Secozzi](https://github.com/Secozzi)) ([#1981](https://github.com/aniyomiorg/aniyomi/pull/1981))
-  - Fix npe issue caused in player controls ([@Secozzi](https://github.com/Secozzi)) ([#1986](https://github.com/aniyomiorg/aniyomi/pull/1986))
-- Replace some manga strings with respective anime strings ([@perokhe](https://github.com/perokhe)) ([#1864](https://github.com/aniyomiorg/aniyomi/pull/1864))
-- Open correct tab from extension update notifications ([@jmir1](https://github.com/jmir1)) ([`161471d`](https://github.com/aniyomiorg/aniyomi/commit/161471d94a2350c0c983eeeccd3b7ac0dc66d429))
-- Fix sub-auto not loading all external subtitle files ([@perokhe](https://github.com/perokhe)) ([#1866](https://github.com/aniyomiorg/aniyomi/pull/1866))
-- Fix `ALSearchItem.format` nullability ([@Secozzi](https://github.com/Secozzi)) ([#1910](https://github.com/aniyomiorg/aniyomi/pull/1910))
-- Don't format mpv preferences ([@Secozzi](https://github.com/Secozzi)) ([#1939](https://github.com/aniyomiorg/aniyomi/pull/1939))
-- Prevent crash on app death when watching in external player ([@Secozzi](https://github.com/Secozzi)) ([#1945](https://github.com/aniyomiorg/aniyomi/pull/1945))
-- Don't run unnecessary stuff when exiting the player ([@Secozzi](https://github.com/Secozzi)) ([#1961](https://github.com/aniyomiorg/aniyomi/pull/1961))
-- Fix some downloader issues ([@Secozzi](https://github.com/Secozzi)) ([#1964](https://github.com/aniyomiorg/aniyomi/pull/1964))
-  - Fix downloader not working for certain types of tracks & duration sometimes not being logged ([@Secozzi](https://github.com/Secozzi)) ([#2001](https://github.com/aniyomiorg/aniyomi/pull/2001))
-- Fix some issues with intro skip length ([@jmir1](https://github.com/jmir1)) ([`72cac57`](https://github.com/aniyomiorg/aniyomi/commit/72cac57d8e66366cbc0f3106eb351c82250c460b), [`25dd3ea`](https://github.com/aniyomiorg/aniyomi/commit/25dd3ea69fb217de7b0485c29e4a9b970737fd45))
-- Force clipboard to use UI thread when copying path for external players ([@quickdesh](https://github.com/quickdesh)) ([#1994](https://github.com/aniyomiorg/aniyomi/pull/1994))
-- Use application directory for storing files used by mpv ([@Secozzi](https://github.com/Secozzi)) ([#1995](https://github.com/aniyomiorg/aniyomi/pull/1995))
-- Update backup warning string (follow Mihon) ([@cuong-tran](https://github.com/cuong-tran)) ([#2012](https://github.com/aniyomiorg/aniyomi/pull/2012))
-- Fix issues with episode deletion & more ([@quickdesh](https://github.com/quickdesh)) ([#2017](https://github.com/aniyomiorg/aniyomi/pull/2017))
-- Fix vertical slider width issues and shift boost volume value to slider ([@quickdesh](https://github.com/quickdesh)) ([#2018](https://github.com/aniyomiorg/aniyomi/pull/2018))
-- Fix MyAnimeList login ([@choppeh](https://github.com/choppeh)) ([#2035](https://github.com/aniyomiorg/aniyomi/pull/2035))
-- Call sort methods for videos and hosters ([@cuong-tran](https://github.com/cuong-tran)) ([#2058](https://github.com/aniyomiorg/aniyomi/pull/2058))
-- Invalidate preferred languages in settings ([@Secozzi](https://github.com/Secozzi)) ([#2075](https://github.com/aniyomiorg/aniyomi/pull/2075))
-- Fix crash when using sort by airing time ([@quickdesh](https://github.com/quickdesh)) ([#2076](https://github.com/aniyomiorg/aniyomi/pull/2076))
+### Translation
+- Update translations from Weblate
 
 ### Other
+- Refactor Library to utilize Flow even more
+- Refactor EmptyView to use Compose
+- Refactor Reader ChapterTransition to use Compose (@arkon)
+- [Experimental] Add modified version of LargeTopAppBar that mimic J2K's ExpandedAppBarLayout
+- Refactor About page to use Compose
+- Adjust Compose-based pages' transition to match J2K's Conductor transition
+- Resolve deprecation warnings
+  - Kotlin's context-receiver, schedule for removal on Kotlin v2.1.x and planned to be replaced by context-parameters on Kotlin v2.2
+  - Project.exec -> Providers.exec
+  - Remove internal API usage to retrieve Kotlin version for kotlin-stdlib
+- Move :core module to :core:main
+  - Move archive related code to :core:archive (@AntsyLich)
+- Refactor Library to store LibraryMap instead of flatten list of LibraryItem
+  - LibraryItem abstraction to make it easier to manage
+  - LibraryManga no longer extend MangaImpl
+- Update dependency gradle to v8.12
+- Update user agent (@Hiirbaf)
+- Update serialization to v1.8.1
+- Update dependency io.github.fornewid:material-motion-compose-core to v1.2.1
+- Update lifecycle to v2.9.0
+- Update dependency org.jsoup:jsoup to v1.20.1
+- Update dependency org.jetbrains.kotlinx:kotlinx-collections-immutable to v0.4.0
+- Update dependency io.mockk:mockk to v1.14.2
+- Update dependency io.coil-kt.coil3:coil-bom to v3.2.0
+- Update dependency com.squareup.okio:okio to v3.12.0
+- Update dependency com.google.firebase:firebase-bom to v33.14.0
+- Update dependency com.google.accompanist:accompanist-themeadapter-material3 to v0.36.0
+- Update dependency com.github.requery:sqlite-android to v3.49.0
+- Update dependency com.getkeepsafe.taptargetview:taptargetview to v1.15.0
+- Update dependency androidx.window:window to v1.4.0
+- Update dependency androidx.webkit:webkit to v1.13.0
+- Update dependency androidx.sqlite:sqlite-ktx to v2.5.1
+- Update dependency androidx.sqlite:sqlite to v2.5.1
+- Update dependency androidx.recyclerview:recyclerview to v1.4.0
+- Update dependency androidx.core:core-ktx to v1.16.0
+- Update dependency androidx.compose:compose-bom to v2025.05.01
+- Update aboutlibraries to v11.6.3
+- Update plugin kotlinter to v5.1.0
+- Update plugin gradle-versions to v0.52.0
+- Update okhttp monorepo to v5.0.0-alpha.16
+- Update moko to v0.24.5
+- Update kotlin monorepo to v2.1.21
+- Update dependency org.jetbrains.kotlinx:kotlinx-coroutines-bom to v1.10.2
+- Update dependency me.zhanghai.android.libarchive:library to v1.1.5
+- Update dependency io.insert-koin:koin-bom to v4.0.4
+- Update dependency com.android.tools:desugar_jdk_libs to v2.1.5
+- Update dependency androidx.work:work-runtime-ktx to v2.10.1
+- Update dependency androidx.constraintlayout:constraintlayout to v2.2.1
+- Update plugin firebase-crashlytics to v3.0.3
+- Update null2264/actions digest to 363cb9c
+- Update dependency io.github.pdvrieze.xmlutil:core-android to v0.91.1
+- Improve X-Requested-With spoof to support newer WebView versions (@Hiirbaf)
 
-- Merge from mihon until 0.16.5 ([@Secozzi](https://github.com/Secozzi)) ([#1663](https://github.com/aniyomiorg/aniyomi/pull/1663))
-  - Merge until latest mihon commits ([@Secozzi](https://github.com/Secozzi)) ([#1693](https://github.com/aniyomiorg/aniyomi/pull/1693))
-  - Merge until latest mihon commits (v0.17.0) ([@Secozzi](https://github.com/Secozzi)) ([#1804](https://github.com/aniyomiorg/aniyomi/pull/1804))
-  - Merge until latest mihon commits (v0.18.0) ([@Secozzi](https://github.com/Secozzi)) ([#1863](https://github.com/aniyomiorg/aniyomi/pull/1863))
-- Remove ACRA crash report analytics ([@jmir1](https://github.com/jmir1)) ([`d3c6a15`](https://github.com/aniyomiorg/aniyomi/commit/d3c6a159d82ca239c10e8f5822c3b2046c5545f2), [`5ae35c8`](https://github.com/aniyomiorg/aniyomi/commit/5ae35c891b90ae927200185641240280effaf667))
+## [1.9.7.3]
 
-## [v0.16.4.3] - 2024-07-01
-### Fixed
+### Fixes
+- More `Comparison method violates its general contract!` crash prevention
 
-- Fix extensions disappearing due to errors with the ClassLoader ([@jmir1](https://github.com/jmir1)) ([`959f84a`](https://github.com/aniyomiorg/aniyomi/commit/959f84ab41859f90c458c076d83d363ae086e47f))
+## [1.9.7.2]
 
-## [v0.16.4.2] - 2024-07-01
-### Fixed
+### Fixes
+- Fix MyAnimeList timeout issue
 
-- Hotfix to eliminate all proguard issues causing errors and crashes ([@jmir1](https://github.com/jmir1)) ([`a8cd723`](https://github.com/aniyomiorg/aniyomi/commit/a8cd7233dfdf26c98ff86b1871a7ac5774379b5e), [`a7644c2`](https://github.com/aniyomiorg/aniyomi/commit/a7644c268153fc0b9f10c27202591f960c6f6384), [`5045fa1`](https://github.com/aniyomiorg/aniyomi/commit/5045fa18ce5a1faa2130f1a33609e43d8453f078))
+## [1.9.7.1]
 
-## [v0.16.4.1] - 2024-07-01
-### Fixed
+### Fixes
+- Prevent `Comparison method violates its general contract!` crashes
 
-- Hotfix release to address errors with extensions ([@jmir1](https://github.com/jmir1)) ([`98d2528`](https://github.com/aniyomiorg/aniyomi/commit/98d252866e17beba7d9a4d094797e23c05ead6c1))
+## [1.9.7]
 
-## [v0.16.4.0] - 2024-07-01
-### Fixed
+### Changes
+- Adjust log file to only log important information by default
 
-- Fix pip not broadcasting intent in A14+ ([@quickdesh](https://github.com/quickdesh)) ([#1603](https://github.com/aniyomiorg/aniyomi/pull/1603))
-- Fix advanced player settings crash in android ≤ 10 ([@perokhe](https://github.com/perokhe)) ([#1627](https://github.com/aniyomiorg/aniyomi/pull/1627))
+### Fixes
+- Fix sorting by latest chapter is not working properly
+- Prevent some NPE crashes
+- Fix some flickering issues when browsing sources
+- Fix download count is not updating
 
-### Improved
-
-- Hide the skip intro button if the skipped amount == 0 ([@abdallahmehiz](https://github.com/abdallahmehiz)) ([#1598](https://github.com/aniyomiorg/aniyomi/pull/1598))
+### Translation
+- Update Korean translation (@Meokjeng)
 
 ### Other
+- Update NDK to v27.2.12479018
 
-- Merge from mihon until mihon 0.16.2 ([@Secozzi](https://github.com/Secozzi)) ([#1578](https://github.com/aniyomiorg/aniyomi/pull/1578))
-  - Merge from mihon until 0.16.4 ([@Secozzi](https://github.com/Secozzi)) ([#1601](https://github.com/aniyomiorg/aniyomi/pull/1601))
+## [1.9.6]
+
+### Fixes
+- Fix some crashes
+
+## [1.9.5]
+
+### Changes
+- Entries from local source now behaves similar to entries from online sources
+
+### Fixes
+- Fix new chapters not showing up in `Recents > Grouped`
+- Add potential workarounds for duplicate chapter bug
+- Fix favorite state is not being updated when browsing source
+
+### Other
+- Update dependency androidx.compose:compose-bom to v2024.12.01
+- Update plugin kotlinter to v5
+- Update plugin gradle-versions to v0.51.0
+- Update kotlin monorepo to v2.1.0
+
+## [1.9.4]
+
+### Fixes
+- Fix chapter date fetch always null causing it to not appear on Updates tab
+
+## [1.9.3]
+
+### Fixes
+- Fix slow chapter load
+- Fix chapter bookmark state is not persistent
+
+### Other
+- Refactor downloader
+  - Replace RxJava usage with Kotlin coroutines
+  - Replace DownloadQueue with Flow to hopefully fix ConcurrentModificationException entirely
+
+## [1.9.2]
+
+### Changes
+- Adjust chapter title-details contrast
+- Make app updater notification consistent with other notifications
+
+### Fixes
+- Fix "Remove from read" not working properly
+
+## [1.9.1]
+
+### Fixes
+- Fix chapters cannot be opened from `Recents > Grouped` and `Recents > All`
+- Fix crashes caused by malformed XML
+- Fix potential memory leak
+
+### Other
+- Update dependency io.github.kevinnzou:compose-webview to v0.33.6
+- Update dependency org.jsoup:jsoup to v1.18.3
+- Update voyager to v1.1.0-beta03
+- Update dependency androidx.annotation:annotation to v1.9.1
+- Update dependency androidx.constraintlayout:constraintlayout to v2.2.0
+- Update dependency androidx.glance:glance-appwidget to v1.1.1
+- Update dependency com.google.firebase:firebase-bom to v33.7.0
+- Update fast.adapter to v5.7.0
+- Downgrade dependency org.conscrypt:conscrypt-android to v2.5.2
+
+## [1.9.0]
+
+### Additions
+- Sync DoH provider list with upstream (added Mullvad, Control D, Njalla, and Shecan)
+- Add option to enable verbose logging
+- Add category hopper long-press action to open random series from **any** category
+- Add option to enable reader debug mode
+- Add option to adjust reader's hardware bitmap threshold (@AntsyLich)
+  - Always use software bitmap on certain devices (@MajorTanya)
+- Add option to scan local entries from `/storage/(sdcard|emulated/0)/Android/data/<yokai>/files/local`
+
+### Changes
+- Enable 'Split Tall Images' by default (@Smol-Ame)
+- Minor visual adjustments
+- Tell user to restart the app when User-Agent is changed (@NGB-Was-Taken)
+- Re-enable fetching licensed manga (@Animeboynz)
+- Bangumi search now shows the score and summary of a search result (@MajorTanya)
+- Logs are now written to a file for easier debugging
+- Bump default user agent (@AntsyLich)
+- Custom cover is now compressed to WebP to prevent OOM crashes
+
+### Fixes
+- Fix only few DoH provider is actually being used (Cloudflare, Google, AdGuard, and Quad9)
+- Fix "Group by Ungrouped" showing duplicate entries
+- Fix reader sometimes won't load images
+- Handle some uncaught crashes
+- Fix crashes due to GestureDetector's firstEvent is sometimes null on some devices
+- Fix download failed due to invalid XML 1.0 character
+- Fix issues with shizuku in a multi-user setup (@Redjard)
+- Fix some regional/variant languages is not listed in app language option
+- Fix browser not opening in some cases in Honor devices (@MajorTanya)
+- Fix "ConcurrentModificationException" crashes
+- Fix Komga unread badge, again
+- Fix default category can't be updated manually
+- Fix crashes trying to load Library caused by cover being too large
+
+### Other
+- Simplify network helper code
+- Fully migrated from StorIO to SQLDelight
+- Update dependency com.android.tools:desugar_jdk_libs to v2.1.3
+- Update moko to v0.24.4
+- Refactor trackers to use DTOs (@MajorTanya)
+  - Fix AniList `ALSearchItem.status` nullibility (@Secozzi)
+- Replace Injekt with Koin
+- Remove unnecessary permission added by Firebase
+- Remove unnecessary features added by Firebase
+- Replace BOM dev.chrisbanes.compose:compose-bom with JetPack's BOM
+- Update dependency androidx.compose:compose-bom to v2024.11.00
+- Update dependency com.google.firebase:firebase-bom to v33.6.0
+- Update dependency com.squareup.okio:okio to v3.9.1
+- Update activity to v1.9.3
+- Update lifecycle to v2.8.7
+- Update dependency me.zhanghai.android.libarchive:library to v1.1.4
+- Update agp to v8.7.3
+- Update junit5 monorepo to v5.11.3
+- Update dependency androidx.test.ext:junit to v1.2.1
+- Update dependency org.jetbrains.kotlinx:kotlinx-collections-immutable to v0.3.8
+- Update dependency org.jsoup:jsoup to v1.18.1
+- Update dependency org.jetbrains.kotlinx:kotlinx-coroutines-bom to v1.9.0
+- Update serialization to v1.7.3
+- Update dependency gradle to v8.11.1
+- Update dependency androidx.webkit:webkit to v1.12.0
+- Update dependency io.mockk:mockk to v1.13.13
+- Update shizuku to v13.1.5
+  - Use reflection to fix shizuku breaking changes (@Jobobby04)
+- Bump compile sdk to 35
+  - Handle Android SDK 35 API collision (@AntsyLich)
+- Update kotlin monorepo to v2.0.21
+- Update dependency androidx.work:work-runtime-ktx to v2.10.0
+- Update dependency androidx.core:core-ktx to v1.15.0
+- Update dependency io.coil-kt.coil3:coil-bom to v3.0.4
+- Update xml.serialization to v0.90.3
+- Update dependency co.touchlab:kermit to v2.0.5
+- Replace WebView to use Compose (@arkon)
+  - Fixed Keyboard is covering web page inputs
+- Increased `tryToSetForeground` delay to fix potential crashes (@nonproto)
+- Update dependency org.conscrypt:conscrypt-android to v2.5.3
+- Port upstream's download cache system
+
+## [1.8.5.13]
+
+### Fixed
+- Fix version checker
+
+## [1.8.5.12]
+
+### Fixed
+- Fixed scanlator data sometimes disappear
+
+## [1.8.5.11]
+
+### Fixed
+- Fixed crashes caused by Bangumi invalid status
+
+## [1.8.5.10]
+
+### Fixes
+- Fixed scanlator filter not working properly
+
+## [1.8.5.9]
+
+### Changes
+- Revert create backup to use file picker
+
+## [1.8.5.8]
+
+### Other
+- Separate backup error log when destination is null or not a file
+- Replace com.github.inorichi.injekt with com.github.null2264.injekt
+
+## [1.8.5.7]
+
+### Fixes
+- Fixed more NPE crashes
+
+## [1.8.5.6]
+
+### Fixes
+- Fixed NPE crash on tablets
+
+## [1.8.5.5]
+
+### Fixes
+- Fixed crashes caused by certain extension implementation
+- Fixed "Theme buttons based on cover" doesn't work properly
+- Fixed library cover images looks blurry then become sharp after going to
+  entry's detail screen
+
+### Other
+- More StorIO to SQLDelight migration effort
+- Update dependency dev.chrisbanes.compose:compose-bom to v2024.08.00-alpha02
+- Update kotlin monorepo to v2.0.20
+- Update aboutlibraries to v11.2.3
+- Remove dependency com.github.leandroBorgesFerreira:LoadingButtonAndroid
+
+## [1.8.5.4]
+
+### Fixes
+- Fixed custom cover set from reader didn't show up on manga details
+
+## [1.8.5.3]
+
+### Additions
+- Add toggle to enable/disable chapter swipe action(s)
+- Add toggle to enable/disable webtoon double tap to zoom
+
+### Changes
+- Custom cover now shown globally
+
+### Fixes
+- Fixed chapter number parsing (@Naputt1)
+- Reduced library flickering (still happened in some cases when the cached image size is too different from the original image size, but should be reduced quite a bit)
+- Fixed entry details header didn't update when being removed from library
+
+### Other
+- Refactor chapter recognition (@stevenyomi)
+- (Re)added unit test for chapter recognition
+- More StorIO to SQLDelight migration effort
+- Target Android 15
+- Adjust manga cover cache key
+- Refactor manga cover fetcher (@ivaniskandar, @AntsyLich, @null2264)
+
+## [1.8.5.2]
+
+### Fixes
+- Fixed some preference not being saved properly
+
+### Other
+- Update dependency co.touchlab:kermit to v2.0.4
+- Update lifecycle to v2.8.4
+
+## [1.8.5.1]
+
+### Fixes
+- Fixed library showing duplicate entry when using dynamic category
+
+## [1.8.5]
+
+### Additions
+- Add missing "Max automatic backups" option on experimental Data and Storage setting menu
+- Add information on when was the last time backup automatically created to experimental Data and Storage setting menu
+- Add monochrome icon
+
+### Changes
+- Add more info to WorkerInfo page
+  - Added "next scheduled run"
+  - Added attempt count
+- `english` tag no longer cause reading mode to switch to LTR (@mangkoran)
+- `chinese` tag no longer cause reading mode to switch to LTR
+- `manhua` tag no longer cause reading mode to switch to LTR
+- Local source manga's cover now being invalidated on refresh
+- It is now possible to create a backup without any entries using experimental Data and Storage setting menu
+- Increased default maximum automatic backup files to 5
+- It is now possible to edit a local source entry without adding it to library
+- Long Strip and Continuous Vertical background color now respect user setting
+- Display Color Profile setting no longer limited to Android 8 or newer
+- Increased long strip cache size to 4 for Android 8 or newer (@FooIbar)
+- Use Coil pipeline to handle HEIF images
+
+### Fixes
+- Fixed auto backup, auto extension update, and app update checker stop working
+  if it crash/failed
+- Fixed crashes when trying to reload extension repo due to connection issue
+- Fixed tap controls not working properly after zoom (@arkon, @Paloys, @FooIbar)
+- Fixed (sorta, more like workaround) ANR issues when running background tasks, such as updating extensions (@ivaniskandar)
+- Fixed split (downloaded) tall images sometimes doesn't work
+- Fixed status bar stuck in dark mode when app is following system theme
+- Fixed splash screen state only getting updates if library is empty (Should slightly reduce splash screen duration)
+- Fixed kitsu tracker issue due to domain change
+- Fixed entry custom cover won't load if entry doesn't have cover from source
+- Fixed unread badge doesn't work properly for some sources (notably Komga)
+- Fixed MAL start date parsing (@MajorTanya)
+
+### Translation
+- Update Japanese translation (@akir45)
+- Update Brazilian Portuguese translation (@AshbornXS)
+- Update Filipino translation (@infyProductions)
+
+### Other
+- Re-added several social media links to Mihon
+- Some code refactors
+  - Simplify some messy code
+  - Rewrite version checker
+  - Rewrite Migrator (@ghostbear)
+  - Split the project into several modules
+  - Migrated i18n to use Moko Resources
+  - Removed unnecessary dependencies (@null2264, @nonproto)
+- Update firebase bom to v33.1.0
+- Replace com.google.android.gms:play-services-oss-licenses with com.mikepenz:aboutlibraries
+- Update dependency com.google.gms:google-services to v4.4.2
+- Add crashlytics integration for Kermit
+- Replace ProgressBar with ProgressIndicator from Material3 to improve UI consistency
+- More StorIO to SQLDelight migrations
+  - Merge lastFetch and lastRead query into library_view VIEW
+  - Migrated a few more chapter related queries
+  - Migrated most of the manga related queries
+- Bump dependency com.github.tachiyomiorg:unifile revision to a9de196cc7
+- Update project to Kotlin 2.0 (v2.0.10)
+- Update compose bom to v2024.08.00-alpha01
+- Refactor archive support to use `libarchive` (@FooIbar)
+- Use version catalog for gradle plugins
+- Update dependency org.jsoup:jsoup to v1.7.1
+- Bump dependency com.github.tachiyomiorg:image-decoder revision to 41c059e540
+- Update dependency io.coil-kt.coil3 to v3.0.0-alpha10
+- Update Android Gradle Plugin to v8.5.2
+- Update gradle to v8.9
+- Start using Voyager for navigation
+- Update dependency androidx.work:work-runtime-ktx to v2.9.1
+- Update dependency androidx.annotation:annotation to v1.8.2
+
+## [1.8.4.6]
+
+### Fixes
+- Fixed scanlator filter not working properly if it contains " & "
+
+### Other
+- Removed dependency com.dmitrymalkovich.android:material-design-dimens
+- Replace dependency br.com.simplepass:loading-button-android with
+  com.github.leandroBorgesFerreira:LoadingButtonAndroid
+- Replace dependency com.github.florent37:viewtooltip with
+  com.github.CarlosEsco:ViewTooltip
+
+## [1.8.4.5]
+
+### Fixes
+- Fixed incorrect library entry chapter count
+
+## [1.8.4.4]
+
+### Fixes
+- Fixed incompatibility issue with J2K backup file
+
+## [1.8.4.3]
+
+### Fixes
+- Fixed "Open source repo" icon's colour
+
+## [1.8.4.2]
+
+### Changes
+- Changed "Open source repo" icon to prevent confusion
+
+## [1.8.4.1]
+
+### Fixes
+- Fixed saving combined pages not doing anything
+
+## [1.8.4]
+
+### Additions
+- Added option to change long tap browse and recents nav behaviour
+  - Added browse long tap behaviour to open global search (@AshbornXS)
+  - Added recents long tap behaviour to open last read chapter (@AshbornXS)
+- Added option to backup sensitive settings (such as tracker login tokens)
+- Added beta version of "Data and storage" settings (can be accessed by long tapping "Data and storage")
+
+### Changes
+- Remove download location redirection from `Settings > Downloads`
+- Moved cache related stuff from `Settings > Advanced` to `Settings > Data and storage`
+- Improve webview (@AshbornXS)
+  - Show url as subtitle
+  - Add option to clear cookies
+  - Allow zoom
+- Handle urls on global search (@AshbornXS)
+- Improve download queue (@AshbornXS)
+  - Download badge now show download queue count
+  - Add option to move series to bottom
+- Only show "open repo url" button when repo url is not empty
+
+### Fixes
+- Fix potential crashes for some custom Android rom
+- Allow MultipartBody.Builder for extensions
+- Refresh extension repo now actually refresh extension(s) trust status
+- Custom manga info now relink properly upon migration
+- Fixed extension repo list did not update when a repo is added via deep link
+- Fixed download unread trying to download filtered (by scanlator) chapters
+- Fixed extensions not retaining their repo url
+- Fixed more NullPointerException crashes
+- Fixed split layout caused non-split images to not load
+
+### Other
+- Migrate some StorIO queries to SQLDelight, should improve stability
+- Migrate from Timber to Kermit
+- Update okhttp monorepo to v5.0.0-alpha.14
+- Refactor backup code
+  - Migrate backup flags to not use bitwise
+  - Split it to several smaller classes
+- Update androidx.compose.material3:material3 to v1.3.0-beta02
+
+## [1.8.3.4]
+
+### Fixes
+- Fixed crashes caused by invalid ComicInfo XML
+
+  If this caused your custom manga info to stop working, try resetting it by deleting `ComicInfoEdits.xml` file located in `Android/data/eu.kanade.tachiyomi.yokai`
+
+- Fixed crashes caused by the app trying to round NaN value
+
+## [1.8.3.3]
+
+### Changes
+- Crash report can now actually be disabled
+
+### Other
+- Loading GlobalExceptionHandler before Crashlytics
+
+## [1.8.3.2]
+
+### Other
+- Some more NullPointerException prevention that I missed
+
+## [1.8.3.1]
+
+### Other
+- A bunch of NullPointerException prevention
+
+## [1.8.3]
+
+### Additions
+- Extensions now can be trusted by repo
+
+### Changes
+- Extensions now required to have `repo.json`
+
+### Other
+- Migrate to SQLDelight
+- Custom manga info is now stored in the database
+
+## [1.8.2]
+
+### Additions
+- Downloaded chapters now include ComicInfo file
+- (LocalSource) entry chapters' info can be edited using ComicInfo
+
+### Fixes
+- Fixed smart background colour by page failing causing the image to not load
+- Fixed downloaded chapter can't be opened if it's too large
+- Downloaded page won't auto append chapter ID even tho the option is enabled
+
+### Other
+- Re-route nightly to use its own repo, should fix "What's new" page
+
+## [1.8.1.2]
+
+### Additions
+- Added a couple new tags to set entry as SFW (`sfw` and `non-erotic`)
+
+### Fixes
+- Fixed smart background colour by page failing causing the image to not load
+
+### Other
+- Re-route nightly to use its own repo, should fix "What's new" page
+
+## [1.8.1.1]
+
+### Fixes
+- Fixed crashes when user try to edit an entry
+
+## [1.8.1]
+
+### Additions
+- (Experimental) Option to append chapter ID to download filename to avoid conflict
+
+### Changes
+- Changed notification icon to use Yōkai's logo instead
+- Yōkai is now ComicInfo compliant. [Click here to learn more](https://anansi-project.github.io/docs/comicinfo/intro)
+- Removed "Couldn't split downloaded image" notification to reduce confusion. It has nothing to do with unsuccessful split, it just think it shouldn't split the image
+
+### Fixes
+- Fixed not being able to open different chapter when a chapter is already opened
+- Fixed not being able to read chapters from local source
+- Fixed local source can't detect archives
+
+### Other
+- Wrap SplashState to singleton factory, might fix issue where splash screen shown multiple times
+- Use Okio instead of `java.io`, should improve reader stability (especially long strip)
+
+## [1.8.0.2]
+
+### Fixes
+- Fixed app crashes when backup directory is null
+- Fixed app asking for All Files access permission when it's no longer needed
+
+## [1.8.0.1]
+
+### Additions
+- Added CrashScreen
+
+### Fixes
+- Fixed version checker for nightly against hotfix patch version
+- Fixed download cache causes the app to crash
+
+## [1.8.0]
+
+### Additions
+- Added cutout support for some pre-Android P devices
+- Added option to add custom colour profile
+- Added onboarding screen
+
+### Changes
+- Permanently enable 32-bit colour mode
+- Unified Storage™ ([Click here](https://mihon.app/docs/faq/storage#migrating-from-tachiyomi-v0-14-x-or-earlier) to learn more about it)
+
+### Fixes
+- Fixed cutout behaviour for Android P
+- Fixed some extensions doesn't detect "added to library" entries properly ([GH-40](https://github.com/null2264/yokai/issues/40))
+- Fixed nightly and debug variant doesn't include their respective prefix on their app name
+- Fixed nightly version checker
+
+### Other
+- Update dependency com.github.tachiyomiorg:image-decoder to e08e9be535
+- Update dependency com.github.null2264:subsampling-scale-image-view to 338caedb5f
+- Added Unit Test for version checker
+- Use Coil pipeline instead of SSIV for image decode whenever possible, might improve webtoon performance
+- Migrated from Coil2 to Coil3
+- Update compose compiler to v1.5.14
+- Update dependency androidx.compose.animation:animation to v1.6.7
+- Update dependency androidx.compose.foundation:foundation to v1.6.7
+- Update dependency androidx.compose.material:material to v1.6.7
+- Update dependency androidx.compose.ui:ui to v1.6.7
+- Update dependency androidx.compose.ui:ui-tooling to v1.6.7
+- Update dependency androidx.compose.ui:ui-tooling-preview to v1.6.7
+- Update dependency androidx.compose.material:material-icons-extended to v1.6.7
+- Update dependency androidx.lifecycle:lifecycle-viewmodel-compose to v2.8.0
+- Update dependency androidx.activity:activity-ktx to v1.9.0
+- Update dependency androidx.activity:activity-compose to v1.9.0
+- Update dependency androidx.annotation:annotation to v1.8.0
+- Update dependency androidx.browser:browser to v1.8.0
+- Update dependency androidx.core:core-ktx to v1.13.1
+- Update dependency androidx.lifecycle:lifecycle-viewmodel-ktx to v2.8.0
+- Update dependency androidx.lifecycle:lifecycle-livedata-ktx to v2.8.0
+- Update dependency androidx.lifecycle:lifecycle-common to v2.8.0
+- Update dependency androidx.lifecycle:lifecycle-process to v2.8.0
+- Update dependency androidx.lifecycle:lifecycle-runtime-ktx to v2.8.0
+- Update dependency androidx.recyclerview:recyclerview to v1.3.2
+- Update dependency androidx.sqlite:sqlite to v2.4.0
+- Update dependency androidx.webkit:webkit to v1.11.0
+- Update dependency androidx.work:work-runtime-ktx to v2.9.0
+- Update dependency androidx.window:window to v1.2.0
+- Update dependency com.google.firebase:firebase-crashlytics-gradle to v3.0.1
+- Update dependency com.google.gms:google-services to v4.4.1
+- Update dependency com.google.android.material:material to v1.12.0
+- Update dependency com.squareup.okio:okio to v3.8.0
+- Update dependency com.google.firebase:firebase-bom to v33.0.0
+- Update dependency org.jetbrains.kotlin:kotlin-gradle-plugin to v1.9.24
+- Update dependency org.jetbrains.kotlin:kotlin-serialization to v1.9.24
+- Update dependency org.jetbrains.kotlinx:kotlinx-serialization-json to v1.6.2
+- Update dependency org.jetbrains.kotlinx:kotlinx-serialization-json-okio to v1.6.2
+- Update dependency org.jetbrains.kotlinx:kotlinx-serialization-protobuf to v1.6.2
+- Update dependency org.jetbrains.kotlinx:kotlinx-coroutines-android to v1.8.0
+- Update dependency org.jetbrains.kotlinx:kotlinx-coroutines-core to v1.8.0
+- Resolved some compile warnings
+- Update dependency com.github.tachiyomiorg:unifile to 7c257e1c64
+
+## [1.7.14]
+
+### Changes
+- Added splash to reader (in case it being opened from shortcut)
+- Increased long strip split height
+- Use normalized app name by default as folder name
+
+### Fixes
+- Fixed cutout support being broken
+
+### Other
+- Move AppState from DI to Application class to reduce race condition
+
+## [1.7.13]
+
+### Additions
+- Ported Tachi's cutout option
+- Added Doki theme (dark only)
+
+### Changes
+- Repositioned cutout options in settings
+- Splash icon now uses coloured variant of the icon
+- Removed deep link for sources, this should be handled by extensions
+- Removed braces from nightly (and debug) app name
+
+### Fixes
+- Fixed preference summary not updating after being changed once
+- Fixed legacy appbar is visible on compose when being launched from deeplink
+- Fixed some app icon not generated properly
+- Fixed splash icon doesn't fit properly on Android 12+
+
+### Other
+- Migrate to using Android 12's SplashScreen API
+- Clean up unused variables from ExtensionInstaller
+
+## [1.7.12]
+
+### Additions
+- Scanlator filter is now being backed up (@jobobby04)
+
+### Fixes
+- Fixed error handling for MAL tracking (@AntsyLich)
+- Fixed extension installer preference incompatibility with modern Tachi
+
+### Other
+- Split PreferencesHelper even more
+- Simplify extension install issue fix (@AwkwardPeak7)
+- Update dependency com.github.tachiyomiorg:image-decoder to fbd6601290
+- Replace dependency com.github.jays2kings:subsampling-scale-image-view with com.github.null2264:subsampling-scale-image-view
+- Update dependency com.github.null2264:subsampling-scale-image-view to e3cffd59c5
+
+## [1.7.11]
+
+### Fixes
+- Fixed MAL tracker issue (@AntsyLich)
+- Fixed trusting extension caused it to appear twice
+
+### Other
+- Change Shikimori client from Tachi's to Yōkai's
+- Move TrackPreferences to PreferenceModule
+
+## [1.7.10]
+
+### Addition
+- Content type filter to hide SFW/NSFW entries
+- Confirmation before revoking all trusted extension
+
+### Changes
+- Revert Webcomic -> Webtoon
+
+### Fixes
+- Fix app bar disappearing on (scrolled) migration page
+- Fix installed extensions stuck in "installable" state
+- Fix untrusted extensions not having an icon
+
+### Other
+- Changed (most) trackers' client id and secret
+- Add or changed user-agent for trackers
+
+## [1.7.9]
+
+### Other
+- Sync project with J2K [v1.7.4](https://github.com/Jays2Kings/tachiyomiJ2K/releases/tag/v1.7.4)
+
+## [1.7.8]
+
+### Changes
+- Local source now try to find entries not only in `Yōkai/` but also in `Yokai/` and `TachiyomiJ2K/` for easier migration
+
+### Other
+- Changed AniList and MAL clientId, you may need to logout and re-login
+
+## [1.7.7]
+
+### Changes
+- Hopper icon now changes depending on currently active group type (J2K)
+
+### Fixes
+- Fixed bookmarked entries not being detected as bookmarked on certain extensions
+
+## [1.7.6]
+
+### Additions
+- Shortcut to Extension Repos from Browser -> Extensions page
+- Added confirmation before extension repo deletion
+
+### Changes
+- Adjusted dialogs background colour to be more consistent with app theme
+
+### Fixes
+- Fixed visual glitch where page sometime empty on launch
+- Fixed extension interceptors receiving compressed responses (T)
+
+### Other
+- Newly added strings from v1.7.5 is now translatable
+
+## [1.7.5]
+
+### Additions
+- Ported custom extension repo from upstream
+
+### Changes
+- Removed built-in extension repo
+- Removed links related to Tachiyomi
+- Ported upstream's trust extension logic
+- Rebrand to Yōkai
+
+### Other
+- Start migrating to Compose
+
+## [1.7.4]
+
+### Changes
+- Rename project to Yōkai (Z)
+- Replace Tachiyomi's purged extensions with Keiyoushi extensions (Temporary solution until I ported custom extension repo feature) (Z)
+- Unread count now respect scanlator filter (J2K)
+
+### Fixes
+- Fixed visual glitch on certain page (J2K)

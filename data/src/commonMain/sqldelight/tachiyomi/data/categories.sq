@@ -1,0 +1,36 @@
+CREATE TABLE categories(
+    _id INTEGER NOT NULL PRIMARY KEY,
+    name TEXT NOT NULL,
+    sort INTEGER NOT NULL,
+    flags INTEGER NOT NULL,
+    manga_order TEXT NOT NULL
+);
+
+findAll:
+SELECT *
+FROM categories
+ORDER BY sort;
+
+findAllByMangaId:
+SELECT categories.* FROM categories
+JOIN mangas_categories ON categories._id = mangas_categories.category_id
+WHERE mangas_categories.manga_id = :mangaId;
+
+insert:
+INSERT INTO categories (name, sort, flags, manga_order)
+VALUES (:name, :sort, :flags, :mangaOrder);
+
+selectLastInsertedRowId:
+SELECT last_insert_rowid();
+
+update:
+UPDATE categories SET
+    name = coalesce(:name, name),
+    sort = coalesce(:sort, sort),
+    flags = coalesce(:flags, flags),
+    manga_order = coalesce(:mangaOrder, manga_order)
+WHERE _id = :id;
+
+delete:
+DELETE FROM categories
+WHERE _id = :id;

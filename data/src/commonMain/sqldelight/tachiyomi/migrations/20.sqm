@@ -1,0 +1,37 @@
+CREATE VIEW library_view AS
+SELECT
+    M.*,
+    coalesce(C.total, 0) AS total,
+    coalesce(C.read_count, 0) AS has_read,
+    coalesce(C.bookmark_count, 0) AS bookmark_count,
+    coalesce(MC.category_id, 0) AS category
+FROM mangas AS M
+LEFT JOIN (
+    SELECT
+        chapters.manga_id,
+        count(*) AS total,
+        sum(read) AS read_count,
+        sum(bookmark) AS bookmark_count
+    FROM chapters
+    LEFT JOIN (
+        WITH RECURSIVE split(seq, _id, name, str) AS (
+            SELECT 0, mangas._id, NULL, replace(ifnull(mangas.filtered_scanlators, ''), ' & ', '[.]')||'[.]' FROM mangas
+            UNION ALL SELECT
+                seq+1,
+                _id,
+                substr(str, 0, instr(str, '[.]')),
+                substr(str, instr(str, '[.]')+3)
+            FROM split WHERE str != ''
+        ) SELECT _id, name FROM split WHERE split.seq != 0 ORDER BY split.seq ASC
+    ) AS filtered_scanlators
+    ON chapters.manga_id = filtered_scanlators._id
+    AND ifnull(chapters.scanlator, 'N/A') = ifnull(filtered_scanlators.name, '/<INVALID>/')
+    WHERE filtered_scanlators.name IS NULL
+    GROUP BY chapters.manga_id
+) AS C
+ON M._id = C.manga_id
+LEFT JOIN mangas_categories AS MC
+ON MC.manga_id = M._id
+WHERE M.favorite = 1
+GROUP BY M._id
+ORDER BY M.title;

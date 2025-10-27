@@ -8,31 +8,38 @@ import android.util.AttributeSet
 import android.view.MotionEvent
 import android.view.View
 import android.view.ViewPropertyAnimator
-import androidx.core.graphics.withScale
-import androidx.core.graphics.withTranslation
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import eu.kanade.tachiyomi.ui.reader.viewer.ViewerNavigation
 import eu.kanade.tachiyomi.ui.reader.viewer.navigation.DisabledNavigation
-import tachiyomi.core.common.i18n.stringResource
+import yokai.util.lang.getString
 import kotlin.math.abs
 
-class ReaderNavigationOverlayView(context: Context, attributeSet: AttributeSet) : View(
-    context,
-    attributeSet,
-) {
+class ReaderNavigationOverlayView(context: Context, attributeSet: AttributeSet) : View(context, attributeSet) {
 
     private var viewPropertyAnimator: ViewPropertyAnimator? = null
 
     private var navigation: ViewerNavigation? = null
 
-    fun setNavigation(navigation: ViewerNavigation, showOnStart: Boolean) {
-        val firstLaunch = this.navigation == null
-        this.navigation = navigation
-        invalidate()
+    var isLTR = true
 
-        if (isVisible || (!showOnStart && firstLaunch) || navigation is DisabledNavigation) {
+    fun setNavigation(navigation: ViewerNavigation, showOnStart: Boolean) {
+        if (!showOnStart && (this.navigation == null || this.navigation === navigation)) {
+            if (this.navigation == null) {
+                this.navigation = navigation
+                isVisible = false
+            }
             return
         }
+
+        this.navigation = navigation
+        showNavigationAgain()
+    }
+
+    fun showNavigationAgain() {
+        invalidate()
+
+        if (isVisible || navigation is DisabledNavigation) return
 
         viewPropertyAnimator = animate()
             .alpha(1f)
@@ -65,27 +72,35 @@ class ReaderNavigationOverlayView(context: Context, attributeSet: AttributeSet) 
     override fun onDraw(canvas: Canvas) {
         if (navigation == null) return
 
-        navigation?.getRegions()?.forEach { region ->
+        navigation?.regions?.forEach {
+            val region = it.invert(navigation!!.invertMode)
             val rect = region.rectF
 
+            canvas.save()
+
             // Scale rect from 1f,1f to screen width and height
-            canvas.withScale(width.toFloat(), height.toFloat()) {
-                regionPaint.color = region.type.color
-                drawRect(rect, regionPaint)
-            }
+            canvas.scale(width.toFloat(), height.toFloat())
+            val directionalRegion = region.type.directionalRegion(isLTR)
+            regionPaint.color = ContextCompat.getColor(context, directionalRegion.colorRes)
+            canvas.drawRect(rect, regionPaint)
 
+            canvas.restore()
             // Don't want scale anymore because it messes with drawText
+            canvas.save()
+
             // Translate origin to rect start (left, top)
-            canvas.withTranslation(x = (width * rect.left), y = (height * rect.top)) {
-                // Calculate center of rect width on screen
-                val x = width * (abs(rect.left - rect.right) / 2)
+            canvas.translate((width * rect.left), (height * rect.top))
 
-                // Calculate center of rect height on screen
-                val y = height * (abs(rect.top - rect.bottom) / 2)
+            // Calculate center of rect width on screen
+            val x = width * (abs(rect.left - rect.right) / 2)
 
-                drawText(context.stringResource(region.type.nameRes), x, y, textBorderPaint)
-                drawText(context.stringResource(region.type.nameRes), x, y, textPaint)
-            }
+            // Calculate center of rect height on screen
+            val y = height * (abs(rect.top - rect.bottom) / 2)
+
+            canvas.drawText(context.getString(directionalRegion.nameRes), x, y, textBorderPaint)
+            canvas.drawText(context.getString(directionalRegion.nameRes), x, y, textPaint)
+
+            canvas.restore()
         }
     }
 

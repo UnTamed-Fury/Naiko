@@ -1,7 +1,7 @@
 package eu.kanade.tachiyomi.data.track.kavita
 
-import eu.kanade.tachiyomi.data.track.TrackerManager
-import eu.kanade.tachiyomi.data.track.model.MangaTrackSearch
+import eu.kanade.tachiyomi.data.track.TrackManager
+import eu.kanade.tachiyomi.data.track.model.TrackSearch
 import kotlinx.serialization.Serializable
 
 @Serializable
@@ -10,7 +10,7 @@ data class SeriesDto(
     val name: String,
     val originalName: String = "",
     val thumbnail_url: String? = "",
-    val stringResourcedName: String? = "",
+    val localizedName: String? = "",
     val sortName: String? = "",
     val pages: Int,
     val coverImageLocked: Boolean = true,
@@ -22,7 +22,7 @@ data class SeriesDto(
     val libraryId: Int,
     val libraryName: String? = "",
 ) {
-    fun toTrack(): MangaTrackSearch = MangaTrackSearch.create(TrackerManager.KAVITA).also {
+    fun toTrack(): TrackSearch = TrackSearch.create(TrackManager.KAVITA).also {
         it.title = name
         it.summary = ""
     }

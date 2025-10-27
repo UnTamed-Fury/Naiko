@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<eu.kanade.tachiyomi.ui.download.DownloadButton xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/download_button"
+    android:clickable="true"
+    android:focusable="true"
+    android:layout_width="32dp"
+    android:layout_height="32dp">
+
+    <ImageView
+        android:id="@+id/download_border"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_gravity="center"
+        android:contentDescription="@string/download"
+        android:src="@drawable/border_circle"
+        android:padding="3dp"
+        tools:visibility="visible" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/download_progress_indeterminate"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:paddingBottom="0.5dp"
+        android:indeterminate="true"
+        android:indeterminateTint="@color/material_on_surface_disabled"
+        app:indicatorColor="?attr/colorSecondary"
+        app:indicatorSize="24dp"
+        app:trackThickness="2dp"
+        tools:visibility="gone" />
+
+    <com.google.android.material.progressindicator.CircularProgressIndicator
+        android:id="@+id/download_progress"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:visibility="gone"
+        android:layout_gravity="center"
+        android:progressTint="@color/download"
+        android:paddingBottom="0.5dp"
+        android:progressBackgroundTint="@color/material_on_surface_disabled"
+        app:indicatorColor="@color/download"
+        app:indicatorSize="24dp"
+        app:trackThickness="2dp"
+        tools:visibility="visible" />
+
+
+    <ImageView
+        android:id="@+id/download_icon"
+        app:tint="?attr/colorSecondary"
+        android:layout_gravity="center"
+        android:layout_width="30dp"
+        android:contentDescription="@string/download"
+        android:layout_height="30dp"
+        android:background="?selectableItemBackgroundBorderless"
+        android:padding="5dp"
+        android:src="@drawable/ic_arrow_downward_24dp" />
+</eu.kanade.tachiyomi.ui.download.DownloadButton>

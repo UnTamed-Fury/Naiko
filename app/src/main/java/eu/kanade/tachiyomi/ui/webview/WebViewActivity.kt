@@ -1,55 +1,34 @@
 package eu.kanade.tachiyomi.ui.webview
 
-import android.app.Activity
 import android.app.assist.AssistContent
 import android.content.Context
 import android.content.Intent
-import android.os.Build
 import android.os.Bundle
 import android.widget.Toast
 import androidx.core.net.toUri
-import eu.kanade.presentation.webview.WebViewScreenContent
-import eu.kanade.tachiyomi.R
-import eu.kanade.tachiyomi.animesource.online.AnimeHttpSource
+import co.touchlab.kermit.Logger
 import eu.kanade.tachiyomi.network.NetworkHelper
+import eu.kanade.tachiyomi.source.SourceManager
 import eu.kanade.tachiyomi.source.online.HttpSource
-import eu.kanade.tachiyomi.ui.base.activity.BaseActivity
 import eu.kanade.tachiyomi.util.system.WebViewUtil
+import eu.kanade.tachiyomi.util.system.extensionIntentForText
 import eu.kanade.tachiyomi.util.system.openInBrowser
-import eu.kanade.tachiyomi.util.system.toShareIntent
 import eu.kanade.tachiyomi.util.system.toast
 import eu.kanade.tachiyomi.util.view.setComposeContent
-import logcat.LogPriority
 import okhttp3.HttpUrl.Companion.toHttpUrl
-import tachiyomi.core.common.util.system.logcat
-import tachiyomi.domain.source.anime.service.AnimeSourceManager
-import tachiyomi.domain.source.manga.service.MangaSourceManager
-import tachiyomi.i18n.MR
 import uy.kohesive.injekt.injectLazy
+import yokai.i18n.MR
+import yokai.presentation.webview.WebViewScreenContent
+import yokai.util.lang.getString
 
-class WebViewActivity : BaseActivity() {
+open class WebViewActivity : BaseWebViewActivity() {
 
-    private val sourceManager: MangaSourceManager by injectLazy()
-    private val animeSourceManager: AnimeSourceManager by injectLazy()
+    private val sourceManager: SourceManager by injectLazy()
     private val network: NetworkHelper by injectLazy()
 
     private var assistUrl: String? = null
 
-    init {
-        registerSecureActivity(this)
-    }
-
     override fun onCreate(savedInstanceState: Bundle?) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            overrideActivityTransition(
-                Activity.OVERRIDE_TRANSITION_OPEN,
-                R.anim.shared_axis_x_push_enter,
-                R.anim.shared_axis_x_push_exit,
-            )
-        } else {
-            @Suppress("DEPRECATION")
-            overridePendingTransition(R.anim.shared_axis_x_push_enter, R.anim.shared_axis_x_push_exit)
-        }
         super.onCreate(savedInstanceState)
 
         if (!WebViewUtil.supportsWebView(this)) {
@@ -60,19 +39,13 @@ class WebViewActivity : BaseActivity() {
 
         val url = intent.extras?.getString(URL_KEY) ?: return
         assistUrl = url
+
         var headers = emptyMap<String, String>()
         (sourceManager.get(intent.extras!!.getLong(SOURCE_KEY)) as? HttpSource)?.let { source ->
             try {
                 headers = source.headers.toMultimap().mapValues { it.value.getOrNull(0) ?: "" }
             } catch (e: Exception) {
-                logcat(LogPriority.ERROR, e) { "Failed to build headers" }
-            }
-        }
-        (animeSourceManager.get(intent.extras!!.getLong(SOURCE_KEY)) as? AnimeHttpSource)?.let { animeSource ->
-            try {
-                headers = animeSource.headers.toMultimap().mapValues { it.value.getOrNull(0) ?: "" }
-            } catch (e: Exception) {
-                logcat(LogPriority.ERROR, e) { "Failed to build headers" }
+                Logger.e(e) { "Failed to build headers" }
             }
         }
 
@@ -84,6 +57,7 @@ class WebViewActivity : BaseActivity() {
                 headers = headers,
                 onUrlChange = { assistUrl = it },
                 onShare = this::shareWebpage,
+                onOpenInApp = this::openUrlInApp,
                 onOpenInBrowser = this::openInBrowser,
                 onClearCookies = this::clearCookies,
             )
@@ -95,57 +69,43 @@ class WebViewActivity : BaseActivity() {
         assistUrl?.let { outContent.webUri = it.toUri() }
     }
 
-    override fun finish() {
-        super.finish()
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.UPSIDE_DOWN_CAKE) {
-            overrideActivityTransition(
-                Activity.OVERRIDE_TRANSITION_CLOSE,
-                R.anim.shared_axis_x_pop_enter,
-                R.anim.shared_axis_x_pop_exit,
-            )
-        } else {
-            @Suppress("DEPRECATION")
-            overridePendingTransition(R.anim.shared_axis_x_pop_enter, R.anim.shared_axis_x_pop_exit)
-        }
+    private fun openUrlInApp(url: String) {
+        extensionIntentForText(url)?.let { startActivity(it) }
     }
 
     private fun shareWebpage(url: String) {
         try {
-            startActivity(url.toUri().toShareIntent(this, type = "text/plain"))
+            val intent = Intent(Intent.ACTION_SEND).apply {
+                type = "text/plain"
+                putExtra(Intent.EXTRA_TEXT, url)
+            }
+            startActivity(Intent.createChooser(intent, getString(MR.strings.share)))
         } catch (e: Exception) {
             toast(e.message)
         }
     }
 
     private fun openInBrowser(url: String) {
-        openInBrowser(url, forceDefaultBrowser = true)
+        openInBrowser(url, forceBrowser = true, fullBrowser = true)
     }
 
     private fun clearCookies(url: String) {
         val cleared = network.cookieJar.remove(url.toHttpUrl())
-        logcat { "Cleared $cleared cookies for: $url" }
+        toast("Cleared $cleared cookies for: $url")
     }
 
     companion object {
-        private const val URL_KEY = "url_key"
-        private const val SOURCE_KEY = "source_key"
-        private const val TITLE_KEY = "title_key"
-        private const val ANIME_KEY = "anime_key"
+        const val SOURCE_KEY = "source_key"
+        const val URL_KEY = "url_key"
+        const val TITLE_KEY = "title_key"
 
-        fun newIntent(
-            context: Context,
-            url: String,
-            sourceId: Long? = null,
-            title: String? = null,
-            isAnime: Boolean = false,
-        ): Intent {
-            return Intent(context, WebViewActivity::class.java).apply {
-                addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
-                putExtra(URL_KEY, url)
-                putExtra(SOURCE_KEY, sourceId)
-                putExtra(TITLE_KEY, title)
-                putExtra(ANIME_KEY, isAnime)
-            }
+        fun newIntent(context: Context, url: String, sourceId: Long? = null, title: String? = null): Intent {
+            val intent = Intent(context, WebViewActivity::class.java)
+            intent.putExtra(SOURCE_KEY, sourceId)
+            intent.putExtra(URL_KEY, url)
+            intent.putExtra(TITLE_KEY, title)
+            intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+            return intent
         }
     }
 }

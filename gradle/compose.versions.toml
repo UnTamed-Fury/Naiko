@@ -1,18 +1,16 @@
 [versions]
-compose-bom = "2025.03.00"
+compose = "2025.05.01"
 
 [libraries]
-activity = "androidx.activity:activity-compose:1.10.1"
-bom = { group = "androidx.compose", name = "compose-bom", version.ref = "compose-bom" }
-foundation = { module = "androidx.compose.foundation:foundation" }
+bom = { module = "androidx.compose:compose-bom", version.ref = "compose" }
 animation = { module = "androidx.compose.animation:animation" }
-animation-graphics = { module = "androidx.compose.animation:animation-graphics" }
-runtime = { module = "androidx.compose.runtime:runtime" }
+foundation = { module = "androidx.compose.foundation:foundation" }
+material3 = { module = "androidx.compose.material3:material3" }
+material-motion = { module = "io.github.fornewid:material-motion-compose-core", version = "1.2.1" }
 ui-tooling = { module = "androidx.compose.ui:ui-tooling" }
 ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
-ui-util = { module = "androidx.compose.ui:ui-util" }
+icons = { module = "androidx.compose.material:material-icons-extended" }
+webview = { module = "io.github.kevinnzou:compose-webview", version = "0.33.6" }
 
-material3-core = { module = "androidx.compose.material3:material3" }
-material-icons = { module = "androidx.compose.material:material-icons-extended" }
-
-glance = "androidx.glance:glance-appwidget:1.1.1"
+[bundles]
+compose = [ "animation", "foundation", "material3", "material-motion", "ui-tooling-preview", "icons" ]

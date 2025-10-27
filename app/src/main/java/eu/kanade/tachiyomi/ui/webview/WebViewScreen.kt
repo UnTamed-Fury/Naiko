@@ -4,10 +4,10 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.platform.LocalContext
 import cafe.adriel.voyager.core.model.rememberScreenModel
 import cafe.adriel.voyager.navigator.LocalNavigator
-import cafe.adriel.voyager.navigator.currentOrThrow
-import eu.kanade.presentation.util.AssistContentScreen
-import eu.kanade.presentation.util.Screen
-import eu.kanade.presentation.webview.WebViewScreenContent
+import eu.kanade.tachiyomi.util.compose.currentOrThrow
+import yokai.presentation.webview.WebViewScreenContent
+import yokai.util.AssistContentScreen
+import yokai.util.Screen
 
 class WebViewScreen(
     private val url: String,
@@ -32,6 +32,7 @@ class WebViewScreen(
             headers = screenModel.headers,
             onUrlChange = { assistUrl = it },
             onShare = { screenModel.shareWebpage(context, it) },
+            onOpenInApp = { screenModel.openInApp(context, it) },
             onOpenInBrowser = { screenModel.openInBrowser(context, it) },
             onClearCookies = screenModel::clearCookies,
         )

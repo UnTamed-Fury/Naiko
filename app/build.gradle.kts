@@ -1,153 +1,118 @@
-import mihon.buildlogic.Config
-import mihon.buildlogic.getBuildTime
-import mihon.buildlogic.getCommitCount
-import mihon.buildlogic.getGitSha
+import com.google.firebase.crashlytics.buildtools.gradle.CrashlyticsPlugin
+import com.google.gms.googleservices.GoogleServicesPlugin
+import java.time.LocalDateTime
+import java.time.ZoneOffset
+import java.time.format.DateTimeFormatter
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("mihon.android.application")
-    id("mihon.android.application.compose")
-    id("com.github.zellius.shortcut-helper")
-    kotlin("plugin.serialization")
-    alias(libs.plugins.aboutLibraries)
+    id("yokai.android.application")
+    id("yokai.android.application.compose")
+    alias(kotlinx.plugins.serialization)
+    alias(kotlinx.plugins.parcelize)
+    alias(libs.plugins.aboutlibraries)
+    alias(libs.plugins.firebase.crashlytics) apply false
+    alias(libs.plugins.google.services) apply false
 }
 
-shortcutHelper.setFilePath("./shortcuts.xml")
+if (gradle.startParameter.taskRequests.toString().contains("standard", true)) {
+    apply<CrashlyticsPlugin>()
+    apply<GoogleServicesPlugin>()
+}
+
+fun runCommand(command: String): String {
+    val result = providers.exec { commandLine(command.split(" ")) }
+    return result.standardOutput.asText.get().trim()
+}
+
+@Suppress("PropertyName")
+val _versionName = "1.10.0"
+val betaCount by lazy {
+    val betaTags = runCommand("git tag -l --sort=refname v${_versionName}-b*")
+
+    if (betaTags.isNotEmpty()) {
+        val betaTag = betaTags.split("\n").last().substringAfter("-b").toIntOrNull()
+        ((betaTag ?: 0) + 1)
+    } else {
+        1
+    }.toString()
+}
+val commitCount by lazy { runCommand("git rev-list --count HEAD") }
+val commitHash by lazy { runCommand("git rev-parse --short HEAD") }
+val buildTime: String by lazy {
+    val df = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss'Z'")
+    LocalDateTime.now(ZoneOffset.UTC).format(df)
+}
+
+val supportedAbis = setOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
 
 android {
-    namespace = "eu.kanade.tachiyomi"
-
     defaultConfig {
-        applicationId = "xyz.jmir.tachiyomi.mi"
-
-        versionCode = 130
-        versionName = "0.18.1.0"
-
-        buildConfigField("String", "COMMIT_COUNT", "\"${getCommitCount()}\"")
-        buildConfigField("String", "COMMIT_SHA", "\"${getGitSha()}\"")
-        buildConfigField("String", "BUILD_TIME", "\"${getBuildTime(useLastCommitTime = false)}\"")
-        buildConfigField("boolean", "UPDATER_ENABLED", "${Config.enableUpdater}")
-
-        // Put these fields in acra.properties
-        // val acraProperties = Properties()
-        // rootProject.file("acra.properties")
-        //     .takeIf { it.exists() }
-        //     ?.let { acraProperties.load(FileInputStream(it)) }
-        // val acraUri = acraProperties.getProperty("ACRA_URI", "")
-        // val acraLogin = acraProperties.getProperty("ACRA_LOGIN", "")
-        // val acraPassword = acraProperties.getProperty("ACRA_PASSWORD", "")
-        // buildConfigField("String", "ACRA_URI", "\"$acraUri\"")
-        // buildConfigField("String", "ACRA_LOGIN", "\"$acraLogin\"")
-        // buildConfigField("String", "ACRA_PASSWORD", "\"$acraPassword\"")
-
+        applicationId = "eu.kanade.tachiyomi"
+        versionCode = 158
+        versionName = _versionName
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
+        multiDexEnabled = true
 
-    buildTypes {
-        val debug by getting {
-            applicationIdSuffix = ".dev"
-            versionNameSuffix = "-${getCommitCount()}"
-            isPseudoLocalesEnabled = true
+        buildConfigField("String", "COMMIT_COUNT", "\"${commitCount}\"")
+        buildConfigField("String", "BETA_COUNT", "\"${betaCount}\"")
+        buildConfigField("String", "COMMIT_SHA", "\"${commitHash}\"")
+        buildConfigField("String", "BUILD_TIME", "\"${buildTime}\"")
+        buildConfigField("Boolean", "INCLUDE_UPDATER", "false")
+        buildConfigField("Boolean", "BETA", "false")
+        buildConfigField("Boolean", "NIGHTLY", "false")
+
+        ndk {
+            // False positive, we have x86 abi support
+            //noinspection ChromeOsAbiSupport
+            abiFilters += supportedAbis
         }
-        val release by getting {
-            isMinifyEnabled = Config.enableCodeShrink
-            isShrinkResources = Config.enableCodeShrink
-
-            proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
-
-            buildConfigField("String", "BUILD_TIME", "\"${getBuildTime(useLastCommitTime = true)}\"")
-        }
-
-        val commonMatchingFallbacks = listOf(release.name)
-
-        create("preview") {
-            initWith(release)
-
-            applicationIdSuffix = ".debug"
-
-            versionNameSuffix = debug.versionNameSuffix
-            signingConfig = debug.signingConfig
-
-            matchingFallbacks.addAll(commonMatchingFallbacks)
-
-            buildConfigField("String", "BUILD_TIME", "\"${getBuildTime(useLastCommitTime = false)}\"")
-        }
-        create("benchmark") {
-            initWith(release)
-
-            isDebuggable = false
-            isProfileable = true
-            versionNameSuffix = "-benchmark"
-            applicationIdSuffix = ".benchmark"
-
-            signingConfig = debug.signingConfig
-
-            matchingFallbacks.addAll(commonMatchingFallbacks)
-        }
-    }
-
-    sourceSets {
-        getByName("preview").res.srcDirs("src/debug/res")
-        getByName("benchmark").res.srcDirs("src/debug/res")
     }
 
     splits {
         abi {
             isEnable = true
-            isUniversalApk = true
             reset()
-            include("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
+            // False positive, we have x86 abi support
+            //noinspection ChromeOsAbiSupport
+            include(*supportedAbis.toTypedArray())
+            isUniversalApk = true
         }
     }
 
-    packaging {
-        jniLibs {
-            keepDebugSymbols += listOf(
-                "libandroidx.graphics.path",
-                "libarchive-jni",
-                "libavcodec",
-                "libavdevice",
-                "libavfilter",
-                "libavformat",
-                "libavutil",
-                "libconscrypt_jni",
-                "libc++_shared",
-                "libffmpegkit_abidetect",
-                "libffmpegkit",
-                "libimagedecoder",
-                "libmpv",
-                "libplayer",
-                "libpostproc",
-                "libquickjs",
-                "libsqlite3x",
-                "libswresample",
-                "libswscale",
-                "libxml2",
-            )
-                .map { "**/$it.so" }
+    buildTypes {
+        getByName("debug") {
+            applicationIdSuffix = ".debugYokai"
+            versionNameSuffix = "-d${commitCount}"
         }
-        resources {
-            excludes += setOf(
-                "kotlin-tooling-metadata.json",
-                "LICENSE.txt",
-                "META-INF/**/*.properties",
-                "META-INF/**/LICENSE.txt",
-                "META-INF/*.properties",
-                "META-INF/*.version",
-                "META-INF/DEPENDENCIES",
-                "META-INF/LICENSE",
-                "META-INF/NOTICE",
-                "META-INF/README.md",
-            )
+        getByName("release") {
+            applicationIdSuffix = ".yokai"
+            isShrinkResources = true
+            isMinifyEnabled = true
+            proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
         }
-    }
+        create("beta") {
+            initWith(getByName("release"))
+            buildConfigField("boolean", "BETA", "true")
 
-    dependenciesInfo {
-        includeInApk = Config.includeDependencyInfo
-        includeInBundle = Config.includeDependencyInfo
+            matchingFallbacks.add("release")
+            versionNameSuffix = "-b${betaCount}"
+        }
+        create("nightly") {
+            initWith(getByName("release"))
+            buildConfigField("boolean", "BETA", "true")
+            buildConfigField("boolean", "NIGHTLY", "true")
+
+            signingConfig = signingConfigs.getByName("debug")
+            matchingFallbacks.add("release")
+            versionNameSuffix = "-r${commitCount}"
+            applicationIdSuffix = ".nightlyYokai"
+        }
     }
 
     buildFeatures {
         viewBinding = true
+        // If you're here because there's not BuildConfig, build the app first, it'll generate it for you
         buildConfig = true
 
         // Disable some unused things
@@ -156,179 +121,182 @@ android {
         shaders = false
     }
 
+    flavorDimensions.add("default")
+
+    productFlavors {
+        create("standard") {
+            buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
+            dimension = "default"
+        }
+        create("dev") {
+            resourceConfigurations.clear()
+            resourceConfigurations.add("en")
+            dimension = "default"
+        }
+    }
+
     lint {
+        disable.addAll(listOf("MissingTranslation", "ExtraTranslation"))
         abortOnError = false
         checkReleaseBuilds = false
     }
-}
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.addAll(
-            "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-            "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
-            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
-            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
-            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
-            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
-            "-opt-in=coil3.annotation.ExperimentalCoilApi",
-            "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
-            "-opt-in=kotlinx.coroutines.FlowPreview",
-            "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
-            "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
-        )
-    }
+    namespace = "eu.kanade.tachiyomi"
 }
 
 dependencies {
-    implementation(projects.i18n)
-    implementation(projects.i18nAniyomi)
     implementation(projects.core.archive)
-    implementation(projects.core.common)
-    implementation(projects.coreMetadata)
-    implementation(projects.sourceApi)
-    implementation(projects.sourceLocal)
+    implementation(projects.core.main)
     implementation(projects.data)
     implementation(projects.domain)
-    implementation(projects.presentationCore)
-    implementation(projects.presentationWidget)
+    implementation(projects.i18n)
+    implementation(projects.presentation.core)
+    implementation(projects.source.api)
 
     // Compose
-    implementation(compose.activity)
-    implementation(compose.foundation)
-    implementation(compose.material3.core)
-    implementation(compose.material.icons)
-    implementation(compose.animation)
-    implementation(compose.animation.graphics)
+    implementation(platform(compose.bom))
+    implementation(compose.bundles.compose)
     debugImplementation(compose.ui.tooling)
-    implementation(compose.ui.tooling.preview)
-    implementation(compose.ui.util)
+    implementation(libs.compose.theme.adapter3)
+    implementation(compose.webview)
 
-    implementation(androidx.interpolator)
+    implementation(libs.flexbox)
 
-    implementation(androidx.paging.runtime)
-    implementation(androidx.paging.compose)
+    implementation(libs.material)
 
-    implementation(libs.bundles.sqlite)
+    // Android X libraries
+    implementation(androidx.bundles.androidx)
 
-    implementation(kotlinx.reflect)
-    implementation(kotlinx.immutables)
+    implementation(platform(libs.firebase))
 
-    implementation(platform(kotlinx.coroutines.bom))
-    implementation(kotlinx.bundles.coroutines)
+    implementation(libs.firebase.analytics)
+    implementation(libs.firebase.crashlytics)
 
-    // AndroidX libraries
-    implementation(androidx.annotation)
-    implementation(androidx.appcompat)
-    implementation(androidx.biometricktx)
-    implementation(androidx.constraintlayout)
-    implementation(aniyomilibs.compose.constraintlayout)
-    implementation(androidx.corektx)
-    implementation(androidx.splashscreen)
-    implementation(androidx.recyclerview)
-    implementation(androidx.viewpager)
-    implementation(androidx.profileinstaller)
-    implementation(aniyomilibs.mediasession)
-
-    implementation(androidx.bundles.lifecycle)
-
-    // Job scheduling
-    implementation(androidx.workmanager)
-
-    // RxJava
+    // ReactiveX
+    implementation(libs.rxandroid)
     implementation(libs.rxjava)
+    implementation(libs.rxrelay)
 
-    // Networking
-    implementation(libs.bundles.okhttp)
-    implementation(libs.okio)
-    implementation(libs.conscrypt.android) // TLS 1.3 support for Android < 10
+    // Chucker
+    debugImplementation(libs.chucker.library)
+    releaseImplementation(libs.chucker.library.no.op)
+    "nightlyImplementation"(libs.chucker.library.no.op)
+    "betaImplementation"(libs.chucker.library.no.op)
 
-    // Data serialization (JSON, protobuf, xml)
+    implementation(kotlin("reflect", version = kotlinx.versions.kotlin.get()))
+
+    // JSON
     implementation(kotlinx.bundles.serialization)
+
+    // JavaScript engine
+    implementation(libs.quickjs.android)
+
+    // Disk
+    implementation(libs.disklrucache)
 
     // HTML parser
     implementation(libs.jsoup)
 
-    // Disk
-    implementation(libs.disklrucache)
-    implementation(libs.unifile)
+    implementation(libs.play.services.gcm)
 
-    // Preferences
-    implementation(libs.preferencektx)
+    // Database
+    implementation(libs.sqlite.android)
+    implementation(libs.bundles.sqlite)
 
-    // Dependency injection
-    implementation(libs.injekt)
+    // Model View Presenter
+    implementation(libs.conductor)
+    implementation(libs.conductor.support.preference)
 
-    // Image loading
-    implementation(platform(libs.coil.bom))
+    // Image library
+    implementation(platform(libs.coil3.bom))
     implementation(libs.bundles.coil)
-    implementation(libs.subsamplingscaleimageview) {
+    implementation(libs.subsamplingscaleimageview) {  // modified
         exclude(module = "image-decoder")
     }
     implementation(libs.image.decoder)
 
-    // UI libraries
-    implementation(libs.material)
-    implementation(libs.flexible.adapter.core)
-    implementation(libs.photoview)
-    implementation(libs.directionalviewpager) {
-        exclude(group = "androidx.viewpager", module = "viewpager")
-    }
-    implementation(libs.insetter)
-    implementation(libs.bundles.richtext)
-    implementation(libs.aboutLibraries.compose)
-    implementation(libs.bundles.voyager)
-    implementation(libs.compose.materialmotion)
-    implementation(libs.swipe)
-    implementation(libs.compose.webview)
-    implementation(libs.compose.grid)
-    implementation(libs.reorderable)
+    // Sort
+    implementation(libs.java.nat.sort)
 
-    // Logging
-    implementation(libs.logcat)
+    implementation(libs.aboutlibraries)
+
+    // UI
+    implementation(libs.fastadapter)
+    implementation(libs.fastadapter.extensions.binding)
+    implementation(libs.flexible.adapter)
+    implementation(libs.flexible.adapter.ui)
+    implementation(libs.viewstatepageradapter)
+    implementation(libs.slice)
+    implementation(libs.markwon)
+
+    implementation(libs.photoview)
+    implementation(libs.directionalviewpager)
+    implementation(libs.viewtooltip)
+    implementation(libs.taptargetview)
+
+    // Navigation
+    implementation(libs.bundles.voyager)
 
     // Shizuku
-    implementation(libs.bundles.shizuku)
+    implementation(libs.shizuku.api)
+    implementation(libs.shizuku.provider)
+
+    implementation(platform(kotlinx.coroutines.bom))
+    implementation(kotlinx.bundles.coroutines)
+
+    // TLS 1.3 support for Android < 10
+    implementation(libs.conscrypt)
+
+    // Android Chart
+    implementation(libs.mpandroidchart)
+
+    implementation(kotlinx.immutable)
 
     // Tests
     testImplementation(libs.bundles.test)
-
-    // For detecting memory leaks; see https://square.github.io/leakcanary/
-    // debugImplementation(libs.leakcanary.android)
-
-    implementation(libs.leakcanary.plumber)
-
+    testRuntimeOnly(libs.bundles.test.runtime)
+    androidTestImplementation(libs.bundles.test.android)
     testImplementation(kotlinx.coroutines.test)
 
-    // mpv-android
-    implementation(aniyomilibs.aniyomi.mpv)
-    // FFmpeg-kit
-    implementation(aniyomilibs.ffmpeg.kit)
-    implementation(aniyomilibs.arthenica.smartexceptions)
-    // seeker seek bar
-    implementation(aniyomilibs.seeker)
-    // true type parser
-    implementation(aniyomilibs.truetypeparser)
+    // For detecting memory leaks
+    // REF: https://square.github.io/leakcanary/
+    debugImplementation(libs.leakcanary.android)
+    implementation(libs.leakcanary.plumber)
 }
 
-androidComponents {
-    beforeVariants { variantBuilder ->
-        // Disables standardBenchmark
-        if (variantBuilder.buildType == "benchmark") {
-            variantBuilder.enable = variantBuilder.productFlavors.containsAll(
-                listOf("default" to "dev"),
-            )
-        }
+tasks {
+    // See https://kotlinlang.org/docs/reference/experimental.html#experimental-status-of-experimental-api(-markers)
+    withType<KotlinCompile> {
+        compilerOptions.freeCompilerArgs.addAll(
+            // "-opt-in=kotlin.Experimental",
+            "-opt-in=kotlin.RequiresOptIn",
+            "-opt-in=kotlin.ExperimentalStdlibApi",
+            "-opt-in=coil3.annotation.ExperimentalCoilApi",
+            "-opt-in=androidx.compose.foundation.layout.ExperimentalLayoutApi",
+            "-opt-in=androidx.compose.material3.ExperimentalMaterial3Api",
+            "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
+            "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
+            "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
+            // "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
+            "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-opt-in=kotlinx.coroutines.FlowPreview",
+            "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
+            "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
+            "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
+        )
     }
-    onVariants(selector().withFlavor("default" to "standard")) {
-        // Only excluding in standard flavor because this breaks
-        // Layout Inspector's Compose tree
-        it.packaging.resources.excludes.add("META-INF/*.version")
-    }
-}
 
-buildscript {
-    dependencies {
-        classpath(kotlinx.gradle)
+    // Duplicating Hebrew string assets due to some locale code issues on different devices
+    val copyHebrewStrings = task("copyHebrewStrings", type = Copy::class) {
+        from("./src/main/res/values-he")
+        into("./src/main/res/values-iw")
+        include("**/*")
+    }
+
+    preBuild {
+        dependsOn(
+            // formatKotlin,
+            copyHebrewStrings
+        )
     }
 }

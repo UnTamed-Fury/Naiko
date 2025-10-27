@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <plurals name="category_plural">
+        <item quantity="other">အမျိုးအစား %d ခု</item>
+    </plurals>
+    <plurals name="chapters_plural">
+        <item quantity="other">%1$s ပိုင်း</item>
+    </plurals>
+    <plurals name="remove_n_chapters">
+        <item quantity="other">ဒေါင်းလုဒ်ဆွဲထားတဲ့အပိုင်း %1$d ပိုင်းကိုဖျက်ပစ်မှာလား</item>
+    </plurals>
+</resources>

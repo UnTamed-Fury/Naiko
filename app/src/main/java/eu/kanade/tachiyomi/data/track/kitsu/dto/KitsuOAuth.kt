@@ -15,6 +15,7 @@ data class KitsuOAuth(
     val expiresIn: Long,
     @SerialName("refresh_token")
     val refreshToken: String?,
-)
+) {
 
-fun KitsuOAuth.isExpired() = (System.currentTimeMillis() / 1000) > (createdAt + expiresIn - 3600)
+    fun isExpired() = (System.currentTimeMillis() / 1000) > (createdAt + expiresIn - 3600)
+}

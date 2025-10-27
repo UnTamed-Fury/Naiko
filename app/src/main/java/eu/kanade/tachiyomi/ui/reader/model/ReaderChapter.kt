@@ -1,10 +1,9 @@
 package eu.kanade.tachiyomi.ui.reader.model
 
-import eu.kanade.domain.items.chapter.model.toDbChapter
-import eu.kanade.tachiyomi.data.database.models.manga.Chapter
+import co.touchlab.kermit.Logger
+import eu.kanade.tachiyomi.data.database.models.Chapter
 import eu.kanade.tachiyomi.ui.reader.loader.PageLoader
 import kotlinx.coroutines.flow.MutableStateFlow
-import tachiyomi.core.common.util.system.logcat
 
 data class ReaderChapter(val chapter: Chapter) {
 
@@ -24,8 +23,6 @@ data class ReaderChapter(val chapter: Chapter) {
 
     private var references = 0
 
-    constructor(chapter: tachiyomi.domain.items.chapter.model.Chapter) : this(chapter.toDbChapter())
-
     fun ref() {
         references++
     }
@@ -34,7 +31,7 @@ data class ReaderChapter(val chapter: Chapter) {
         references--
         if (references == 0) {
             if (pageLoader != null) {
-                logcat { "Recycling chapter ${chapter.name}" }
+                Logger.d { "Recycling chapter ${chapter.name}" }
             }
             pageLoader?.recycle()
             pageLoader = null
@@ -42,10 +39,10 @@ data class ReaderChapter(val chapter: Chapter) {
         }
     }
 
-    sealed interface State {
-        data object Wait : State
-        data object Loading : State
-        data class Error(val error: Throwable) : State
-        data class Loaded(val pages: List<ReaderPage>) : State
+    sealed class State {
+        object Wait : State()
+        object Loading : State()
+        class Error(val error: Throwable) : State()
+        class Loaded(val pages: List<ReaderPage>) : State()
     }
 }

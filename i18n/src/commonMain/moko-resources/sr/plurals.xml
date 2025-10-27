@@ -1,34 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <plurals name="lock_after_mins">
-        <item quantity="one">Након %1$s минут</item>
-        <item quantity="few">Након %1$s минута</item>
-        <item quantity="other">Након %1$s минута</item>
+    <plurals name="extension_updates_available">
+        <item quantity="one">Доступна је нова верзија екстензије</item>
+        <item quantity="few">%d нове верзије екстензије су доступне</item>
+        <item quantity="other">%d нових верзија екстензија су доступна</item>
     </plurals>
-    <plurals name="notification_chapters_generic">
-        <item quantity="one">%1$d ново поглавље</item>
-        <item quantity="few">%1$d нова поглавља</item>
-        <item quantity="other">%1$d нових поглавља</item>
-    </plurals>
-    <plurals name="notification_new_chapters_summary">
-        <item quantity="one">За %d наслов</item>
-        <item quantity="few">За %d наслова</item>
-        <item quantity="other">За %d наслова</item>
-    </plurals>
-    <plurals name="update_check_notification_ext_updates">
-        <item quantity="one">Доступно је %d ново ажурирање додатака</item>
-        <item quantity="few">Доступна су %d нова ажурирања додатака</item>
-        <item quantity="other">Доступно је %d нових ажурирања додатака</item>
-    </plurals>
-    <plurals name="num_categories">
-        <item quantity="one">%d категорија</item>
-        <item quantity="few">%d категорије</item>
-        <item quantity="other">%d категорија</item>
-    </plurals>
-    <plurals name="relative_time">
-        <item quantity="one">Пре %1$d дан</item>
-        <item quantity="few">Пре %1$d дана</item>
-        <item quantity="other">Пре %1$d дана</item>
+    <plurals name="category_plural">
+        <item quantity="one">%d kategorija</item>
+        <item quantity="few">%d kategorije</item>
+        <item quantity="other">%d kategoriji</item>
     </plurals>
     <plurals name="missing_chapters_warning">
         <item quantity="one">Прескаче се %d поглавље, или не постоји у извору или је филтером издвојено</item>
@@ -40,54 +20,107 @@
         <item quantity="few">Завршено у %1$s са %2$s грешке</item>
         <item quantity="other">Завршено у %1$s са %2$s грешака</item>
     </plurals>
-    <plurals name="num_trackers">
-        <item quantity="one">%d пратилац</item>
-        <item quantity="few">%d пратиоца</item>
-        <item quantity="other">%d пратилаца</item>
+    <plurals name="cache_cleared">
+        <item quantity="one">Keš je obrisan. %d datoteka je izbrisana</item>
+        <item quantity="few">Keš je obrisan. %d datoteke su izbrisane</item>
+        <item quantity="other">Keš je obrisan. %d datoteke su izbrisane</item>
     </plurals>
-    <plurals name="manga_num_chapters">
-        <item quantity="one">%1$s поглавље</item>
-        <item quantity="few">%1$s поглавља</item>
-        <item quantity="other">%1$s поглавља</item>
+    <plurals name="copy_manga">
+        <item quantity="one">Kopiraj %1$d%2$s mangu\?</item>
+        <item quantity="few">Kopiraj %1$d%2$s mange\?</item>
+        <item quantity="other">Koporaj %1$d%2$s mangi\?</item>
     </plurals>
-    <plurals name="notification_chapters_multiple_and_more">
-        <item quantity="one">Поглавља %1$s и још једно</item>
-        <item quantity="few">Поглавља %1$s и још %2$d</item>
-        <item quantity="other">Поглавља %1$s и још %2$d</item>
+    <plurals name="after_minutes">
+        <item quantity="one">Nakon %1$s minut</item>
+        <item quantity="few">Nakon %1$s minuta</item>
+        <item quantity="other">Nakon %1$s minuta</item>
     </plurals>
-    <plurals name="download_queue_summary">
-        <item quantity="one">%1$s преостао</item>
-        <item quantity="few">%1$s преостала</item>
-        <item quantity="other">%1$s преосталих</item>
+    <plurals name="_updates_pending">
+        <item quantity="one">%d ažuriranje je na čekanju</item>
+        <item quantity="few">%d ažuriranja su na čekanju</item>
+        <item quantity="other">%d ažuriranje je na čekanju</item>
+    </plurals>
+    <plurals name="pages_plural">
+        <item quantity="one">%1$d strana</item>
+        <item quantity="few">%1$d strane</item>
+        <item quantity="other">%1$d Stranice</item>
+    </plurals>
+    <plurals name="cleanup_done">
+        <item quantity="one">Čišćenje završeno.Uklonjena %d fascikla</item>
+        <item quantity="few">Čišćenje završeno.Uklonjene %d fascikle</item>
+        <item quantity="other">Čišćenje završeno.Uklonjenj %d fascikli</item>
+    </plurals>
+    <plurals name="deleted_chapters">
+        <item quantity="one">Поглавље је уклоњено из извора:
+\n%2$s
+\nИзбрисати преузимање\?</item>
+        <item quantity="few">%1$s поглавља је уклоњено из извора:
+\n%2$s
+\n
+\nИзбрисати преузимања\?</item>
+        <item quantity="other">%1$s поглавља је уклоњено из извора:
+\n%2$s
+\n
+\nИзбрисати преузимања\?</item>
+    </plurals>
+    <plurals name="manga_migrated">
+        <item quantity="one">%d manga prebačena</item>
+        <item quantity="few">%d mangi prebačeno</item>
+        <item quantity="other">%d mangi prebačeno</item>
+    </plurals>
+    <plurals name="migrate_manga">
+        <item quantity="one">Premestite %1$d%2$s mangu\?</item>
+        <item quantity="few">Premestine %1$d%2$s mange\?</item>
+        <item quantity="other">Premestite %1$d%2$s mangi\?</item>
+    </plurals>
+    <plurals name="chapters_plural">
+        <item quantity="one">%1$s poglavlje</item>
+        <item quantity="few">%1$s poglavlja</item>
+        <item quantity="other">%1$s poglavlja</item>
+    </plurals>
+    <plurals name="for_n_titles">
+        <item quantity="one">Za %d naslov</item>
+        <item quantity="few">Za %d naslove</item>
+        <item quantity="other">Za %d naslovi</item>
+    </plurals>
+    <plurals name="notification_and_n_more">
+        <item quantity="one">Još %1$d naslov</item>
+        <item quantity="few">Još %1$d naslova</item>
+        <item quantity="other">Jos %1$d naslova</item>
+    </plurals>
+    <plurals name="remove_n_chapters">
+        <item quantity="one">Izbrisati %1$d preuzeto poglavlje\?</item>
+        <item quantity="few">Izbrisati %1$d preuzeta poglavlja\?</item>
+        <item quantity="other">Izbrisati %1$d preuzetih poglavlja\?</item>
+    </plurals>
+    <plurals name="extensions_updated_plural">
+        <item quantity="one">Екстензија ажурирана</item>
+        <item quantity="few">%d екстензије су ажуриране</item>
+        <item quantity="other">%d екстензија је ажурирано</item>
     </plurals>
     <plurals name="next_unread_chapters">
         <item quantity="one">Следеће непрочитано поглавље</item>
         <item quantity="few">Следећа %d непрочитана поглавља</item>
         <item quantity="other">Следећих %d непрочитаних поглавља</item>
     </plurals>
-    <plurals name="download_amount">
-        <item quantity="one">Следеће поглавље</item>
-        <item quantity="few">Следећа %d поглавља</item>
-        <item quantity="other">Следећих %d поглавља</item>
+    <plurals name="_series_types">
+        <item quantity="one">%d врста серије</item>
+        <item quantity="few">%d врсте серије</item>
+        <item quantity="other">%d врста серија</item>
     </plurals>
-    <plurals name="missing_chapters">
-        <item quantity="one">Недостаје %1$s поглавље</item>
-        <item quantity="few">Недостају %1$s поглавља</item>
-        <item quantity="other">Недостаје %1$s поглавља</item>
+    <plurals name="_statuses">
+        <item quantity="one">%d статус</item>
+        <item quantity="few">%d статуса</item>
+        <item quantity="other">%d статуса</item>
     </plurals>
-    <plurals name="day">
-        <item quantity="one">1 дан</item>
-        <item quantity="few">%d дана</item>
-        <item quantity="other">%d дана</item>
+    <plurals name="_sources">
+        <item quantity="one">%d извор</item>
+        <item quantity="few">%d извора</item>
+        <item quantity="other">%d извора</item>
     </plurals>
-    <plurals name="num_repos">
-        <item quantity="one">%d репозиторија</item>
-        <item quantity="few">%d репозиторија</item>
-        <item quantity="other">%d репозиторија</item>
-    </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="one">За %1$d дан</item>
-        <item quantity="few">За %1$d дана</item>
-        <item quantity="other">За %1$d дана</item>
+    <plurals name="_languages">
+        <item quantity="one">%d језик</item>
+        <item quantity="few">%d језика</item>
+        <item quantity="other">%d језика</item>
     </plurals>
 </resources>

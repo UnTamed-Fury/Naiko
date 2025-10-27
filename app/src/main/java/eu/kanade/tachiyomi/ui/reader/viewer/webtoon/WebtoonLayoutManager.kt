@@ -2,8 +2,8 @@
 
 package androidx.recyclerview.widget
 
-import android.content.Context
 import androidx.recyclerview.widget.RecyclerView.NO_POSITION
+import eu.kanade.tachiyomi.ui.reader.ReaderActivity
 
 /**
  * Layout manager used by the webtoon viewer. Item prefetch is disabled because the extra layout
@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.RecyclerView.NO_POSITION
  * This layout manager uses the same package name as the support library in order to use a package
  * protected method.
  */
-class WebtoonLayoutManager(context: Context, private val extraLayoutSpace: Int) : LinearLayoutManager(context) {
+class WebtoonLayoutManager(activity: ReaderActivity, private val extraLayoutSpace: Int) : LinearLayoutManager(activity) {
 
     init {
         isItemPrefetchEnabled = false
@@ -32,22 +32,20 @@ class WebtoonLayoutManager(context: Context, private val extraLayoutSpace: Int) 
      */
     fun findLastEndVisibleItemPosition(): Int {
         ensureLayoutState()
-        val callback = if (mOrientation == HORIZONTAL) {
+        @ViewBoundsCheck.ViewBounds val preferredBoundsFlag =
+            (ViewBoundsCheck.FLAG_CVE_LT_PVE or ViewBoundsCheck.FLAG_CVE_EQ_PVE)
+
+        val fromIndex = childCount - 1
+        val toIndex = -1
+
+        val child = if (mOrientation == HORIZONTAL) {
             mHorizontalBoundCheck
+                .findOneViewWithinBoundFlags(fromIndex, toIndex, preferredBoundsFlag, 0)
         } else {
             mVerticalBoundCheck
-        }.mCallback
-        val start = callback.parentStart
-        val end = callback.parentEnd
-        for (i in childCount - 1 downTo 0) {
-            val child = getChildAt(i)!!
-            val childStart = callback.getChildStart(child)
-            val childEnd = callback.getChildEnd(child)
-            if (childEnd <= end || childStart < start) {
-                return getPosition(child)
-            }
+                .findOneViewWithinBoundFlags(fromIndex, toIndex, preferredBoundsFlag, 0)
         }
 
-        return NO_POSITION
+        return if (child == null) NO_POSITION else getPosition(child)
     }
 }

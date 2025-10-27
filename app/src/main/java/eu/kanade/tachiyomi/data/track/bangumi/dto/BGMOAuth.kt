@@ -1,6 +1,5 @@
 package eu.kanade.tachiyomi.data.track.bangumi.dto
 
-import kotlinx.serialization.EncodeDefault
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -11,7 +10,6 @@ data class BGMOAuth(
     @SerialName("token_type")
     val tokenType: String,
     @SerialName("created_at")
-    @EncodeDefault
     val createdAt: Long = System.currentTimeMillis() / 1000,
     @SerialName("expires_in")
     val expiresIn: Long,
@@ -19,7 +17,8 @@ data class BGMOAuth(
     val refreshToken: String?,
     @SerialName("user_id")
     val userId: Long?,
-)
+) {
 
-// Access token refresh before expired
-fun BGMOAuth.isExpired() = (System.currentTimeMillis() / 1000) > (createdAt + expiresIn - 3600)
+    // Access token refresh before expired
+    fun isExpired() = (System.currentTimeMillis() / 1000) > (createdAt + expiresIn - 3600)
+}

@@ -43,11 +43,11 @@ val Options.customDecoder: Boolean
 
 private val customDecoderKey = Extras.Key(default = false)
 
-fun ImageRequest.Builder.useBackground(enable: Boolean) = apply {
-    extras[useBackgroundKey] = enable
+val Options.useCustomCover: Boolean
+    get() = getExtra(useCustomCoverKey)
+
+fun ImageRequest.Builder.useCustomCover(enable: Boolean) = apply {
+    extras[useCustomCoverKey] = enable
 }
 
-val Options.useBackground: Boolean
-    get() = getExtra(useBackgroundKey)
-
-private val useBackgroundKey = Extras.Key(default = false)
+private val useCustomCoverKey = Extras.Key(default = true)

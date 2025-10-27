@@ -2,31 +2,34 @@ package eu.kanade.tachiyomi.data.coil
 
 import coil3.key.Keyer
 import coil3.request.Options
-import eu.kanade.domain.entries.manga.model.hasCustomCover
-import eu.kanade.tachiyomi.data.cache.MangaCoverCache
-import tachiyomi.domain.entries.manga.model.MangaCover
+import eu.kanade.tachiyomi.data.cache.CoverCache
+import eu.kanade.tachiyomi.data.database.models.hasCustomCover
+import eu.kanade.tachiyomi.domain.manga.models.Manga
+import eu.kanade.tachiyomi.util.storage.DiskUtil
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import tachiyomi.domain.entries.manga.model.Manga as DomainManga
+import yokai.domain.manga.models.MangaCover
 
-class MangaKeyer : Keyer<DomainManga> {
-    override fun key(data: DomainManga, options: Options): String {
-        return if (data.hasCustomCover()) {
-            "manga;${data.id};${data.coverLastModified}"
-        } else {
-            "manga;${data.thumbnailUrl};${data.coverLastModified}"
+class MangaKeyer : Keyer<Manga> {
+    override fun key(data: Manga, options: Options): String {
+        val key = when {
+            data.hasCustomCover() -> data.id
+            data.favorite -> data.thumbnail_url?.let { DiskUtil.hashKeyForDisk(it) }
+            else -> data.thumbnail_url
         }
+
+        return "${key};${data.cover_last_modified}"
     }
 }
 
-class MangaCoverKeyer(
-    private val coverCache: MangaCoverCache = Injekt.get(),
-) : Keyer<MangaCover> {
+class MangaCoverKeyer(private val coverCache: CoverCache = Injekt.get()) : Keyer<MangaCover> {
     override fun key(data: MangaCover, options: Options): String {
-        return if (coverCache.getCustomCoverFile(data.mangaId).exists()) {
-            "manga;${data.mangaId};${data.lastModified}"
-        } else {
-            "manga;${data.url};${data.lastModified}"
+        val key = when {
+            coverCache.getCustomCoverFile(data.mangaId).exists() -> data.mangaId
+            data.inLibrary -> DiskUtil.hashKeyForDisk(data.url)
+            else -> data.url
         }
+
+        return "${key};${data.lastModified}"
     }
 }

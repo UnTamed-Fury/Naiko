@@ -3,22 +3,27 @@ package eu.kanade.tachiyomi.ui.reader.viewer.webtoon
 import android.view.Gravity
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatButton
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.core.view.isNotEmpty
 import androidx.core.view.isVisible
-import com.google.android.material.progressindicator.CircularProgressIndicator
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderTransitionView
 import eu.kanade.tachiyomi.util.system.dpToPx
+import eu.kanade.tachiyomi.util.view.setText
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import tachiyomi.core.common.i18n.stringResource
-import tachiyomi.i18n.MR
+import yokai.i18n.MR
+import yokai.presentation.theme.YokaiTheme
+import yokai.util.lang.getString
 
 /**
  * Holder of the webtoon viewer that contains a chapter transition.
@@ -64,7 +69,7 @@ class WebtoonTransitionHolder(
      * Binds the given [transition] with this view holder, subscribing to its state.
      */
     fun bind(transition: ChapterTransition) {
-        transitionView.bind(transition, viewer.downloadManager, viewer.activity.viewModel.manga)
+        transitionView.bind(viewer.config.readerTheme, transition, viewer.downloadManager, viewer.activity.viewModel.manga)
 
         transition.to?.let { observeStatus(it, transition) }
     }
@@ -102,16 +107,28 @@ class WebtoonTransitionHolder(
      * Sets the loading state on the pages container.
      */
     private fun setLoading() {
-        val progress = CircularProgressIndicator(context)
-        progress.isIndeterminate = true
+        val progress = ComposeView(context).apply {
+            layoutParams = FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT, Gravity.CENTER)
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnDetachedFromWindowOrReleasedFromPool)
+            setContent {
+                YokaiTheme { CircularProgressIndicator() }
+            }
+        }
 
         val textView = AppCompatTextView(context).apply {
             wrapContent()
-            text = context.stringResource(MR.strings.transition_pages_loading)
+            setText(MR.strings.loading_pages)
         }
 
         pagesContainer.addView(progress)
         pagesContainer.addView(textView)
+    }
+
+    /**
+     * Sets the loaded state on the pages container.
+     */
+    private fun setLoaded() {
+        // No additional view is added
     }
 
     /**
@@ -120,12 +137,12 @@ class WebtoonTransitionHolder(
     private fun setError(error: Throwable, transition: ChapterTransition) {
         val textView = AppCompatTextView(context).apply {
             wrapContent()
-            text = context.stringResource(MR.strings.transition_pages_error, error.message ?: "")
+            text = context.getString(MR.strings.failed_to_load_pages_, error.message ?: "")
         }
 
         val retryBtn = AppCompatButton(context).apply {
             wrapContent()
-            text = context.stringResource(MR.strings.action_retry)
+            setText(MR.strings.retry)
             setOnClickListener {
                 val toChapter = transition.to
                 if (toChapter != null) {

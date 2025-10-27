@@ -1,8 +1,6 @@
 package eu.kanade.tachiyomi.data.track.mangaupdates
 
-import eu.kanade.tachiyomi.data.database.models.manga.MangaTrack
-import eu.kanade.tachiyomi.data.track.mangaupdates.MangaUpdates.Companion.READING_LIST
-import eu.kanade.tachiyomi.data.track.mangaupdates.MangaUpdates.Companion.WISH_LIST
+import eu.kanade.tachiyomi.data.database.models.Track
 import eu.kanade.tachiyomi.data.track.mangaupdates.dto.MUContext
 import eu.kanade.tachiyomi.data.track.mangaupdates.dto.MUListItem
 import eu.kanade.tachiyomi.data.track.mangaupdates.dto.MULoginResponse
@@ -26,7 +24,6 @@ import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import okhttp3.RequestBody.Companion.toRequestBody
 import uy.kohesive.injekt.injectLazy
-import tachiyomi.domain.track.manga.model.MangaTrack as DomainTrack
 
 class MangaUpdatesApi(
     interceptor: MangaUpdatesInterceptor,
@@ -34,34 +31,27 @@ class MangaUpdatesApi(
 ) {
     private val json: Json by injectLazy()
 
-    private val authClient by lazy {
-        client.newBuilder()
-            .addInterceptor(interceptor)
-            .build()
-    }
+    private val authClient = client.newBuilder()
+        .addInterceptor(interceptor)
+        .build()
 
-    suspend fun getSeriesListItem(track: MangaTrack): Pair<MUListItem, MURating?> {
-        val listItem = with(json) {
-            authClient.newCall(GET("$BASE_URL/v1/lists/series/${track.remote_id}"))
+    suspend fun getSeriesListItem(track: Track): Pair<MUListItem, MURating?> {
+        val listItem =
+            authClient.newCall(
+                GET(
+                    url = "$BASE_URL/v1/lists/series/${track.media_id}",
+                ),
+            )
                 .awaitSuccess()
                 .parseAs<MUListItem>()
-        }
 
         val rating = getSeriesRating(track)
 
         return listItem to rating
     }
 
-    suspend fun addSeriesToList(track: MangaTrack, hasReadChapters: Boolean) {
-        val status = if (hasReadChapters) READING_LIST else WISH_LIST
-        val body = buildJsonArray {
-            addJsonObject {
-                putJsonObject("series") {
-                    put("id", track.remote_id)
-                }
-                put("list_id", status)
-            }
-        }
+    suspend fun addSeriesToList(track: Track) {
+        val body = createTrackBody(track)
         authClient.newCall(
             POST(
                 url = "$BASE_URL/v1/lists/series",
@@ -69,26 +59,24 @@ class MangaUpdatesApi(
             ),
         )
             .awaitSuccess()
-            .let {
-                if (it.code == 200) {
-                    track.status = status
-                    track.last_chapter_read = 1.0
-                }
-            }
     }
 
-    suspend fun updateSeriesListItem(track: MangaTrack) {
+    suspend fun removeSeriesFromList(track: Track): Boolean {
         val body = buildJsonArray {
-            addJsonObject {
-                putJsonObject("series") {
-                    put("id", track.remote_id)
-                }
-                put("list_id", track.status)
-                putJsonObject("status") {
-                    put("chapter", track.last_chapter_read.toInt())
-                }
-            }
+            add(track.media_id)
         }
+        authClient.newCall(
+            POST(
+                url = "$BASE_URL/v1/lists/series/delete",
+                body = body.toString().toRequestBody(CONTENT_TYPE),
+            ),
+        )
+            .awaitSuccess()
+            .let { return it.code == 200 }
+    }
+
+    suspend fun updateSeriesListItem(track: Track) {
+        val body = createTrackBody(track)
         authClient.newCall(
             POST(
                 url = "$BASE_URL/v1/lists/series/update",
@@ -100,47 +88,49 @@ class MangaUpdatesApi(
         updateSeriesRating(track)
     }
 
-    suspend fun deleteSeriesFromList(track: DomainTrack) {
-        val body = buildJsonArray {
-            add(track.remoteId)
+    private fun createTrackBody(track: Track) = buildJsonArray {
+        addJsonObject {
+            putJsonObject("series") {
+                put("id", track.media_id)
+            }
+            put("list_id", track.status)
+            putJsonObject("status") {
+                put("chapter", track.last_chapter_read.toInt())
+            }
         }
-        authClient.newCall(
-            POST(
-                url = "$BASE_URL/v1/lists/series/delete",
-                body = body.toString().toRequestBody(CONTENT_TYPE),
-            ),
-        )
-            .awaitSuccess()
     }
 
-    private suspend fun getSeriesRating(track: MangaTrack): MURating? {
+    private suspend fun getSeriesRating(track: Track): MURating? {
         return try {
-            with(json) {
-                authClient.newCall(GET("$BASE_URL/v1/series/${track.remote_id}/rating"))
-                    .awaitSuccess()
-                    .parseAs<MURating>()
-            }
+            authClient.newCall(
+                GET(
+                    url = "$BASE_URL/v1/series/${track.media_id}/rating",
+                ),
+            )
+                .awaitSuccess()
+                .parseAs<MURating>()
         } catch (e: Exception) {
             null
         }
     }
 
-    private suspend fun updateSeriesRating(track: MangaTrack) {
-        if (track.score < 0.0) return
-        if (track.score != 0.0) {
+    private suspend fun updateSeriesRating(track: Track) {
+        if (track.score != 0f) {
             val body = buildJsonObject {
                 put("rating", track.score)
             }
             authClient.newCall(
                 PUT(
-                    url = "$BASE_URL/v1/series/${track.remote_id}/rating",
+                    url = "$BASE_URL/v1/series/${track.media_id}/rating",
                     body = body.toString().toRequestBody(CONTENT_TYPE),
                 ),
             )
                 .awaitSuccess()
         } else {
             authClient.newCall(
-                DELETE(url = "$BASE_URL/v1/series/${track.remote_id}/rating"),
+                DELETE(
+                    url = "$BASE_URL/v1/series/${track.media_id}/rating",
+                ),
             )
                 .awaitSuccess()
         }
@@ -157,19 +147,16 @@ class MangaUpdatesApi(
                 },
             )
         }
-
-        return with(json) {
-            client.newCall(
-                POST(
-                    url = "$BASE_URL/v1/series/search",
-                    body = body.toString().toRequestBody(CONTENT_TYPE),
-                ),
-            )
-                .awaitSuccess()
-                .parseAs<MUSearchResult>()
-                .results
-                .map { it.record }
-        }
+        return client.newCall(
+            POST(
+                url = "$BASE_URL/v1/series/search",
+                body = body.toString().toRequestBody(CONTENT_TYPE),
+            ),
+        )
+            .awaitSuccess()
+            .parseAs<MUSearchResult>()
+            .results
+            .map { it.record }
     }
 
     suspend fun authenticate(username: String, password: String): MUContext? {
@@ -177,17 +164,15 @@ class MangaUpdatesApi(
             put("username", username)
             put("password", password)
         }
-        return with(json) {
-            client.newCall(
-                PUT(
-                    url = "$BASE_URL/v1/account/login",
-                    body = body.toString().toRequestBody(CONTENT_TYPE),
-                ),
-            )
-                .awaitSuccess()
-                .parseAs<MULoginResponse>()
-                .context
-        }
+        return client.newCall(
+            PUT(
+                url = "$BASE_URL/v1/account/login",
+                body = body.toString().toRequestBody(CONTENT_TYPE),
+            ),
+        )
+            .awaitSuccess()
+            .parseAs<MULoginResponse>()
+            .context
     }
 
     companion object {

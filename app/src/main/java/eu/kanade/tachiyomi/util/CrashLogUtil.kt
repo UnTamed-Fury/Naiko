@@ -1,118 +1,107 @@
 package eu.kanade.tachiyomi.util
 
 import android.content.Context
+import android.net.Uri
 import android.os.Build
 import eu.kanade.tachiyomi.BuildConfig
-import eu.kanade.tachiyomi.extension.anime.AnimeExtensionManager
-import eu.kanade.tachiyomi.extension.manga.MangaExtensionManager
+import eu.kanade.tachiyomi.R
+import eu.kanade.tachiyomi.data.notification.NotificationReceiver
+import eu.kanade.tachiyomi.data.notification.Notifications
+import eu.kanade.tachiyomi.extension.ExtensionManager
 import eu.kanade.tachiyomi.util.storage.getUriCompat
-import eu.kanade.tachiyomi.util.system.WebViewUtil
 import eu.kanade.tachiyomi.util.system.createFileInCacheDir
-import eu.kanade.tachiyomi.util.system.toShareIntent
+import eu.kanade.tachiyomi.util.system.notificationBuilder
+import eu.kanade.tachiyomi.util.system.notificationManager
 import eu.kanade.tachiyomi.util.system.toast
-import tachiyomi.core.common.util.lang.withNonCancellableContext
-import tachiyomi.core.common.util.lang.withUIContext
+import eu.kanade.tachiyomi.util.system.withNonCancellableContext
+import eu.kanade.tachiyomi.util.system.withUIContext
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import java.time.OffsetDateTime
-import java.time.ZoneId
+import yokai.i18n.MR
+import yokai.util.lang.getString
+import java.io.IOException
 
-class CrashLogUtil(
-    private val context: Context,
-    private val mangaExtensionManager: MangaExtensionManager = Injekt.get(),
-    private val animeExtensionManager: AnimeExtensionManager = Injekt.get(),
-) {
+class CrashLogUtil(private val context: Context) {
+
+    private val notificationBuilder = context.notificationBuilder(Notifications.CHANNEL_CRASH_LOGS) {
+        setSmallIcon(R.drawable.ic_yokai)
+    }
 
     suspend fun dumpLogs(exception: Throwable? = null) = withNonCancellableContext {
         try {
-            val file = context.createFileInCacheDir("aniyomi_crash_logs.txt")
-
+            val file = context.createFileInCacheDir("yokai_crash_logs.txt")
             file.appendText(getDebugInfo() + "\n\n")
-            getMangaExtensionsInfo()?.let { file.appendText("$it\n\n") }
-            getAnimeExtensionsInfo()?.let { file.appendText("$it\n\n") }
+            file.appendText(getExtensionsInfo() + "\n\n")
             exception?.let { file.appendText("$it\n\n") }
 
-            Runtime.getRuntime().exec("logcat *:E -d -v year -v zone -f ${file.absolutePath}").waitFor()
+            Runtime.getRuntime().exec("logcat *:E -d -f ${file.absolutePath}")
 
-            val uri = file.getUriCompat(context)
-            context.startActivity(uri.toShareIntent(context, "text/plain"))
-        } catch (e: Throwable) {
+            showNotification(file.getUriCompat(context))
+        } catch (e: IOException) {
             withUIContext { context.toast("Failed to get logs") }
         }
     }
 
     fun getDebugInfo(): String {
         return """
-            App ID: ${BuildConfig.APPLICATION_ID}
-            App version: ${BuildConfig.VERSION_NAME} (${BuildConfig.COMMIT_SHA}, ${BuildConfig.VERSION_CODE}, ${BuildConfig.BUILD_TIME})
-            Android version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT}; build ${Build.DISPLAY})
+            App version: ${BuildConfig.VERSION_NAME} (${BuildConfig.FLAVOR}, ${BuildConfig.COMMIT_SHA}, ${BuildConfig.VERSION_CODE}, ${BuildConfig.BUILD_TIME})
+            Android version: ${Build.VERSION.RELEASE} (SDK ${Build.VERSION.SDK_INT})
             Android build ID: ${Build.DISPLAY}
             Device brand: ${Build.BRAND}
             Device manufacturer: ${Build.MANUFACTURER}
-            Device name: ${Build.DEVICE} (${Build.PRODUCT})
+            Device name: ${Build.DEVICE}
             Device model: ${Build.MODEL}
-            WebView: ${WebViewUtil.getVersion(context)}
-            Current time: ${OffsetDateTime.now(ZoneId.systemDefault())}
-            MPV version: 6764488
-            Libplacebo version: v7.349.0
-            FFmpeg version: n7.1
+            Device product name: ${Build.PRODUCT}
         """.trimIndent()
-        // TODO: Use this again (from aniyomi-mpv-lib 1.17.n onwards):
-
-        //    MPV version: ${Utils.VERSIONS.mpv}
-        //    Libplacebo version: ${Utils.VERSIONS.libPlacebo}
-        //    FFmpeg version: ${Utils.VERSIONS.ffmpeg}
     }
 
-    private fun getMangaExtensionsInfo(): String? {
-        val availableExtensions = mangaExtensionManager.availableExtensionsFlow.value.associateBy { it.pkgName }
+    private fun getExtensionsInfo(): String {
+        val extensionManager: ExtensionManager = Injekt.get()
+        val installedExtensions = extensionManager.installedExtensionsFlow.value
+        val availableExtensions = extensionManager.availableExtensionsFlow.value
 
-        val extensionInfoList = mangaExtensionManager.installedExtensionsFlow.value
-            .sortedBy { it.name }
-            .mapNotNull {
-                val availableExtension = availableExtensions[it.pkgName]
-                val hasUpdate = (availableExtension?.versionCode ?: 0) > it.versionCode
+        val extensionInfoList = mutableListOf<String>()
 
-                if (!hasUpdate && !it.isObsolete) return@mapNotNull null
+        for (installedExtension in installedExtensions) {
+            val availableExtension = availableExtensions.find { it.pkgName == installedExtension.pkgName }
 
-                """
-                    - ${it.name}
-                      Installed: ${it.versionName} / Available: ${availableExtension?.versionName ?: "?"}
-                      Obsolete: ${it.isObsolete}
-                """.trimIndent()
+            val hasUpdate = (availableExtension?.versionCode ?: 0) > installedExtension.versionCode
+            if (hasUpdate || installedExtension.isObsolete) {
+                val extensionInfo =
+                    "Extension Name: ${installedExtension.name}\n" +
+                        "Installed Version: ${installedExtension.versionName}\n" +
+                        "Available Version: ${availableExtension?.versionName ?: "N/A"}\n" +
+                        "Obsolete: ${installedExtension.isObsolete}\n"
+                extensionInfoList.add(extensionInfo)
             }
-
-        return if (extensionInfoList.isNotEmpty()) {
-            (listOf("Problematic extensions:") + extensionInfoList)
-                .joinToString("\n")
-        } else {
-            null
         }
+        if (extensionInfoList.isNotEmpty()) {
+            extensionInfoList.add(0, "Extensions that are outdated or obsolete")
+        }
+        return extensionInfoList.joinToString("\n")
     }
 
-    private fun getAnimeExtensionsInfo(): String? {
-        val availableExtensions = animeExtensionManager.availableExtensionsFlow.value.associateBy { it.pkgName }
+    private fun showNotification(uri: Uri) {
+        context.notificationManager.cancel(Notifications.ID_CRASH_LOGS)
+        with(notificationBuilder) {
+            setContentTitle(context.getString(MR.strings.crash_log_saved))
 
-        val extensionInfoList = animeExtensionManager.installedExtensionsFlow.value
-            .sortedBy { it.name }
-            .mapNotNull {
-                val availableExtension = availableExtensions[it.pkgName]
-                val hasUpdate = (availableExtension?.versionCode ?: 0) > it.versionCode
+            // Clear old actions if they exist
+            clearActions()
 
-                if (!hasUpdate && !it.isObsolete) return@mapNotNull null
+            addAction(
+                R.drawable.ic_bug_report_24dp,
+                context.getString(MR.strings.open_log),
+                NotificationReceiver.openErrorOrSkippedLogPendingActivity(context, uri),
+            )
 
-                """
-                    - ${it.name}
-                      Installed: ${it.versionName} / Available: ${availableExtension?.versionName ?: "?"}
-                      Obsolete: ${it.isObsolete}
-                """.trimIndent()
-            }
+            addAction(
+                R.drawable.ic_share_24dp,
+                context.getString(MR.strings.share),
+                NotificationReceiver.shareCrashLogPendingBroadcast(context, uri, Notifications.ID_CRASH_LOGS),
+            )
 
-        return if (extensionInfoList.isNotEmpty()) {
-            (listOf("Problematic extensions:") + extensionInfoList)
-                .joinToString("\n")
-        } else {
-            null
+            context.notificationManager.notify(Notifications.ID_CRASH_LOGS, build())
         }
     }
 }

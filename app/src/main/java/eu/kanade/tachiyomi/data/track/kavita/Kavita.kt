@@ -1,31 +1,31 @@
 package eu.kanade.tachiyomi.data.track.kavita
 
+import android.content.Context
 import android.graphics.Color
-import dev.icerock.moko.resources.StringResource
 import eu.kanade.tachiyomi.R
-import eu.kanade.tachiyomi.data.database.models.manga.MangaTrack
-import eu.kanade.tachiyomi.data.track.BaseTracker
-import eu.kanade.tachiyomi.data.track.EnhancedMangaTracker
-import eu.kanade.tachiyomi.data.track.MangaTracker
-import eu.kanade.tachiyomi.data.track.model.MangaTrackSearch
+import eu.kanade.tachiyomi.data.database.models.Track
+import eu.kanade.tachiyomi.data.track.EnhancedTrackService
+import eu.kanade.tachiyomi.data.track.TrackService
+import eu.kanade.tachiyomi.data.track.model.TrackSearch
+import eu.kanade.tachiyomi.data.track.updateNewTrackInfo
+import eu.kanade.tachiyomi.domain.manga.models.Manga
 import eu.kanade.tachiyomi.source.ConfigurableSource
-import eu.kanade.tachiyomi.source.MangaSource
+import eu.kanade.tachiyomi.source.Source
+import eu.kanade.tachiyomi.source.SourceManager
 import eu.kanade.tachiyomi.source.sourcePreferences
+import java.security.MessageDigest
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import tachiyomi.domain.entries.manga.model.Manga
-import tachiyomi.domain.source.manga.service.MangaSourceManager
-import tachiyomi.i18n.MR
 import uy.kohesive.injekt.injectLazy
-import java.security.MessageDigest
-import tachiyomi.domain.track.manga.model.MangaTrack as DomainTrack
+import yokai.i18n.MR
+import yokai.util.lang.getString
 
-class Kavita(id: Long) : BaseTracker(id, "Kavita"), EnhancedMangaTracker, MangaTracker {
+class Kavita(private val context: Context, id: Long) : TrackService(id), EnhancedTrackService {
 
     companion object {
-        const val UNREAD = 1L
-        const val READING = 2L
-        const val COMPLETED = 3L
+        const val UNREAD = 1
+        const val READING = 2
+        const val COMPLETED = 3
     }
 
     var authentications: OAuth? = null
@@ -33,64 +33,78 @@ class Kavita(id: Long) : BaseTracker(id, "Kavita"), EnhancedMangaTracker, MangaT
     private val interceptor by lazy { KavitaInterceptor(this) }
     val api by lazy { KavitaApi(client, interceptor) }
 
-    private val sourceManager: MangaSourceManager by injectLazy()
+    private val sourceManager: SourceManager by injectLazy()
+
+    override fun nameRes() = MR.strings.kavita
 
     override fun getLogo(): Int = R.drawable.ic_tracker_kavita
 
-    override fun getLogoColor() = Color.rgb(74, 198, 148)
+    override fun getTrackerColor() = Color.rgb(85, 199, 148)
 
-    override fun getStatusListManga(): List<Long> = listOf(UNREAD, READING, COMPLETED)
+    override fun getLogoColor() = Color.argb(0, 85, 199, 148)
 
-    override fun getStatusForManga(status: Long): StringResource? = when (status) {
-        UNREAD -> MR.strings.unread
-        READING -> MR.strings.reading
-        COMPLETED -> MR.strings.completed
-        else -> null
+    override fun getStatusList() = listOf(UNREAD, READING, COMPLETED)
+
+    override fun isCompletedStatus(index: Int): Boolean = getStatusList()[index] == COMPLETED
+
+    override fun getStatus(status: Int): String = with(context) {
+        when (status) {
+            UNREAD -> getString(MR.strings.unread)
+            READING -> getString(MR.strings.reading)
+            COMPLETED -> getString(MR.strings.completed)
+            else -> ""
+        }
     }
 
-    override fun getReadingStatus(): Long = READING
+    override fun getGlobalStatus(status: Int): String = with(context) {
+        when (status) {
+            UNREAD -> getString(MR.strings.plan_to_read)
+            READING -> getString(MR.strings.reading)
+            COMPLETED -> getString(MR.strings.completed)
+            else -> ""
+        }
+    }
 
-    override fun getRereadingStatus(): Long = -1
-
-    override fun getCompletionStatus(): Long = COMPLETED
+    override fun completedStatus(): Int = COMPLETED
+    override fun readingStatus() = READING
+    override fun planningStatus() = UNREAD
 
     override fun getScoreList(): ImmutableList<String> = persistentListOf()
 
-    override fun displayScore(track: DomainTrack): String = ""
+    override fun displayScore(track: Track): String = ""
 
-    override suspend fun update(track: MangaTrack, didReadChapter: Boolean): MangaTrack {
-        if (track.status != COMPLETED) {
-            if (didReadChapter) {
-                if (track.last_chapter_read.toLong() == track.total_chapters && track.total_chapters > 0) {
-                    track.status = COMPLETED
-                } else {
-                    track.status = READING
-                }
-            }
-        }
+    override suspend fun add(track: Track): Track {
+        track.status = READING
+        updateNewTrackInfo(track)
         return api.updateProgress(track)
     }
 
-    override suspend fun bind(track: MangaTrack, hasReadChapters: Boolean): MangaTrack {
+    override suspend fun update(track: Track, setToRead: Boolean): Track {
+        updateTrackStatus(track, setToRead)
+        return api.updateProgress(track)
+    }
+
+    override suspend fun bind(track: Track): Track {
         return track
     }
 
-    override suspend fun searchManga(query: String): List<MangaTrackSearch> {
+    override suspend fun search(query: String): List<TrackSearch> {
         TODO("Not yet implemented: search")
     }
 
-    override suspend fun refresh(track: MangaTrack): MangaTrack {
+    override suspend fun refresh(track: Track): Track {
         val remoteTrack = api.getTrackSearch(track.tracking_url)
         track.copyPersonalFrom(remoteTrack)
         track.total_chapters = remoteTrack.total_chapters
         return track
     }
 
-    override suspend fun login(username: String, password: String) {
+    override suspend fun login(username: String, password: String): Boolean {
         saveCredentials("user", "pass")
+        return true
     }
 
-    // [Tracker].isLogged works by checking that credentials are saved.
+    // TrackService.isLogged works by checking that credentials are saved.
     // By saving dummy, unused credentials, we can activate the tracker simply by login/logout
     override fun loginNoop() {
         saveCredentials("user", "pass")
@@ -98,22 +112,15 @@ class Kavita(id: Long) : BaseTracker(id, "Kavita"), EnhancedMangaTracker, MangaT
 
     override fun getAcceptedSources() = listOf("eu.kanade.tachiyomi.extension.all.kavita.Kavita")
 
-    override suspend fun match(manga: Manga): MangaTrackSearch? =
+    override suspend fun match(manga: Manga): TrackSearch? =
         try {
             api.getTrackSearch(manga.url)
         } catch (e: Exception) {
             null
         }
 
-    override fun isTrackFrom(track: DomainTrack, manga: Manga, source: MangaSource?): Boolean =
-        track.remoteUrl == manga.url && source?.let { accept(it) } == true
-
-    override fun migrateTrack(track: DomainTrack, manga: Manga, newSource: MangaSource): DomainTrack? =
-        if (accept(newSource)) {
-            track.copy(remoteUrl = manga.url)
-        } else {
-            null
-        }
+    override fun isTrackFrom(track: Track, manga: Manga, source: Source?): Boolean =
+        track.tracking_url == manga.url && source?.let { accept(it) } == true
 
     fun loadOAuth() {
         val oauth = OAuth()

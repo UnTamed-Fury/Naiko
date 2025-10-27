@@ -2,13 +2,12 @@ package eu.kanade.tachiyomi.data.track.kitsu
 
 import eu.kanade.tachiyomi.BuildConfig
 import eu.kanade.tachiyomi.data.track.kitsu.dto.KitsuOAuth
-import eu.kanade.tachiyomi.data.track.kitsu.dto.isExpired
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.Response
 import uy.kohesive.injekt.injectLazy
 
-class KitsuInterceptor(private val kitsu: Kitsu) : Interceptor {
+class KitsuInterceptor(val kitsu: Kitsu) : Interceptor {
 
     private val json: Json by injectLazy()
 
@@ -37,7 +36,7 @@ class KitsuInterceptor(private val kitsu: Kitsu) : Interceptor {
         // Add the authorization header to the original request.
         val authRequest = originalRequest.newBuilder()
             .addHeader("Authorization", "Bearer ${oauth!!.accessToken}")
-            .header("User-Agent", "Aniyomi v${BuildConfig.VERSION_NAME} (${BuildConfig.APPLICATION_ID})")
+            .header("User-Agent", "null2264/yokai/${BuildConfig.VERSION_NAME} (${BuildConfig.APPLICATION_ID})")
             .header("Accept", "application/vnd.api+json")
             .header("Content-Type", "application/vnd.api+json")
             .build()

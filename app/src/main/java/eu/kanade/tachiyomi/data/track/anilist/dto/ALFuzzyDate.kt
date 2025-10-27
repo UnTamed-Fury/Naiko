@@ -1,8 +1,8 @@
 package eu.kanade.tachiyomi.data.track.anilist.dto
 
-import kotlinx.serialization.Serializable
 import java.time.LocalDate
 import java.time.ZoneId
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class ALFuzzyDate(

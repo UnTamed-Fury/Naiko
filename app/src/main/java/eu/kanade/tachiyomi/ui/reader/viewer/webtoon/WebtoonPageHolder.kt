@@ -1,6 +1,7 @@
 package eu.kanade.tachiyomi.ui.reader.viewer.webtoon
 
 import android.content.res.Resources
+import android.view.Gravity
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
@@ -9,27 +10,27 @@ import android.widget.FrameLayout
 import androidx.core.view.isVisible
 import androidx.core.view.updateLayoutParams
 import androidx.core.view.updateMargins
+import co.touchlab.kermit.Logger
 import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
 import eu.kanade.tachiyomi.databinding.ReaderErrorBinding
 import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
+import eu.kanade.tachiyomi.ui.reader.viewer.ReaderErrorView
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderPageImageView
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderProgressIndicator
-import eu.kanade.tachiyomi.ui.webview.WebViewActivity
+import eu.kanade.tachiyomi.util.system.ImageUtil
 import eu.kanade.tachiyomi.util.system.dpToPx
+import eu.kanade.tachiyomi.util.system.launchIO
+import eu.kanade.tachiyomi.util.system.withIOContext
+import eu.kanade.tachiyomi.util.system.withUIContext
+import kotlinx.coroutines.CancellationException
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.supervisorScope
-import logcat.LogPriority
 import okio.Buffer
 import okio.BufferedSource
-import tachiyomi.core.common.util.lang.launchIO
-import tachiyomi.core.common.util.lang.withIOContext
-import tachiyomi.core.common.util.lang.withUIContext
-import tachiyomi.core.common.util.system.ImageUtil
-import tachiyomi.core.common.util.system.logcat
 
 /**
  * Holder of the webtoon reader for a single page of a chapter.
@@ -57,7 +58,7 @@ class WebtoonPageHolder(
     /**
      * Error layout to show when the image fails to load.
      */
-    private var errorLayout: ReaderErrorBinding? = null
+    private var errorLayout: ReaderErrorView? = null
 
     /**
      * Getter to retrieve the height of the recycler view.
@@ -81,7 +82,7 @@ class WebtoonPageHolder(
         refreshLayoutParams()
 
         frame.onImageLoaded = { onImageDecoded() }
-        frame.onImageLoadError = { setError() }
+        frame.onImageLoadError = { onImageDecodeError() }
         frame.onScaleChanged = { viewer.activity.hideMenu() }
     }
 
@@ -97,7 +98,7 @@ class WebtoonPageHolder(
 
     private fun refreshLayoutParams() {
         frame.layoutParams = FrameLayout.LayoutParams(MATCH_PARENT, WRAP_CONTENT).apply {
-            if (!viewer.isContinuous) {
+            if (viewer.hasMargins) {
                 bottomMargin = 15.dpToPx
             }
 
@@ -120,32 +121,25 @@ class WebtoonPageHolder(
         progressContainer.isVisible = true
     }
 
-    /**
-     * Loads the page and processes changes to the page's status.
-     *
-     * Returns immediately if there is no page or the page has no PageLoader.
-     * Otherwise, this function does not return. It will continue to process status changes until
-     * the Job is cancelled.
-     */
     private suspend fun loadPageAndProcessStatus() {
         val page = page ?: return
         val loader = page.chapter.pageLoader ?: return
         supervisorScope {
-            launchIO {
-                loader.loadPage(page)
-            }
-            page.statusFlow.collectLatest { state ->
-                when (state) {
-                    Page.State.QUEUE -> setQueued()
-                    Page.State.LOAD_PAGE -> setLoading()
-                    Page.State.DOWNLOAD_IMAGE -> {
+            launchIO { loader.loadPage(page) }
+            page.statusFlow.collectLatest { status ->
+                when (status) {
+                    is Page.State.Queue -> setQueued()
+                    is Page.State.LoadPage -> setLoading()
+                    is Page.State.DownloadImage -> {
                         setDownloading()
-                        page.progressFlow.collectLatest { value ->
-                            progressIndicator.setProgress(value)
+                        scope.launch {
+                            page.progressFlow.collectLatest { value ->
+                                progressIndicator.setProgress(value)
+                            }
                         }
                     }
-                    Page.State.READY -> setImage()
-                    Page.State.ERROR -> setError()
+                    is Page.State.Ready -> setImage()
+                    is Page.State.Error -> setError()
                 }
             }
         }
@@ -182,7 +176,9 @@ class WebtoonPageHolder(
      * Called when the page is ready.
      */
     private suspend fun setImage() {
-        progressIndicator.setProgress(0)
+        progressContainer.isVisible = true
+        progressIndicator.show()
+        progressIndicator.completeAndFadeOut()
 
         val streamFn = page?.stream ?: return
 
@@ -199,13 +195,20 @@ class WebtoonPageHolder(
                     ReaderPageImageView.Config(
                         zoomDuration = viewer.config.doubleTapAnimDuration,
                         minimumScaleType = SubsamplingScaleImageView.SCALE_TYPE_FIT_WIDTH,
-                        cropBorders = viewer.config.imageCropBorders,
+                        cropBorders = viewer.config.run {
+                            if (viewer.hasMargins) { verticalCropBorders } else { webtoonCropBorders }
+                        },
+                        debugMode = viewer.config.debugMode,
                     ),
                 )
                 removeErrorLayout()
             }
         } catch (e: Throwable) {
-            logcat(LogPriority.ERROR, e)
+            val logMsg = "Failed to set reader page image"
+            if (e is CancellationException)
+                Logger.w(e) { logMsg }  // probably user exiting the reader page before the image loads
+            else
+                Logger.e(e) { logMsg }
             withUIContext {
                 setError()
             }
@@ -213,29 +216,16 @@ class WebtoonPageHolder(
     }
 
     private fun process(imageSource: BufferedSource): BufferedSource {
-        if (viewer.config.dualPageRotateToFit) {
-            return rotateDualPage(imageSource)
+        if (!viewer.config.splitPages) {
+            return imageSource
         }
 
-        if (viewer.config.dualPageSplit) {
-            val isDoublePage = ImageUtil.isWideImage(imageSource)
-            if (isDoublePage) {
-                val upperSide = if (viewer.config.dualPageInvert) ImageUtil.Side.LEFT else ImageUtil.Side.RIGHT
-                return ImageUtil.splitAndMerge(imageSource, upperSide)
-            }
-        }
-
-        return imageSource
-    }
-
-    private fun rotateDualPage(imageSource: BufferedSource): BufferedSource {
         val isDoublePage = ImageUtil.isWideImage(imageSource)
-        return if (isDoublePage) {
-            val rotation = if (viewer.config.dualPageRotateToFitInvert) -90f else 90f
-            ImageUtil.rotateImage(imageSource, rotation)
-        } else {
-            imageSource
+        if (!isDoublePage) {
+            return imageSource
         }
+
+        return ImageUtil.splitAndStackBitmap(imageSource, viewer.config.invertDoublePages, viewer.hasMargins)
     }
 
     /**
@@ -243,7 +233,7 @@ class WebtoonPageHolder(
      */
     private fun setError() {
         progressContainer.isVisible = false
-        initErrorLayout()
+        showErrorLayout(false)
     }
 
     /**
@@ -255,6 +245,14 @@ class WebtoonPageHolder(
     }
 
     /**
+     * Called when the image fails to decode.
+     */
+    private fun onImageDecodeError() {
+        progressContainer.isVisible = false
+        showErrorLayout(true)
+    }
+
+    /**
      * Creates a new progress bar.
      */
     private fun createProgressIndicator(): ReaderProgressIndicator {
@@ -263,6 +261,7 @@ class WebtoonPageHolder(
 
         val progress = ReaderProgressIndicator(context).apply {
             updateLayoutParams<FrameLayout.LayoutParams> {
+                gravity = Gravity.CENTER_HORIZONTAL
                 updateMargins(top = parentHeight / 4)
             }
         }
@@ -270,41 +269,24 @@ class WebtoonPageHolder(
         return progress
     }
 
-    /**
-     * Initializes a button to retry pages.
-     */
-    private fun initErrorLayout(): ReaderErrorBinding {
+    private fun showErrorLayout(withOpenInWebView: Boolean): ReaderErrorBinding {
         if (errorLayout == null) {
-            errorLayout = ReaderErrorBinding.inflate(LayoutInflater.from(context), frame, true)
-            errorLayout?.root?.layoutParams = FrameLayout.LayoutParams(
-                MATCH_PARENT,
-                (parentHeight * 0.8).toInt(),
-            )
-            errorLayout?.actionRetry?.setOnClickListener {
+            errorLayout = ReaderErrorBinding.inflate(LayoutInflater.from(context), frame, true).root
+            errorLayout?.binding?.actionRetry?.setOnClickListener {
                 page?.let { it.chapter.pageLoader?.retryPage(it) }
             }
         }
-
-        val imageUrl = page?.imageUrl
-        errorLayout?.actionOpenInWebView?.isVisible = imageUrl != null
-        if (imageUrl != null) {
-            if (imageUrl.startsWith("http", true)) {
-                errorLayout?.actionOpenInWebView?.setOnClickListener {
-                    val intent = WebViewActivity.newIntent(context, imageUrl)
-                    context.startActivity(intent)
-                }
-            }
+        val imageUrl = if (withOpenInWebView) {
+            page?.imageUrl
+        } else {
+            viewer.activity.viewModel.getChapterUrl(page?.chapter?.chapter)
         }
-
-        return errorLayout!!
+        return errorLayout!!.configureView(imageUrl)
     }
 
-    /**
-     * Removes the decode error layout from the holder, if found.
-     */
     private fun removeErrorLayout() {
         errorLayout?.let {
-            frame.removeView(it.root)
+            frame.removeView(it)
             errorLayout = null
         }
     }

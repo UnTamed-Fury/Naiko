@@ -15,7 +15,8 @@ data class SMOAuth(
     val expiresIn: Long,
     @SerialName("refresh_token")
     val refreshToken: String?,
-)
+) {
 
-// Access token lives 1 day
-fun SMOAuth.isExpired() = (System.currentTimeMillis() / 1000) > (createdAt + expiresIn - 3600)
+    // Access token lives 1 day
+    fun isExpired() = (System.currentTimeMillis() / 1000) > (createdAt + expiresIn - 3600)
+}

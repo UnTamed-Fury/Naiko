@@ -1,90 +1,75 @@
 package eu.kanade.tachiyomi.ui.reader.viewer
 
-import eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences
+import eu.kanade.tachiyomi.core.preference.Preference
+import eu.kanade.tachiyomi.data.preference.PreferencesHelper
+import eu.kanade.tachiyomi.data.preference.changesIn
 import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.flow.distinctUntilChanged
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import tachiyomi.core.common.preference.Preference
+import uy.kohesive.injekt.Injekt
+import uy.kohesive.injekt.api.get
+import yokai.domain.ui.settings.ReaderPreferences
 
 /**
  * Common configuration for all viewers.
  */
-abstract class ViewerConfig(readerPreferences: ReaderPreferences, private val scope: CoroutineScope) {
+abstract class ViewerConfig(
+    preferences: PreferencesHelper,
+    protected val scope: CoroutineScope,
+    readerPreferences: ReaderPreferences = Injekt.get(),
+) {
 
     var imagePropertyChangedListener: (() -> Unit)? = null
+    var reloadChapterListener: ((Boolean) -> Unit)? = null
 
     var navigationModeChangedListener: (() -> Unit)? = null
+    var navigationModeInvertedListener: (() -> Unit)? = null
 
-    var tappingInverted = ReaderPreferences.TappingInvertMode.NONE
     var longTapEnabled = true
-    var usePageTransitions = false
+    var tappingInverted = ViewerNavigation.TappingInvertMode.NONE
     var doubleTapAnimDuration = 500
     var volumeKeysEnabled = false
     var volumeKeysInverted = false
     var alwaysShowChapterTransition = true
+
+    var navigationOverlayForNewUser = false
     var navigationMode = 0
         protected set
 
-    var forceNavigationOverlay = false
-
-    var navigationOverlayOnStart = false
-
-    var dualPageSplit = false
-        protected set
-
-    var dualPageInvert = false
-        protected set
-
-    var dualPageRotateToFit = false
-        protected set
-
-    var dualPageRotateToFitInvert = false
-        protected set
+    var debugMode = false
 
     abstract var navigator: ViewerNavigation
         protected set
 
     init {
-        readerPreferences.readWithLongTap()
+        preferences.readWithLongTap()
             .register({ longTapEnabled = it })
 
-        readerPreferences.pageTransitions()
-            .register({ usePageTransitions = it })
-
-        readerPreferences.doubleTapAnimSpeed()
+        preferences.doubleTapAnimSpeed()
             .register({ doubleTapAnimDuration = it })
 
-        readerPreferences.readWithVolumeKeys()
+        preferences.readWithVolumeKeys()
             .register({ volumeKeysEnabled = it })
 
-        readerPreferences.readWithVolumeKeysInverted()
+        preferences.readWithVolumeKeysInverted()
             .register({ volumeKeysInverted = it })
 
-        readerPreferences.alwaysShowChapterTransition()
+        preferences.alwaysShowChapterTransition()
             .register({ alwaysShowChapterTransition = it })
 
-        forceNavigationOverlay = readerPreferences.showNavigationOverlayNewUser().get()
-        if (forceNavigationOverlay) {
-            readerPreferences.showNavigationOverlayNewUser().set(false)
-        }
-
-        readerPreferences.showNavigationOverlayOnStart()
-            .register({ navigationOverlayOnStart = it })
+        readerPreferences.debugMode()
+            .register({ debugMode = it })
     }
-
-    protected abstract fun defaultNavigation(): ViewerNavigation
-
-    abstract fun updateNavigation(navigationMode: Int)
 
     fun <T> Preference<T>.register(
         valueAssignment: (T) -> Unit,
         onChanged: (T) -> Unit = {},
     ) {
-        changes()
-            .onEach { valueAssignment(it) }
-            .distinctUntilChanged()
-            .onEach { onChanged(it) }
-            .launchIn(scope)
+        changesIn(scope) {
+            valueAssignment(it)
+            onChanged(it)
+        }
     }
+
+    protected abstract fun defaultNavigation(): ViewerNavigation
+
+    abstract fun updateNavigation(navigationMode: Int)
 }

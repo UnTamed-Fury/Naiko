@@ -1,98 +1,126 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <plurals name="lock_after_mins">
+    <plurals name="extension_updates_available">
+        <item quantity="one">Mise à jour d\'extension disponible</item>
+        <item quantity="many">%d mises à jour des extensions disponibles</item>
+        <item quantity="other">%d mises à jour des extensions disponibles</item>
+    </plurals>
+    <plurals name="notification_and_n_more">
+        <item quantity="one">et %1$d autre chapitre</item>
+        <item quantity="many">et %1$d autres chapitres</item>
+        <item quantity="other">et %1$d autres chapitres</item>
+    </plurals>
+    <plurals name="for_n_titles">
+        <item quantity="one">Pour le titre du %d</item>
+        <item quantity="many">Pour les titres des %d</item>
+        <item quantity="other">Pour les titres des %d</item>
+    </plurals>
+    <plurals name="remove_n_chapters">
+        <item quantity="one">Supprimer %1$d chapitre téléchargé \?</item>
+        <item quantity="many">Supprimer %1$d chapitres téléchargés \?</item>
+        <item quantity="other">Supprimer %1$d chapitres téléchargés \?</item>
+    </plurals>
+    <plurals name="category_plural">
+        <item quantity="one">%d catégorie</item>
+        <item quantity="many">%d catégories</item>
+        <item quantity="other">%d catégories</item>
+    </plurals>
+    <plurals name="after_minutes">
         <item quantity="one">Après %1$s minute</item>
         <item quantity="many">Après %1$s minutes</item>
         <item quantity="other">Après %1$s minutes</item>
     </plurals>
-    <plurals name="notification_chapters_generic">
-        <item quantity="one">%1$d nouveau chapitre</item>
-        <item quantity="many">%1$d nouveaux chapitres</item>
-        <item quantity="other">%1$d nouveaux chapitres</item>
+    <plurals name="cleanup_done">
+        <item quantity="one">Nettoyage terminé. %d dossier supprimé</item>
+        <item quantity="many">Nettoyage terminé. %d dossiers supprimés</item>
+        <item quantity="other">Nettoyage terminé. %d dossiers supprimés</item>
     </plurals>
-    <plurals name="notification_chapters_multiple_and_more">
-        <item quantity="one">Chapitre %1$s et 1 autre</item>
-        <item quantity="many">Chapitres %1$s et %2$d autres</item>
-        <item quantity="other">Chapitres %1$s et %2$d autres</item>
+    <plurals name="cache_cleared">
+        <item quantity="one">Cache effacé. %d fichier a été supprimé</item>
+        <item quantity="many">Cache effacé. %d fichiers ont été supprimés</item>
+        <item quantity="other">Cache effacé. %d fichiers ont été supprimés</item>
     </plurals>
-    <plurals name="notification_new_chapters_summary">
-        <item quantity="one">Pour %d titre</item>
-        <item quantity="many">Pour %d titres</item>
-        <item quantity="other">Pour %d titres</item>
+    <plurals name="manga_migrated">
+        <item quantity="one">%d manga migré</item>
+        <item quantity="many">%d mangas migrés</item>
+        <item quantity="other">%d mangas migrés</item>
     </plurals>
-    <plurals name="update_check_notification_ext_updates">
-        <item quantity="one">Mise à jour d\'extension disponible</item>
-        <item quantity="many">%d mises à jour d\'extensions disponibles</item>
-        <item quantity="other">%d mises à jour d\'extensions disponibles</item>
+    <plurals name="copy_manga">
+        <item quantity="one">Copier le manga %1$d%2$s \?</item>
+        <item quantity="many">Copier les mangas %1$d%2$s \?</item>
+        <item quantity="other">Copier les mangas %1$d%2$s \?</item>
     </plurals>
-    <plurals name="download_queue_summary">
-        <item quantity="one">%1$s restant</item>
-        <item quantity="many">%1$s restants</item>
-        <item quantity="other">%1$s restants</item>
+    <plurals name="migrate_manga">
+        <item quantity="one">Migrer le manga %1$d%2$s \?</item>
+        <item quantity="many">Migrer les mangas %1$d%2$s \?</item>
+        <item quantity="other">Migrer les mangas %1$d%2$s \?</item>
     </plurals>
-    <plurals name="num_categories">
-        <item quantity="one">%d catégorie</item>
-        <item quantity="many">%d catégories</item>
-        <item quantity="other">%d catégories</item>
+    <plurals name="deleted_chapters">
+        <item quantity="one">Un chapitre a été retiré de la source :
+\n%2$s
+\nSupprimer le téléchargement \?</item>
+        <item quantity="many">%1$s chapitres ont été retirés de la source :
+\n%2$s
+\n
+\nSupprimer les téléchargements \?</item>
+        <item quantity="other">%1$s chapitres ont été retirés de la source :
+\n%2$s
+\n
+\nSupprimer les téléchargements \?</item>
     </plurals>
     <plurals name="restore_completed_message">
         <item quantity="one">Effectuée en %1$s avec %2$s erreur</item>
         <item quantity="many">Effectuée en %1$s avec %2$s erreurs</item>
         <item quantity="other">Effectuée en %1$s avec %2$s erreurs</item>
     </plurals>
-    <plurals name="manga_num_chapters">
+    <plurals name="chapters_plural">
         <item quantity="one">%1$s chapitre</item>
         <item quantity="many">%1$s chapitres</item>
         <item quantity="other">%1$s chapitres</item>
     </plurals>
-    <plurals name="num_trackers">
-        <item quantity="one">Suivi par %d service</item>
-        <item quantity="many">Suivi par %d services</item>
-        <item quantity="other">Suivi par %d services</item>
+    <plurals name="pages_plural">
+        <item quantity="one">%1$d page</item>
+        <item quantity="many">%1$d pages</item>
+        <item quantity="other">%1$d pages</item>
+    </plurals>
+    <plurals name="_updates_pending">
+        <item quantity="one">%d mise à jour en attente</item>
+        <item quantity="many">%d mises à jour en attente</item>
+        <item quantity="other">%d mises à jour en attente</item>
+    </plurals>
+    <plurals name="extensions_updated_plural">
+        <item quantity="one">Extension mise à jour</item>
+        <item quantity="many">%d extensions mises à jour</item>
+        <item quantity="other">%d extensions mises à jour</item>
     </plurals>
     <plurals name="missing_chapters_warning">
         <item quantity="one">%d chapitre a été sauté, soit la source ne l\'a pas, soit il a été filtré</item>
         <item quantity="many">%d chapitres ont été sautés, soit la source ne les a pas, soit ils ont été filtrés</item>
         <item quantity="other">%d chapitres ont été sautés, soit la source ne les a pas, soit il ont été filtrés</item>
     </plurals>
-    <plurals name="relative_time">
-        <item quantity="one">Hier</item>
-        <item quantity="many">Il y a %1$d jours</item>
-        <item quantity="other">Il y a %1$d jours</item>
-    </plurals>
     <plurals name="next_unread_chapters">
         <item quantity="one">Chapitre suivant non lu</item>
-        <item quantity="many">Les %d chapitres suivants non lus</item>
-        <item quantity="other">Les %d chapitres suivants non lus</item>
+        <item quantity="many">Les %d suivants non lus</item>
+        <item quantity="other">Les %d suivants non lus</item>
     </plurals>
-    <plurals name="download_amount">
-        <item quantity="one">Chapitre suivant</item>
-        <item quantity="many">%d chapitres suivants</item>
-        <item quantity="other">%d chapitres suivants</item>
+    <plurals name="_series_types">
+        <item quantity="one">%d type de série</item>
+        <item quantity="many">%d types de série</item>
+        <item quantity="other">%d types de série</item>
     </plurals>
-    <plurals name="missing_chapters">
-        <item quantity="one">%1$s chapitre manquant</item>
-        <item quantity="many">%1$s chapitres manquants</item>
-        <item quantity="other">%1$s chapitres manquants</item>
+    <plurals name="_sources">
+        <item quantity="one">%d source</item>
+        <item quantity="many">%d sources</item>
+        <item quantity="other">%d sources</item>
     </plurals>
-    <plurals name="day">
-        <item quantity="one">1 jour</item>
-        <item quantity="many">%d jours</item>
-        <item quantity="other">%d jours</item>
+    <plurals name="_statuses">
+        <item quantity="one">%d état</item>
+        <item quantity="many">%d états</item>
+        <item quantity="other">%d états</item>
     </plurals>
-    <plurals name="num_repos">
-        <item quantity="one">%d dépôt</item>
-        <item quantity="many">%d dépôts</item>
-        <item quantity="other">%d dépôts</item>
-    </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="one">Demain</item>
-        <item quantity="many">Dans %1$d jours</item>
-        <item quantity="other">Dans %1$d jours</item>
-    </plurals>
-    <plurals name="pref_pages">
-        <item quantity="one">1 page</item>
-        <item quantity="many">%1$s pages</item>
-        <item quantity="other">%1$s pages</item>
+    <plurals name="_languages">
+        <item quantity="one">%d langue</item>
+        <item quantity="many">%d langues</item>
+        <item quantity="other">%d langues</item>
     </plurals>
 </resources>

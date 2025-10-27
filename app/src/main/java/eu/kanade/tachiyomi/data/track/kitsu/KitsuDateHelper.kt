@@ -6,11 +6,11 @@ import java.util.Locale
 
 object KitsuDateHelper {
 
-    private const val PATTERN = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
-    private val formatter = SimpleDateFormat(PATTERN, Locale.ENGLISH)
+    private const val pattern = "yyyy-MM-dd'T'HH:mm:ss.SSS'Z'"
+    private val formatter = SimpleDateFormat(pattern, Locale.ENGLISH)
 
     fun convert(dateValue: Long): String? {
-        if (dateValue == 0L) return null
+        if (dateValue <= 0L) return null
 
         return formatter.format(Date(dateValue))
     }

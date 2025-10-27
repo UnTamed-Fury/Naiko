@@ -1,32 +1,32 @@
 [versions]
-kotlin_version = "2.2.0"
-serialization_version = "1.9.0"
-xml_serialization_version = "0.90.3"
+kotlin = "2.1.21"
+serialization = "1.8.1"
+xml_serialization = "0.91.1"
 
 [libraries]
-reflect = { module = "org.jetbrains.kotlin:kotlin-reflect", version.ref = "kotlin_version" }
-gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin_version" }
-compose-compiler-gradle = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin_version" }
+gradle = { module = "org.jetbrains.kotlin:kotlin-gradle-plugin", version.ref = "kotlin" }
+compose-compiler-gradle = { module = "org.jetbrains.kotlin:compose-compiler-gradle-plugin", version.ref = "kotlin" }
 
-immutables = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version = "0.3.8" }
-
-coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version = "1.10.1" }
-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
+coroutines-bom = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-bom", version = "1.10.2" }
 coroutines-android = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-android" }
-coroutines-guava = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-guava" }
+coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-core" }
 coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test" }
-
-serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization_version" }
-serialization-json-okio = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json-okio", version.ref = "serialization_version" }
-serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "serialization_version" }
-serialization-xml-core = { module = "io.github.pdvrieze.xmlutil:core-android", version.ref = "xml_serialization_version" }
-serialization-xml = { module = "io.github.pdvrieze.xmlutil:serialization-android", version.ref = "xml_serialization_version" }
+serialization-json = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json", version.ref = "serialization" }
+serialization-json-okio = { module = "org.jetbrains.kotlinx:kotlinx-serialization-json-okio", version.ref = "serialization" }
+serialization-protobuf = { module = "org.jetbrains.kotlinx:kotlinx-serialization-protobuf", version.ref = "serialization" }
+serialization-xml-core = { module = "io.github.pdvrieze.xmlutil:core-android", version.ref = "xml_serialization" }
+serialization-xml = { module = "io.github.pdvrieze.xmlutil:serialization", version.ref = "xml_serialization" }
+immutable = { module = "org.jetbrains.kotlinx:kotlinx-collections-immutable", version = "0.4.0" }
 
 [bundles]
-coroutines = ["coroutines-core", "coroutines-android", "coroutines-guava"]
-serialization = ["serialization-json", "serialization-json-okio", "serialization-protobuf", "serialization-xml-core", "serialization-xml"]
+serialization = [
+    "serialization-json", "serialization-json-okio", "serialization-protobuf", "serialization-xml", "serialization-xml-core"
+]
+coroutines = [ "coroutines-android", "coroutines-core" ]
 
 [plugins]
-android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin_version" }
-compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin_version" }
-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin_version" }
+android = { id = "org.jetbrains.kotlin.android", version.ref = "kotlin" }
+compose-compiler = { id = "org.jetbrains.kotlin.plugin.compose", version.ref = "kotlin" }
+multiplatform = { id = "org.jetbrains.kotlin.multiplatform", version.ref = "kotlin" }
+serialization = { id = "org.jetbrains.kotlin.plugin.serialization", version.ref = "kotlin" }
+parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize" }

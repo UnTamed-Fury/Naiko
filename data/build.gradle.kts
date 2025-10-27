@@ -1,45 +1,38 @@
 plugins {
-    id("mihon.library")
-    kotlin("android")
-    kotlin("plugin.serialization")
+    id("yokai.android.library")
+    kotlin("multiplatform")
+    alias(kotlinx.plugins.serialization)
     alias(libs.plugins.sqldelight)
 }
 
-android {
-    namespace = "tachiyomi.data"
-
-    defaultConfig {
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    sqldelight {
-        databases {
-            create("Database") {
-                packageName.set("tachiyomi.data")
-                dialect(libs.sqldelight.dialects.sql)
-                schemaOutputDirectory.set(project.file("./src/main/sqldelight"))
-                srcDirs.from(project.file("./src/main/sqldelight"))
+kotlin {
+    androidTarget()
+    sourceSets {
+        val commonMain by getting {
+            dependencies {
+                api(projects.domain)
+                api(libs.bundles.db)
             }
-            create("AnimeDatabase") {
-                packageName.set("tachiyomi.mi.data")
-                dialect(libs.sqldelight.dialects.sql)
-                schemaOutputDirectory.set(project.file("./src/main/sqldelightanime"))
-                srcDirs.from(project.file("./src/main/sqldelightanime"))
+        }
+        val androidMain by getting {
+            dependencies {
+                api(libs.bundles.db.android)
+                implementation(projects.source.api)
             }
         }
     }
 }
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-opt-in=kotlinx.serialization.ExperimentalSerializationApi")
-    }
+android {
+    namespace = "yokai.data"
 }
 
-dependencies {
-    implementation(projects.sourceApi)
-    implementation(projects.domain)
-    implementation(projects.core.common)
-
-    api(libs.bundles.sqldelight)
+sqldelight {
+    databases {
+        create("Database") {
+            packageName.set("yokai.data")
+            dialect(libs.sqldelight.dialects.sql)
+            schemaOutputDirectory.set(project.file("./src/commonMain/sqldelight"))
+        }
+    }
 }

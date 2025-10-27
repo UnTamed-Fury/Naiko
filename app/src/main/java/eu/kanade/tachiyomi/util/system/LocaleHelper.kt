@@ -2,8 +2,9 @@ package eu.kanade.tachiyomi.util.system
 
 import android.content.Context
 import androidx.core.os.LocaleListCompat
-import tachiyomi.core.common.i18n.stringResource
-import tachiyomi.i18n.MR
+import yokai.i18n.MR
+import yokai.util.lang.getString
+import eu.kanade.tachiyomi.ui.source.SourcePresenter
 import java.util.Locale
 
 /**
@@ -12,27 +13,14 @@ import java.util.Locale
 object LocaleHelper {
 
     /**
-     * Sorts by display name, except keeps the "all" (displayed as "Multi") locale at the top.
-     */
-    val comparator = { a: String, b: String ->
-        if (a == "all") {
-            -1
-        } else if (b == "all") {
-            1
-        } else {
-            getLocalizedDisplayName(a).compareTo(getLocalizedDisplayName(b))
-        }
-    }
-
-    /**
-     * Returns display name of a string language code.
+     * Returns Display name of a string language code
      */
     fun getSourceDisplayName(lang: String?, context: Context): String {
         return when (lang) {
-            LAST_USED_KEY -> context.stringResource(MR.strings.last_used_source)
-            PINNED_KEY -> context.stringResource(MR.strings.pinned_sources)
-            "other" -> context.stringResource(MR.strings.other_source)
-            "all" -> context.stringResource(MR.strings.multi_lang)
+            "", "other" -> context.getString(MR.strings.other)
+            SourcePresenter.LAST_USED_KEY -> context.getString(MR.strings.last_used)
+            SourcePresenter.PINNED_KEY -> context.getString(MR.strings.pinned)
+            "all" -> context.getString(MR.strings.all)
             else -> getLocalizedDisplayName(lang)
         }
     }
@@ -48,7 +36,7 @@ object LocaleHelper {
     }
 
     /**
-     * Returns display name of a string language code.
+     * Returns Display name of a string language code
      *
      * @param lang empty for system language
      */
@@ -65,21 +53,4 @@ object LocaleHelper {
         }
         return locale!!.getDisplayName(locale).replaceFirstChar { it.uppercase(locale) }
     }
-
-    /**
-     * Return the default languages enabled for the sources.
-     */
-    fun getDefaultEnabledLanguages(): Set<String> {
-        return setOf("all", "en", Locale.getDefault().language)
-    }
-
-    /**
-     * Return English display string from string language code
-     */
-    fun getSimpleLocaleDisplayName(): String {
-        return LocaleListCompat.getDefault()[0]!!.displayLanguage
-    }
 }
-
-internal const val PINNED_KEY = "pinned"
-internal const val LAST_USED_KEY = "last_used"

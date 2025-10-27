@@ -9,13 +9,22 @@ import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
  */
 abstract class PageLoader {
 
+    abstract val isLocal: Boolean
+
     /**
      * Whether this loader has been already recycled.
      */
     var isRecycled = false
         private set
 
-    abstract var isLocal: Boolean
+    /**
+     * Recycles this loader. Implementations must override this method to clean up any active
+     * resources.
+     */
+    @CallSuper
+    open fun recycle() {
+        isRecycled = true
+    }
 
     /**
      * Returns the list of pages of a chapter.
@@ -27,20 +36,11 @@ abstract class PageLoader {
      * Progress of the page loading should be followed via [page.statusFlow].
      * [loadPage] is not currently guaranteed to complete, so it should be launched asynchronously.
      */
-    open suspend fun loadPage(page: ReaderPage) {}
+    abstract suspend fun loadPage(page: ReaderPage)
 
     /**
      * Retries the given [page] in case it failed to load. This method only makes sense when an
      * online source is used.
      */
     open fun retryPage(page: ReaderPage) {}
-
-    /**
-     * Recycles this loader. Implementations must override this method to clean up any active
-     * resources.
-     */
-    @CallSuper
-    open fun recycle() {
-        isRecycled = true
-    }
 }

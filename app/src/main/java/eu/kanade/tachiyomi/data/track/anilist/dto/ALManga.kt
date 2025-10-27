@@ -1,10 +1,10 @@
 package eu.kanade.tachiyomi.data.track.anilist.dto
 
-import eu.kanade.tachiyomi.data.database.models.manga.MangaTrack
-import eu.kanade.tachiyomi.data.track.TrackerManager
+import eu.kanade.tachiyomi.data.database.models.Track
+import eu.kanade.tachiyomi.data.track.TrackManager
 import eu.kanade.tachiyomi.data.track.anilist.Anilist
 import eu.kanade.tachiyomi.data.track.anilist.AnilistApi
-import eu.kanade.tachiyomi.data.track.model.MangaTrackSearch
+import eu.kanade.tachiyomi.data.track.model.TrackSearch
 import eu.kanade.tachiyomi.util.lang.htmlDecode
 import java.text.SimpleDateFormat
 import java.util.Locale
@@ -19,16 +19,15 @@ data class ALManga(
     val startDateFuzzy: Long,
     val totalChapters: Long,
     val averageScore: Int,
-    val staff: ALStaff,
 ) {
-    fun toTrack() = MangaTrackSearch.create(TrackerManager.ANILIST).apply {
-        remote_id = remoteId
+    fun toTrack() = TrackSearch.create(TrackManager.ANILIST).apply {
+        media_id = remoteId
         title = this@ALManga.title
         total_chapters = totalChapters
         cover_url = imageUrl
         summary = description?.htmlDecode() ?: ""
-        score = averageScore.toDouble()
-        tracking_url = AnilistApi.mangaUrl(remote_id)
+        score = averageScore.toFloat()  // TODO: Turn to Double
+        tracking_url = AnilistApi.mangaUrl(media_id)
         publishing_status = publishingStatus
         publishing_type = format
         if (startDateFuzzy != 0L) {
@@ -38,11 +37,6 @@ data class ALManga(
             } catch (e: IllegalArgumentException) {
                 ""
             }
-        }
-        staff.edges.forEach {
-            val name = it.node.name() ?: return@forEach
-            if ("Story" in it.role) authors += name
-            if ("Art" in it.role) artists += name
         }
     }
 }
@@ -55,19 +49,17 @@ data class ALUserManga(
     val startDateFuzzy: Long,
     val completedDateFuzzy: Long,
     val manga: ALManga,
-    val private: Boolean,
 ) {
-    fun toTrack() = MangaTrack.create(TrackerManager.ANILIST).apply {
-        remote_id = manga.remoteId
+    fun toTrack() = Track.create(TrackManager.ANILIST).apply {
+        media_id = manga.remoteId
         title = manga.title
         status = toTrackStatus()
-        score = scoreRaw.toDouble()
+        score = scoreRaw.toFloat()  // TODO: Turn to Double
         started_reading_date = startDateFuzzy
         finished_reading_date = completedDateFuzzy
-        last_chapter_read = chaptersRead.toDouble()
+        last_chapter_read = chaptersRead.toFloat()  // TODO: Turn to Double
         library_id = libraryId
         total_chapters = manga.totalChapters
-        private = this@ALUserManga.private
     }
 
     private fun toTrackStatus() = when (listStatus) {

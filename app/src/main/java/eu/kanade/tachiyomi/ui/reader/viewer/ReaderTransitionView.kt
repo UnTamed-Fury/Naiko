@@ -11,12 +11,13 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.platform.AbstractComposeView
-import eu.kanade.presentation.reader.ChapterTransition
-import eu.kanade.presentation.theme.TachiyomiTheme
-import eu.kanade.tachiyomi.data.download.manga.MangaDownloadManager
+import eu.kanade.tachiyomi.data.download.DownloadManager
+import eu.kanade.tachiyomi.domain.manga.models.Manga
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
-import tachiyomi.domain.entries.manga.model.Manga
-import tachiyomi.source.local.entries.manga.isLocal
+import eu.kanade.tachiyomi.util.isLocal
+import eu.kanade.tachiyomi.util.system.ThemeUtil
+import yokai.presentation.reader.ChapterTransition
+import yokai.presentation.theme.YokaiTheme
 
 class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     AbstractComposeView(context, attrs) {
@@ -27,18 +28,18 @@ class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: At
         layoutParams = LayoutParams(LayoutParams.WRAP_CONTENT, LayoutParams.WRAP_CONTENT)
     }
 
-    fun bind(transition: ChapterTransition, downloadManager: MangaDownloadManager, manga: Manga?) {
+    fun bind(theme: Int, transition: ChapterTransition, downloadManager: DownloadManager, manga: Manga?) {
         data = if (manga != null) {
             Data(
+                theme = theme,
+                manga = manga,
                 transition = transition,
                 currChapterDownloaded = transition.from.pageLoader?.isLocal == true,
                 goingToChapterDownloaded = manga.isLocal() ||
                     transition.to?.chapter?.let { goingToChapter ->
                         downloadManager.isChapterDownloaded(
-                            chapterName = goingToChapter.name,
-                            chapterScanlator = goingToChapter.scanlator,
-                            mangaTitle = manga.title,
-                            sourceId = manga.source,
+                            chapter = goingToChapter,
+                            manga = manga,
                             skipCache = true,
                         )
                     } ?: false,
@@ -51,12 +52,13 @@ class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: At
     @Composable
     override fun Content() {
         data?.let {
-            TachiyomiTheme {
-                CompositionLocalProvider(
+            YokaiTheme {
+                CompositionLocalProvider (
                     LocalTextStyle provides MaterialTheme.typography.bodySmall,
-                    LocalContentColor provides MaterialTheme.colorScheme.onBackground,
+                    LocalContentColor provides ThemeUtil.readerContentColor(it.theme, MaterialTheme.colorScheme.onBackground),
                 ) {
                     ChapterTransition(
+                        manga = it.manga,
                         transition = it.transition,
                         currChapterDownloaded = it.currChapterDownloaded,
                         goingToChapterDownloaded = it.goingToChapterDownloaded,
@@ -65,9 +67,34 @@ class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: At
             }
         }
     }
+
     private data class Data(
+        val theme: Int,
+        val manga: Manga,
         val transition: ChapterTransition,
         val currChapterDownloaded: Boolean,
         val goingToChapterDownloaded: Boolean,
     )
+}
+
+fun missingChapterCount(transition: ChapterTransition): Int {
+    if (transition.to == null) {
+        return 0
+    }
+
+    val hasMissingChapters = when (transition) {
+        is ChapterTransition.Prev -> hasMissingChapters(transition.from, transition.to)
+        is ChapterTransition.Next -> hasMissingChapters(transition.to, transition.from)
+    }
+
+    if (!hasMissingChapters) {
+        return 0
+    }
+
+    val chapterDifference = when (transition) {
+        is ChapterTransition.Prev -> calculateChapterDifference(transition.from, transition.to)
+        is ChapterTransition.Next -> calculateChapterDifference(transition.to, transition.from)
+    }
+
+    return chapterDifference.toInt()
 }

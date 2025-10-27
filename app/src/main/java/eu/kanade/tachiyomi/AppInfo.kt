@@ -1,11 +1,10 @@
 package eu.kanade.tachiyomi
 
-import tachiyomi.core.common.util.system.ImageUtil
+import eu.kanade.tachiyomi.util.system.ImageUtil
 
 /**
  * Used by extensions.
  */
-@Suppress("UNUSED")
 object AppInfo {
     /**
      * Version code of the host application. May be useful for sharing as User-Agent information.
@@ -29,5 +28,5 @@ object AppInfo {
      *
      * @since extension-lib 1.5
      */
-    fun getSupportedImageMimeTypes(): List<String> = ImageUtil.ImageType.entries.map { it.mime }
+    fun getSupportedImageMimeTypes(): List<String> = ImageUtil.ImageType.values().map { it.mime }
 }

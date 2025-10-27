@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tachiyomi_primary">#0057CE</color>
+    <color name="tachiyomi_onPrimary">#FFFFFF</color>
+    <color name="tachiyomi_primaryContainer">#D8E2FF</color>
+    <color name="tachiyomi_onPrimaryContainer">#001947</color>
+    <color name="tachiyomi_secondary">#0057CE</color>
+    <color name="tachiyomi_onSecondary">#FFFFFF</color>
+    <color name="tachiyomi_secondaryContainer">#D8E2FF</color>
+    <color name="tachiyomi_onSecondaryContainer">#001947</color>
+    <color name="tachiyomi_tertiary">#006E17</color>
+    <color name="tachiyomi_onTertiary">#FFFFFF</color>
+    <color name="tachiyomi_tertiaryContainer">#95F990</color>
+    <color name="tachiyomi_onTertiaryContainer">#002202</color>
+    <color name="tachiyomi_background">#FDFBFF</color>
+    <color name="tachiyomi_onBackground">#1B1B1E</color>
+    <color name="tachiyomi_surface">#FDFBFF</color>
+    <color name="tachiyomi_onSurface">#1B1B1E</color>
+    <color name="tachiyomi_surfaceVariant">#E1E2EC</color>
+    <color name="tachiyomi_onSurfaceVariant">#44464E</color>
+    <color name="tachiyomi_outline">#757780</color>
+    <color name="tachiyomi_inverseOnSurface">#F2F0F4</color>
+    <color name="tachiyomi_inverseSurface">#303033</color>
+    <color name="tachiyomi_primaryInverse">#AEC6FF</color>
+
+    <!-- Application Colors -->
+    <color name="primaryVariantTachiyomi">#E5ECF4</color>
+    <color name="colorPrimaryInactive">#C2424242</color>
+    <color name="primaryTachiyomi">#54759E</color>
+    <color name="onPrimaryTachiyomi">@color/md_white_1000</color>
+    <color name="primaryInverseTachiyomi">#78bcff</color>
+    <color name="splashBackground">@color/yokai_background</color>
+    <color name="secondaryTachiyomi">@color/md_blue_A400</color>
+    <color name="rippleColorTachiyomi">#1F2979FF</color>
+    <color name="secondaryVariantTachiyomi">#0d2f68</color>
+    <color name="actionModeShadow">@color/md_black_1000_38</color>
+    <color name="gray_button">#404040</color>
+    <color name="legacyRippleColor">@color/md_black_1000_12</color>
+
+    <color name="read_chapter">@color/material_on_background_disabled</color>
+
+    <color name="unread_badge_text">@color/md_white_1000</color>
+    <color name="download_badge">@color/pale_green</color>
+    <color name="download_badge_text">@color/md_black_1000</color>
+    <color name="download_badge_light">@color/strong_green</color>
+    <color name="download_badge_light_text">@color/md_white_1000</color>
+    <color name="total_badge">@color/md_deep_purple_500</color>
+    <color name="total_badge_text">@color/md_white_1000</color>
+
+    <color name="colorAmoledPrimary">@color/md_black_1000</color>
+
+    <color name="textColorPrimaryInverse">@color/md_white_1000</color>
+
+    <color name="strong_divider">@color/md_black_1000_38</color>
+    <color name="divider">@color/md_black_1000_12</color>
+    <color name="download">@color/md_green_800</color>
+
+    <color name="background">@color/md_grey_50</color>
+    <color name="dialog">@color/md_white_1000</color>
+    <color name="splashIcon">@color/md_black_1000</color>
+    <color name="colorOnSurface">@color/md_black_1000</color>
+    <color name="colorOnBackground">@color/md_black_1000_87</color>
+    <color name="downloadBadgeDayNight">@color/download_badge</color>
+    <color name="downloadBadgeDayNightInverse">@color/download_badge_light</color>
+    <color name="colorOnDownloadBadgeDayNight">@color/black</color>
+
+    <!-- Text Colors -->
+    <color name="md_black_1000_87">#DE000000</color>
+    <color name="md_black_1000_54">#8A000000</color>
+    <color name="md_black_1000_38">#61000000</color>
+    <color name="md_black_1000_12">#1F000000</color>
+
+    <color name="md_white_1000">#FFFFFFFF</color>
+    <color name="md_white_1000_76">#C2FFFFFF</color>
+    <color name="md_white_1000_54">#8AFFFFFF</color>
+    <color name="md_white_1000_50">#80FFFFFF</color>
+    <color name="md_white_1000_20">#33FFFFFF</color>
+    <color name="md_white_1000_38">#61FFFFFF</color>
+    <color name="md_white_1000_12">#1FFFFFFF</color>
+
+    <!-- Material Design Colors -->
+    <color name="md_black_1000">#000000</color>
+
+    <color name="md_grey_50">#FAFAFA</color>
+    <color name="md_grey_700">#616161</color>
+
+    <color name="md_blue_A400">#2979FF</color>
+
+    <color name="md_red_400">#EF5350</color>
+    <color name="md_red_500">#F44336</color>
+
+    <color name="md_green_700">#388E3C</color>
+    <color name="md_green_800">#2E7D32</color>
+
+    <color name="md_deep_purple_500">#673AB7</color>
+
+    <color name="holo_red">#AA2200</color>
+    <color name="primaryRed">#C14033</color>
+
+    <color name="pale_green">#99CC99</color>
+    <color name="strong_green">#106010</color>
+
+    <color name="black">#000</color>
+
+    <!-- Navigation overlay colors -->
+    <color name="navigation_menu">#CC95818D</color>
+    <color name="navigation_next">#CCA6CFD5</color>
+    <color name="navigation_prev">#CC7D1128</color>
+
+    <!-- Yokai -->
+    <color name="yokai_background">#0E1418</color>
+
+    <!-- Spring Blossom -->
+    <color name="primaryDuskDawn">#a149bf</color>
+    <color name="primaryInverseDuskDawn">#cd95e0</color>
+    <color name="secondaryDuskDawn">#c43c97</color>
+    <color name="rippleColorDuskDawn">#1Fc43c97</color>
+    <color name="secondaryVariantDuskDawn">#4c163a</color>
+    <color name="backgroundDuskDawn">#f7f4f8</color>
+    <color name="primaryVariantDuskDawn">#efe3f3</color>
+    <color name="onPrimaryDuskDawn">@color/onPrimaryTachiyomi</color>
+    <color name="colorOnBackgroundDuskDawn">#DE240728</color>
+    <color name="appBarTextDuskDawn">#DE4c0d4b</color>
+
+    <!-- Teal/Sapphire Theme -->
+    <color name="secondaryTealSapphire">#05B1A4</color>
+    <color name="rippleColorTealSapphire">#1F05B1A4</color>
+    <color name="secondaryVariantTealSapphire">#12524b</color>
+    <color name="primaryTealSapphire">#5f9c96</color>
+    <color name="primaryInverseTealSapphire">#a1e1db</color>
+    <color name="primaryVariantTealSapphire">#d4f1e6</color>
+    <color name="onPrimaryTealSapphire">@color/onPrimaryTachiyomi</color>
+    <color name="backgroundTealSapphire">#f0f7f7</color>
+    <color name="colorOnBackgroundTealSapphire">#DE072926</color>
+    <color name="tabBarIconColorTealSapphire">#DE072927</color>
+    <color name="appBarTextTealSapphire">#DE0a302e</color>
+
+    <!-- Flat Lime Theme -->
+    <color name="primaryLime">#57BD79</color>
+    <color name="primaryVariantLime">#D9ECE0</color>
+    <color name="primaryInverseLime">#AEDFC0</color>
+    <color name="onPrimaryLime">@color/onPrimaryTachiyomi</color>
+    <color name="secondaryLime">#1DA750</color>
+    <color name="secondaryVariantLime">#065124</color>
+    <color name="rippleColorLime">#1F4AF88A</color>
+    <color name="backgroundLime">#E9EFEB</color>
+    <color name="downloadBadgeLime">#80CAD3</color>
+
+    <!-- Strawberry Daiquiri Theme -->
+    <color name="primaryStrawberry">#d31d3b</color>
+    <color name="primaryVariantStrawberry">#F3E7E7</color>
+    <color name="onPrimaryStrawberry">@color/onPrimaryTachiyomi</color>
+    <color name="primaryInverseStrawberry">#ef8e9e</color>
+    <color name="secondaryStrawberry">#ED4A65</color>
+    <color name="rippleColorStrawberry">#1FED4A65</color>
+    <color name="secondaryVariantStrawberry">#68101f</color>
+    <color name="backgroundStrawberries">@color/background</color>
+
+    <!-- Tako Theme -->
+    <color name="primaryTako">#463561</color>
+    <color name="primaryVariantTako">#E5DCF4</color>
+    <color name="primaryInverseTako">#ac8fd9</color>
+    <color name="onPrimaryTako">@color/onPrimaryTachiyomi</color>
+    <color name="secondaryTako">#66577E</color>
+    <color name="onSecondaryTako">#F3B375</color>
+    <color name="secondaryVariantTako">#3f2b49</color>
+    <color name="tabBarIconColorTako">#574360</color>
+    <color name="rippleColorTako">#1F66577E</color>
+    <color name="surfaceTako">#F7F5FF</color>
+    <color name="backgroundTako">#F2EDF7</color>
+    <color name="actionTintTako">#221b28</color>
+    <color name="inactiveTabTako">#C2221b28</color>
+
+    <!-- Yotsuba Theme -->
+    <color name="primaryYotsuba">#ba5427</color>
+    <color name="primaryVariantYotsuba">#F6EBE7</color>
+    <color name="onPrimaryYotsuba">@color/onPrimaryTachiyomi</color>
+    <color name="primaryInverseYotsuba">#efaa8d</color>
+    <color name="secondaryYotsuba">#dc6d3d</color>
+    <color name="rippleColorYotsuba">#1Fdc6d3d</color>
+    <color name="secondaryVariantYotsuba">#4e1e0a</color>
+
+    <!-- Yin Yang Theme -->
+    <color name="primaryVariantYinYang">#FFFFFF</color>
+    <color name="primaryYinYang">#333333</color>
+    <color name="primaryInverseYinYang">#FFFFFF</color>
+    <color name="onPrimaryYinYang">@color/onPrimaryTachiyomi</color>
+    <color name="secondaryYinYang">#000000</color>
+    <color name="rippleColorYinYang">#1F000000</color>
+    <color name="secondaryVariantYinYang">#000000</color>
+    <color name="onSecondaryYinYang">@color/md_white_1000</color>
+
+    <!-- Doki Theme -->
+    <color name="primaryDoki">#FDE289</color>
+    <color name="primaryVariantDoki">#070F2C</color>
+    <color name="primaryInverseDoki">#EBBA6C</color>
+    <color name="onPrimaryDoki">#070F2C</color>
+    <color name="secondaryDoki">#EABD62</color>
+    <color name="secondaryVariantDoki">#F4CC8A</color>
+    <color name="tabBarIconColorDoki">@color/secondaryDoki</color>
+    <color name="rippleColorDoki">#1FEABD62</color>
+    <color name="backgroundDoki">#040716</color>
+</resources>

@@ -1,8 +1,8 @@
 package eu.kanade.tachiyomi.data.backup.models
 
+import eu.kanade.tachiyomi.data.database.models.ChapterImpl
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.protobuf.ProtoNumber
-import tachiyomi.domain.items.chapter.model.Chapter
 
 @Serializable
 data class BackupChapter(
@@ -14,62 +14,59 @@ data class BackupChapter(
     @ProtoNumber(4) var read: Boolean = false,
     @ProtoNumber(5) var bookmark: Boolean = false,
     // lastPageRead is called progress in 1.x
-    @ProtoNumber(6) var lastPageRead: Long = 0,
+    @ProtoNumber(6) var lastPageRead: Int = 0,
     @ProtoNumber(7) var dateFetch: Long = 0,
     @ProtoNumber(8) var dateUpload: Long = 0,
     // chapterNumber is called number is 1.x
     @ProtoNumber(9) var chapterNumber: Float = 0F,
-    @ProtoNumber(10) var sourceOrder: Long = 0,
-    @ProtoNumber(11) var lastModifiedAt: Long = 0,
-    @ProtoNumber(12) var version: Long = 0,
+    @ProtoNumber(10) var sourceOrder: Int = 0,
+
+    // J2K specific values
+    @ProtoNumber(800) var pagesLeft: Int = 0,
 ) {
-    fun toChapterImpl(): Chapter {
-        return Chapter.create().copy(
-            url = this@BackupChapter.url,
-            name = this@BackupChapter.name,
-            chapterNumber = this@BackupChapter.chapterNumber.toDouble(),
-            scanlator = this@BackupChapter.scanlator,
-            read = this@BackupChapter.read,
-            bookmark = this@BackupChapter.bookmark,
-            lastPageRead = this@BackupChapter.lastPageRead,
-            dateFetch = this@BackupChapter.dateFetch,
-            dateUpload = this@BackupChapter.dateUpload,
-            sourceOrder = this@BackupChapter.sourceOrder,
-            lastModifiedAt = this@BackupChapter.lastModifiedAt,
-            version = this@BackupChapter.version,
+    fun toChapterImpl(): ChapterImpl {
+        return ChapterImpl().apply {
+            url = this@BackupChapter.url
+            name = this@BackupChapter.name
+            chapter_number = this@BackupChapter.chapterNumber
+            scanlator = this@BackupChapter.scanlator
+            read = this@BackupChapter.read
+            bookmark = this@BackupChapter.bookmark
+            last_page_read = this@BackupChapter.lastPageRead
+            date_fetch = this@BackupChapter.dateFetch
+            date_upload = this@BackupChapter.dateUpload
+            source_order = this@BackupChapter.sourceOrder
+            pages_left = this@BackupChapter.pagesLeft
+        }
+    }
+
+    companion object {
+        fun mapper(
+            id: Long,
+            mangaId: Long,
+            url: String,
+            name: String,
+            scanlator: String?,
+            read: Boolean,
+            bookmark: Boolean,
+            lastPageRead: Long,
+            pagesLeft: Long,
+            chapterNumber: Double,
+            sourceOrder: Long,
+            dateFetch: Long,
+            dateUpload: Long,
+        ) = BackupChapter(
+            url = url,
+            name = name,
+            scanlator = scanlator,
+            read = read,
+            bookmark = bookmark,
+            lastPageRead = lastPageRead.toInt(),
+            pagesLeft = pagesLeft.toInt(),
+            chapterNumber = chapterNumber.toFloat(),
+            sourceOrder = sourceOrder.toInt(),
+            dateFetch = dateFetch,
+            dateUpload = dateUpload,
         )
     }
-}
-
-val backupChapterMapper = {
-        _: Long,
-        _: Long,
-        url: String,
-        name: String,
-        scanlator: String?,
-        read: Boolean,
-        bookmark: Boolean,
-        lastPageRead: Long,
-        chapterNumber: Double,
-        source_order: Long,
-        dateFetch: Long,
-        dateUpload: Long,
-        lastModifiedAt: Long,
-        version: Long,
-        _: Long,
-    ->
-    BackupChapter(
-        url = url,
-        name = name,
-        chapterNumber = chapterNumber.toFloat(),
-        scanlator = scanlator,
-        read = read,
-        bookmark = bookmark,
-        lastPageRead = lastPageRead,
-        dateFetch = dateFetch,
-        dateUpload = dateUpload,
-        sourceOrder = source_order,
-        lastModifiedAt = lastModifiedAt,
-        version = version,
-    )
 }

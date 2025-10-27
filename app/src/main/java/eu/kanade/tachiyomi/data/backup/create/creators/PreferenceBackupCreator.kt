@@ -1,8 +1,8 @@
 package eu.kanade.tachiyomi.data.backup.create.creators
 
-import eu.kanade.tachiyomi.animesource.ConfigurableAnimeSource
-import eu.kanade.tachiyomi.animesource.preferenceKey
-import eu.kanade.tachiyomi.animesource.sourcePreferences
+import eu.kanade.tachiyomi.core.preference.Preference
+import eu.kanade.tachiyomi.core.preference.PreferenceStore
+import eu.kanade.tachiyomi.data.backup.create.BackupOptions
 import eu.kanade.tachiyomi.data.backup.models.BackupPreference
 import eu.kanade.tachiyomi.data.backup.models.BackupSourcePreferences
 import eu.kanade.tachiyomi.data.backup.models.BooleanPreferenceValue
@@ -12,38 +12,24 @@ import eu.kanade.tachiyomi.data.backup.models.LongPreferenceValue
 import eu.kanade.tachiyomi.data.backup.models.StringPreferenceValue
 import eu.kanade.tachiyomi.data.backup.models.StringSetPreferenceValue
 import eu.kanade.tachiyomi.source.ConfigurableSource
+import eu.kanade.tachiyomi.source.SourceManager
 import eu.kanade.tachiyomi.source.preferenceKey
 import eu.kanade.tachiyomi.source.sourcePreferences
-import tachiyomi.core.common.preference.Preference
-import tachiyomi.core.common.preference.PreferenceStore
-import tachiyomi.domain.source.anime.service.AnimeSourceManager
-import tachiyomi.domain.source.manga.service.MangaSourceManager
+import eu.kanade.tachiyomi.ui.library.LibrarySort
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 
 class PreferenceBackupCreator(
-    private val animeSourceManager: AnimeSourceManager = Injekt.get(),
-    private val mangaSourceManager: MangaSourceManager = Injekt.get(),
+    private val sourceManager: SourceManager = Injekt.get(),
     private val preferenceStore: PreferenceStore = Injekt.get(),
 ) {
-
     fun createApp(includePrivatePreferences: Boolean): List<BackupPreference> {
         return preferenceStore.getAll().toBackupPreferences()
             .withPrivatePreferences(includePrivatePreferences)
     }
 
     fun createSource(includePrivatePreferences: Boolean): List<BackupSourcePreferences> {
-        val animePreferences = animeSourceManager.getCatalogueSources()
-            .filterIsInstance<ConfigurableAnimeSource>()
-            .map {
-                BackupSourcePreferences(
-                    it.preferenceKey(),
-                    it.sourcePreferences().all.toBackupPreferences()
-                        .withPrivatePreferences(includePrivatePreferences),
-                )
-            }
-            .filter { it.prefs.isNotEmpty() }
-        val mangaPreferences = mangaSourceManager.getCatalogueSources()
+        return sourceManager.getOnlineSources()
             .filterIsInstance<ConfigurableSource>()
             .map {
                 BackupSourcePreferences(
@@ -52,15 +38,18 @@ class PreferenceBackupCreator(
                         .withPrivatePreferences(includePrivatePreferences),
                 )
             }
-            .filter { it.prefs.isNotEmpty() }
-        return animePreferences + mangaPreferences
     }
 
     @Suppress("UNCHECKED_CAST")
     private fun Map<String, *>.toBackupPreferences(): List<BackupPreference> {
-        return this
-            .filterKeys { !Preference.isAppState(it) }
+        return this.filterKeys { !Preference.isAppState(it) }
             .mapNotNull { (key, value) ->
+                // j2k fork differences
+                if (key == "library_sorting_mode" && value is Int) {
+                    val stringValue = (LibrarySort.valueOf(value) ?: LibrarySort.Title).serialize()
+                    return@mapNotNull BackupPreference(key, StringPreferenceValue(stringValue))
+                }
+                // end j2k fork differences
                 when (value) {
                     is Int -> BackupPreference(key, IntPreferenceValue(value))
                     is Long -> BackupPreference(key, LongPreferenceValue(value))

@@ -1,6 +1,6 @@
 package eu.kanade.tachiyomi.data.track.mangaupdates.dto
 
-import eu.kanade.tachiyomi.data.track.model.MangaTrackSearch
+import eu.kanade.tachiyomi.data.track.model.TrackSearch
 import eu.kanade.tachiyomi.util.lang.htmlDecode
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -23,9 +23,9 @@ data class MURecord(
     val latestChapter: Int? = null,
 )
 
-fun MURecord.toTrackSearch(id: Long): MangaTrackSearch {
-    return MangaTrackSearch.create(id).apply {
-        remote_id = this@toTrackSearch.seriesId ?: 0L
+fun MURecord.toTrackSearch(id: Long): TrackSearch {
+    return TrackSearch.create(id).apply {
+        media_id = this@toTrackSearch.seriesId ?: 0L
         title = this@toTrackSearch.title?.htmlDecode() ?: ""
         total_chapters = 0
         cover_url = this@toTrackSearch.image?.url?.original ?: ""

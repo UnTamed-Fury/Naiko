@@ -1,10 +1,14 @@
 package eu.kanade.tachiyomi.ui.reader.viewer
 
+import android.annotation.SuppressLint
 import android.content.Context
 import android.util.AttributeSet
 import android.view.MotionEvent
 import com.google.android.material.button.MaterialButton
 import eu.kanade.tachiyomi.R
+import yokai.i18n.MR
+import yokai.util.lang.getString
+import dev.icerock.moko.resources.compose.stringResource
 import eu.kanade.tachiyomi.ui.reader.viewer.pager.PagerViewer
 
 /**
@@ -19,6 +23,7 @@ class ReaderButton @JvmOverloads constructor(
 
     var viewer: PagerViewer? = null
 
+    @SuppressLint("ClickableViewAccessibility")
     override fun onTouchEvent(event: MotionEvent): Boolean {
         viewer?.pager?.setGestureDetectorEnabled(false)
         if (event.actionMasked == MotionEvent.ACTION_UP) {

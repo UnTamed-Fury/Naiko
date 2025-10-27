@@ -2,13 +2,12 @@ package eu.kanade.tachiyomi.data.track.shikimori
 
 import eu.kanade.tachiyomi.BuildConfig
 import eu.kanade.tachiyomi.data.track.shikimori.dto.SMOAuth
-import eu.kanade.tachiyomi.data.track.shikimori.dto.isExpired
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.Response
 import uy.kohesive.injekt.injectLazy
 
-class ShikimoriInterceptor(private val shikimori: Shikimori) : Interceptor {
+class ShikimoriInterceptor(val shikimori: Shikimori) : Interceptor {
 
     private val json: Json by injectLazy()
 
@@ -36,7 +35,7 @@ class ShikimoriInterceptor(private val shikimori: Shikimori) : Interceptor {
         // Add the authorization header to the original request.
         val authRequest = originalRequest.newBuilder()
             .addHeader("Authorization", "Bearer ${oauth!!.accessToken}")
-            .header("User-Agent", "Aniyomi v${BuildConfig.VERSION_NAME} (${BuildConfig.APPLICATION_ID})")
+            .header("User-Agent", "null2264/yokai/${BuildConfig.VERSION_NAME} (${BuildConfig.APPLICATION_ID})")
             .build()
 
         return chain.proceed(authRequest)

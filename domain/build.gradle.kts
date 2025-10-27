@@ -1,38 +1,34 @@
 plugins {
-    id("mihon.library")
-    kotlin("android")
-    kotlin("plugin.serialization")
-}
-
-android {
-    namespace = "tachiyomi.domain"
-
-    defaultConfig {
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
+    id("yokai.android.library")
+    kotlin("multiplatform")
+    alias(kotlinx.plugins.serialization)
 }
 
 kotlin {
-    compilerOptions {
-        freeCompilerArgs.add("-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi")
+    androidTarget()
+    sourceSets {
+        commonMain {
+            dependencies {
+                implementation(projects.source.api)
+            }
+        }
+        commonTest {
+            dependencies {
+                implementation(libs.bundles.test)
+                implementation(kotlinx.coroutines.test)
+            }
+        }
+        androidMain {
+            dependencies {
+            }
+        }
     }
 }
 
-dependencies {
-    implementation(projects.sourceApi)
-    implementation(projects.core.common)
+android {
+    namespace = "yokai.domain"
 
-    implementation(platform(kotlinx.coroutines.bom))
-    implementation(kotlinx.bundles.coroutines)
-    implementation(kotlinx.bundles.serialization)
-
-    implementation(libs.unifile)
-
-    api(libs.sqldelight.android.paging)
-
-    compileOnly(libs.compose.stablemarker)
-
-    testImplementation(libs.bundles.test)
-    testImplementation(kotlinx.coroutines.test)
+    defaultConfig {
+        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
+    }
 }

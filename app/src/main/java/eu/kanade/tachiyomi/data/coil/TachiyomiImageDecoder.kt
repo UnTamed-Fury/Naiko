@@ -1,6 +1,7 @@
 package eu.kanade.tachiyomi.data.coil
 
 import android.graphics.Bitmap
+import android.os.Build
 import coil3.ImageLoader
 import coil3.asImage
 import coil3.decode.DecodeResult
@@ -10,8 +11,9 @@ import coil3.decode.ImageSource
 import coil3.fetch.SourceFetchResult
 import coil3.request.Options
 import coil3.request.bitmapConfig
+import eu.kanade.tachiyomi.util.system.GLUtil
+import eu.kanade.tachiyomi.util.system.ImageUtil
 import okio.BufferedSource
-import tachiyomi.core.common.util.system.ImageUtil
 import tachiyomi.decoder.ImageDecoder
 
 /**
@@ -24,7 +26,7 @@ class TachiyomiImageDecoder(private val resources: ImageSource, private val opti
             ImageDecoder.newInstance(it.inputStream(), options.cropBorders, displayProfile)
         }
 
-        check(decoder != null && decoder.width > 0 && decoder.height > 0) { "Failed to initialize decoder" }
+        check(decoder != null && decoder.width > 0 && decoder.height > 0) { "Failed to initialize decoder." }
 
         val srcWidth = decoder.width
         val srcHeight = decoder.height
@@ -43,9 +45,13 @@ class TachiyomiImageDecoder(private val resources: ImageSource, private val opti
         var bitmap = decoder.decode(sampleSize = sampleSize)
         decoder.recycle()
 
-        check(bitmap != null) { "Failed to decode image" }
+        check(bitmap != null) { "Failed to decode image." }
 
-        if (options.bitmapConfig == Bitmap.Config.HARDWARE && ImageUtil.canUseHardwareBitmap(bitmap)) {
+        if (
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.O &&
+            options.bitmapConfig == Bitmap.Config.HARDWARE &&
+            !ImageUtil.isHardwareThresholdExceeded(bitmap)
+        ) {
             val hwBitmap = bitmap.copy(Bitmap.Config.HARDWARE, false)
             if (hwBitmap != null) {
                 bitmap.recycle()
@@ -62,11 +68,8 @@ class TachiyomiImageDecoder(private val resources: ImageSource, private val opti
     class Factory : Decoder.Factory {
 
         override fun create(result: SourceFetchResult, options: Options, imageLoader: ImageLoader): Decoder? {
-            return if (options.customDecoder || isApplicable(result.source.source())) {
-                TachiyomiImageDecoder(result.source, options)
-            } else {
-                null
-            }
+            if (isApplicable(result.source.source()) || options.customDecoder) return TachiyomiImageDecoder(result.source, options)
+            return null
         }
 
         private fun isApplicable(source: BufferedSource): Boolean {

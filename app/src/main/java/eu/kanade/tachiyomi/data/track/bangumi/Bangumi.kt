@@ -1,27 +1,26 @@
 package eu.kanade.tachiyomi.data.track.bangumi
 
+import android.content.Context
 import android.graphics.Color
-import dev.icerock.moko.resources.StringResource
+import co.touchlab.kermit.Logger
 import eu.kanade.tachiyomi.R
-import eu.kanade.tachiyomi.data.database.models.anime.AnimeTrack
-import eu.kanade.tachiyomi.data.database.models.manga.MangaTrack
-import eu.kanade.tachiyomi.data.track.AnimeTracker
-import eu.kanade.tachiyomi.data.track.BaseTracker
-import eu.kanade.tachiyomi.data.track.MangaTracker
+import eu.kanade.tachiyomi.data.database.models.Track
+import eu.kanade.tachiyomi.data.track.TrackService
 import eu.kanade.tachiyomi.data.track.bangumi.dto.BGMOAuth
-import eu.kanade.tachiyomi.data.track.model.AnimeTrackSearch
-import eu.kanade.tachiyomi.data.track.model.MangaTrackSearch
+import eu.kanade.tachiyomi.data.track.model.TrackSearch
+import eu.kanade.tachiyomi.data.track.updateNewTrackInfo
+import eu.kanade.tachiyomi.util.system.e
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.toImmutableList
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
-import tachiyomi.i18n.MR
-import tachiyomi.i18n.aniyomi.AYMR
 import uy.kohesive.injekt.injectLazy
-import tachiyomi.domain.track.anime.model.AnimeTrack as DomainAnimeTrack
-import tachiyomi.domain.track.manga.model.MangaTrack as DomainMangaTrack
+import yokai.i18n.MR
+import yokai.util.lang.getString
 
-class Bangumi(id: Long) : BaseTracker(id, "Bangumi"), MangaTracker, AnimeTracker {
+class Bangumi(private val context: Context, id: Long) : TrackService(id) {
+
+    override fun nameRes() = MR.strings.bangumi
 
     private val json: Json by injectLazy()
 
@@ -29,176 +28,107 @@ class Bangumi(id: Long) : BaseTracker(id, "Bangumi"), MangaTracker, AnimeTracker
 
     private val api by lazy { BangumiApi(id, client, interceptor) }
 
-    override val supportsPrivateTracking: Boolean = true
-
-    override fun getScoreList(): ImmutableList<String> = SCORE_LIST
-
-    override fun indexToScore(index: Int): Double {
-        return index.toDouble()
+    override fun getScoreList(): ImmutableList<String> {
+        return IntRange(0, 10).map(Int::toString).toImmutableList()
     }
 
-    override fun displayScore(track: DomainMangaTrack): String {
+    override fun displayScore(track: Track): String {
         return track.score.toInt().toString()
     }
 
-    override fun displayScore(track: DomainAnimeTrack): String {
-        return track.score.toInt().toString()
-    }
-
-    private suspend fun add(track: MangaTrack): MangaTrack {
-        return api.addLibManga(track)
-    }
-
-    private suspend fun add(track: AnimeTrack): AnimeTrack {
-        return api.addLibAnime(track)
-    }
-
-    override suspend fun update(track: MangaTrack, didReadChapter: Boolean): MangaTrack {
-        if (track.status != COMPLETED) {
-            if (didReadChapter) {
-                if (track.last_chapter_read.toLong() == track.total_chapters && track.total_chapters > 0) {
-                    track.status = COMPLETED
-                } else {
-                    track.status = READING
-                }
-            }
-        }
-
+    override suspend fun update(track: Track, setToRead: Boolean): Track {
+        updateTrackStatus(track, setToRead, setToComplete = true, mustReadToComplete = false)
         return api.updateLibManga(track)
     }
 
-    override suspend fun update(track: AnimeTrack, didWatchEpisode: Boolean): AnimeTrack {
-        if (track.status != COMPLETED) {
-            if (didWatchEpisode) {
-                if (track.last_episode_seen.toLong() == track.total_episodes && track.total_episodes > 0) {
-                    track.status = COMPLETED
-                } else {
-                    track.status = READING
-                }
-            }
-        }
-
-        return api.updateLibAnime(track)
+    override suspend fun add(track: Track): Track {
+        track.score = DEFAULT_SCORE.toFloat()
+        track.status = DEFAULT_STATUS
+        updateNewTrackInfo(track)
+        api.addLibManga(track)
+        return update(track)
     }
 
-    override suspend fun bind(track: MangaTrack, hasReadChapters: Boolean): MangaTrack {
-        val statusTrack = api.statusLibManga(track, getUsername())
-        return if (statusTrack != null) {
-            track.copyPersonalFrom(statusTrack, copyRemotePrivate = false)
-            track.library_id = statusTrack.library_id
-            track.score = statusTrack.score
-            track.last_chapter_read = statusTrack.last_chapter_read
-            track.total_chapters = statusTrack.total_chapters
-
-            if (track.status != COMPLETED) {
-                track.status = if (hasReadChapters) READING else statusTrack.status
-            }
-
-            update(track)
+    override suspend fun bind(track: Track): Track {
+        val statusTrack = api.statusLibManga(track)
+        val remoteTrack = api.findLibManga(track)
+        return if (statusTrack != null && remoteTrack != null) {
+            track.copyPersonalFrom(remoteTrack)
+            track.library_id = remoteTrack.library_id
+            track.status = remoteTrack.status
+            track.last_chapter_read = remoteTrack.last_chapter_read
+            refresh(track)
         } else {
-            // Set default fields if it's not found in the list
-            track.status = if (hasReadChapters) READING else PLAN_TO_READ
-            track.score = 0.0
             add(track)
         }
     }
 
-    override suspend fun bind(track: AnimeTrack, hasSeenEpisodes: Boolean): AnimeTrack {
-        val statusTrack = api.statusLibAnime(track, getUsername())
-        return if (statusTrack != null) {
-            track.copyPersonalFrom(statusTrack, copyRemotePrivate = false)
-            track.library_id = statusTrack.library_id
-            track.score = statusTrack.score
-            track.last_episode_seen = statusTrack.last_episode_seen
-            track.total_episodes = statusTrack.total_episodes
-
-            if (track.status != COMPLETED) {
-                track.status = if (hasSeenEpisodes) READING else statusTrack.status
-            }
-
-            update(track)
-        } else {
-            // Set default fields if it's not found in the list
-            track.status = if (hasSeenEpisodes) READING else PLAN_TO_READ
-            track.score = 0.0
-            add(track)
-        }
-    }
-
-    override suspend fun searchManga(query: String): List<MangaTrackSearch> {
+    override suspend fun search(query: String): List<TrackSearch> {
         return api.search(query)
     }
 
-    override suspend fun searchAnime(query: String): List<AnimeTrackSearch> {
-        return api.searchAnime(query)
-    }
-
-    override suspend fun refresh(track: MangaTrack): MangaTrack {
-        val remoteStatusTrack = api.statusLibManga(track, getUsername()) ?: throw Exception("Could not find manga")
-        track.copyPersonalFrom(remoteStatusTrack)
-        return track
-    }
-
-    override suspend fun refresh(track: AnimeTrack): AnimeTrack {
-        val remoteStatusTrack = api.statusLibAnime(track, getUsername()) ?: throw Exception("Could not find anime")
-        track.copyPersonalFrom(remoteStatusTrack)
+    override suspend fun refresh(track: Track): Track {
+        val statusTrack = api.statusLibManga(track) ?: throw Exception("Could not find manga")
+        track.copyPersonalFrom(statusTrack)
+        val remoteTrack = api.findLibManga(track)
+        if (remoteTrack != null) {
+            track.total_chapters = remoteTrack.total_chapters
+            track.status = remoteTrack.status
+        }
         return track
     }
 
     override fun getLogo() = R.drawable.ic_tracker_bangumi
 
+    override fun getTrackerColor() = Color.rgb(240, 147, 155)
+
     override fun getLogoColor() = Color.rgb(240, 145, 153)
 
-    override fun getStatusListManga(): List<Long> {
+    override fun getStatusList(): List<Int> {
         return listOf(READING, COMPLETED, ON_HOLD, DROPPED, PLAN_TO_READ)
     }
 
-    override fun getStatusListAnime(): List<Long> {
-        return listOf(READING, COMPLETED, ON_HOLD, DROPPED, PLAN_TO_READ)
+    override fun isCompletedStatus(index: Int) = getStatusList()[index] == COMPLETED
+
+    override fun completedStatus(): Int = COMPLETED
+    override fun readingStatus() = READING
+    override fun planningStatus() = PLAN_TO_READ
+
+    override fun getStatus(status: Int): String = with(context) {
+        when (status) {
+            READING -> getString(MR.strings.reading)
+            PLAN_TO_READ -> getString(MR.strings.plan_to_read)
+            COMPLETED -> getString(MR.strings.completed)
+            ON_HOLD -> getString(MR.strings.on_hold)
+            DROPPED -> getString(MR.strings.dropped)
+            else -> ""
+        }
     }
 
-    override fun getStatusForManga(status: Long): StringResource? = when (status) {
-        READING -> MR.strings.reading
-        PLAN_TO_READ -> MR.strings.plan_to_read
-        COMPLETED -> MR.strings.completed
-        ON_HOLD -> MR.strings.on_hold
-        DROPPED -> MR.strings.dropped
-        else -> null
+    override fun getGlobalStatus(status: Int): String = with(context) {
+        when (status) {
+            READING -> getString(MR.strings.reading)
+            PLAN_TO_READ -> getString(MR.strings.plan_to_read)
+            COMPLETED -> getString(MR.strings.completed)
+            ON_HOLD -> getString(MR.strings.on_hold)
+            DROPPED -> getString(MR.strings.dropped)
+            else -> ""
+        }
     }
-
-    override fun getStatusForAnime(status: Long): StringResource? = when (status) {
-        READING -> AYMR.strings.watching
-        PLAN_TO_READ -> AYMR.strings.plan_to_watch
-        COMPLETED -> MR.strings.completed
-        ON_HOLD -> MR.strings.on_hold
-        DROPPED -> MR.strings.dropped
-        else -> null
-    }
-
-    override fun getReadingStatus(): Long = READING
-
-    override fun getWatchingStatus(): Long = READING
-
-    override fun getRereadingStatus(): Long = -1
-
-    override fun getRewatchingStatus(): Long = -1
-
-    override fun getCompletionStatus(): Long = COMPLETED
 
     override suspend fun login(username: String, password: String) = login(password)
 
-    suspend fun login(code: String) {
+    suspend fun login(code: String): Boolean {
         try {
             val oauth = api.accessToken(code)
             interceptor.newAuth(oauth)
-            // Users can set a 'username' (not nickname) once which effectively
-            // replaces the stringified ID in certain queries.
-            // If no username is set, the API returns the user ID as a strings
-            var username = api.getUsername()
-            saveCredentials(username, oauth.accessToken)
-        } catch (_: Throwable) {
+            saveCredentials(oauth.userId.toString(), oauth.accessToken)
+            return true
+        } catch (e: Exception) {
+            Logger.e(e) { "Unable to login" }
             logout()
         }
+        return false
     }
 
     fun saveToken(oauth: BGMOAuth?) {
@@ -208,7 +138,7 @@ class Bangumi(id: Long) : BaseTracker(id, "Bangumi"), MangaTracker, AnimeTracker
     fun restoreToken(): BGMOAuth? {
         return try {
             json.decodeFromString<BGMOAuth>(trackPreferences.trackToken(this).get())
-        } catch (_: Exception) {
+        } catch (e: Exception) {
             null
         }
     }
@@ -220,14 +150,13 @@ class Bangumi(id: Long) : BaseTracker(id, "Bangumi"), MangaTracker, AnimeTracker
     }
 
     companion object {
-        const val PLAN_TO_READ = 1L
-        const val COMPLETED = 2L
-        const val READING = 3L
-        const val ON_HOLD = 4L
-        const val DROPPED = 5L
+        const val PLAN_TO_READ = 1
+        const val COMPLETED = 2
+        const val READING = 3
+        const val ON_HOLD = 4
+        const val DROPPED = 5
 
-        private val SCORE_LIST = IntRange(0, 10)
-            .map(Int::toString)
-            .toImmutableList()
+        const val DEFAULT_STATUS = READING
+        const val DEFAULT_SCORE = 0
     }
 }

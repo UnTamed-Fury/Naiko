@@ -1,37 +1,42 @@
 package eu.kanade.tachiyomi.ui.reader.viewer.pager
 
 import android.annotation.SuppressLint
-import android.content.Context
+import android.app.Activity
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
 import android.view.ViewGroup.LayoutParams.MATCH_PARENT
 import android.view.ViewGroup.LayoutParams.WRAP_CONTENT
+import android.widget.FrameLayout
 import android.widget.LinearLayout
 import androidx.appcompat.widget.AppCompatTextView
-import com.google.android.material.progressindicator.CircularProgressIndicator
+import androidx.compose.material3.CircularProgressIndicator
+import androidx.compose.ui.platform.ComposeView
+import androidx.compose.ui.platform.ViewCompositionStrategy
+import androidx.core.view.updatePaddingRelative
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderButton
 import eu.kanade.tachiyomi.ui.reader.viewer.ReaderTransitionView
 import eu.kanade.tachiyomi.util.system.dpToPx
+import eu.kanade.tachiyomi.util.view.setText
 import eu.kanade.tachiyomi.widget.ViewPagerAdapter
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
-import tachiyomi.core.common.i18n.stringResource
-import tachiyomi.i18n.MR
+import yokai.i18n.MR
+import yokai.presentation.theme.YokaiTheme
+import yokai.util.lang.getString
 
 /**
  * View of the ViewPager that contains a chapter transition.
  */
 @SuppressLint("ViewConstructor")
 class PagerTransitionHolder(
-    readerThemedContext: Context,
     val viewer: PagerViewer,
     val transition: ChapterTransition,
-) : LinearLayout(readerThemedContext), ViewPagerAdapter.PositionableView {
+) : LinearLayout(viewer.activity), ViewPagerAdapter.PositionableView {
 
     private val scope = MainScope()
     private var stateJob: Job? = null
@@ -59,12 +64,19 @@ class PagerTransitionHolder(
         setPadding(sidePadding, 0, sidePadding, 0)
 
         val transitionView = ReaderTransitionView(context)
+
         addView(transitionView)
         addView(pagesContainer)
 
-        transitionView.bind(transition, viewer.downloadManager, viewer.activity.viewModel.manga)
+        transitionView.bind(viewer.config.readerTheme, transition, viewer.downloadManager, viewer.activity.viewModel.manga)
 
-        transition.to?.let(::observeStatus)
+        transition.to?.let { observeStatus(it) }
+
+        if (viewer.config.hingeGapSize > 0) {
+            val fullWidth = (context as? Activity)?.window?.decorView?.width
+                ?: context.resources.displayMetrics.widthPixels
+            updatePaddingRelative(start = sidePadding + fullWidth / 2 + viewer.config.hingeGapSize)
+        }
     }
 
     /**
@@ -100,12 +112,17 @@ class PagerTransitionHolder(
      * Sets the loading state on the pages container.
      */
     private fun setLoading() {
-        val progress = CircularProgressIndicator(context)
-        progress.isIndeterminate = true
+        val progress = ComposeView(context).apply {
+            layoutParams = FrameLayout.LayoutParams(WRAP_CONTENT, WRAP_CONTENT, Gravity.CENTER)
+            setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnDetachedFromWindowOrReleasedFromPool)
+            setContent {
+                YokaiTheme { CircularProgressIndicator() }
+            }
+        }
 
         val textView = AppCompatTextView(context).apply {
             wrapContent()
-            text = context.stringResource(MR.strings.transition_pages_loading)
+            setText(MR.strings.loading_pages)
         }
 
         pagesContainer.addView(progress)
@@ -118,13 +135,13 @@ class PagerTransitionHolder(
     private fun setError(error: Throwable) {
         val textView = AppCompatTextView(context).apply {
             wrapContent()
-            text = context.stringResource(MR.strings.transition_pages_error, error.message ?: "")
+            text = context.getString(MR.strings.failed_to_load_pages_, error.message ?: "")
         }
 
         val retryBtn = ReaderButton(context).apply {
             viewer = this@PagerTransitionHolder.viewer
             wrapContent()
-            text = context.stringResource(MR.strings.action_retry)
+            setText(MR.strings.retry)
             setOnClickListener {
                 val toChapter = transition.to
                 if (toChapter != null) {

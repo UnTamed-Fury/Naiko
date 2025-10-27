@@ -1,0 +1,138 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/constraint_layout"
+    tools:background="@android:color/black"
+    android:layout_width="match_parent"
+    style="@style/Theme.MaterialComponents.BottomSheetDialog"
+    android:layout_height="match_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:id="@+id/options_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="32dp"
+        android:background="@drawable/bottom_sheet_rounded_background"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0">
+
+        <TextView
+            android:id="@+id/data_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="8dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/data_to_include_in_migration"
+            style="?textAppearanceTitleSmall"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <com.google.android.flexbox.FlexboxLayout
+            android:id="@+id/grid_flags_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            app:flexWrap="wrap"
+            app:layout_constraintStart_toStartOf="@+id/data_label"
+            app:layout_constraintTop_toBottomOf="@+id/data_label"/>
+
+        <TextView
+            android:id="@+id/options_label"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/options"
+            style="?textAppearanceTitleSmall"
+            app:layout_constraintStart_toStartOf="@+id/grid_flags_layout"
+            app:layout_constraintTop_toBottomOf="@+id/grid_flags_layout" />
+
+        <RadioGroup
+            android:id="@+id/sourceGroup"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="8dp"
+            android:orientation="vertical"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="@+id/options_label"
+            app:layout_constraintTop_toBottomOf="@+id/options_label">
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingStart="0dp"
+                android:paddingEnd="8dp"
+                android:text="@string/use_first_source" />
+
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/use_most_chapters" />
+        </RadioGroup>
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/extra_search_param"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="0dp"
+            android:text="@string/include_extra_search_parameter"
+            app:layout_constraintEnd_toEndOf="@+id/sourceGroup"
+            app:layout_constraintStart_toStartOf="@+id/sourceGroup"
+            app:layout_constraintTop_toBottomOf="@+id/sourceGroup" />
+
+        <eu.kanade.tachiyomi.widget.TachiyomiTextInputEditText
+            android:id="@+id/extra_search_param_text"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginEnd="8dp"
+            android:ems="10"
+            android:hint="@string/search_parameter_eg"
+            android:importantForAutofill="no"
+            android:inputType="textPersonName"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.0"
+            app:layout_constraintStart_toStartOf="@+id/extra_search_param"
+            app:layout_constraintTop_toBottomOf="@+id/extra_search_param" />
+
+        <com.google.android.material.materialswitch.MaterialSwitch
+            android:id="@+id/skip_step"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:text="@string/skip_this_step_next_time"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="@+id/extra_search_param"
+            app:layout_constraintStart_toStartOf="@+id/extra_search_param"
+            app:layout_constraintTop_toBottomOf="@+id/extra_search_param_text"/>
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <View
+        android:id="@+id/fab_guider"
+        android:layout_width="2dp"
+        app:layout_constraintTop_toTopOf="@+id/options_layout"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_height="30dp" />
+
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+        android:id="@+id/fab"
+        style="@style/Theme.Widget.FAB"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="10dp"
+        app:icon="@drawable/ic_arrow_forward_24dp"
+        android:text="@string/migrate"
+        app:layout_anchor="@id/constraint_layout"
+        app:layout_anchorGravity="bottom|end"
+        app:layout_constraintBottom_toBottomOf="@id/fab_guider"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

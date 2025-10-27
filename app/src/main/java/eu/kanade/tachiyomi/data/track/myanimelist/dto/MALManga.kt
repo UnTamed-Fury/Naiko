@@ -22,5 +22,6 @@ data class MALManga(
 
 @Serializable
 data class MALMangaCovers(
-    val large: String = "",
+    val large: String?,
+    val medium: String,
 )

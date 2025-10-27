@@ -1,36 +1,38 @@
-import mihon.buildlogic.generatedBuildDir
-import mihon.buildlogic.tasks.getLocalesConfigTask
-import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
+import yokai.build.generatedBuildDir
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("mihon.library")
+    id("yokai.android.library")
     kotlin("multiplatform")
     alias(libs.plugins.moko)
 }
 
 kotlin {
     androidTarget()
+    iosX64()
+    iosArm64()
+    iosSimulatorArm64()
 
     applyDefaultHierarchyTemplate()
 
     sourceSets {
         commonMain {
             dependencies {
-                api(libs.moko.core)
+                api(libs.moko.resources)
+                api(libs.moko.resources.compose)
             }
         }
-    }
-
-    @OptIn(ExperimentalKotlinGradlePluginApi::class)
-    compilerOptions {
-        freeCompilerArgs.add("-Xexpect-actual-classes")
+        androidMain {
+        }
+        iosMain {
+        }
     }
 }
 
 val generatedAndroidResourceDir = generatedBuildDir.resolve("android/res")
 
 android {
-    namespace = "tachiyomi.i18n"
+    namespace = "yokai.i18n"
 
     sourceSets {
         val main by getting
@@ -39,19 +41,21 @@ android {
             generatedAndroidResourceDir,
         )
     }
-
-    lint {
-        disable.addAll(listOf("MissingTranslation", "ExtraTranslation"))
-    }
 }
 
 multiplatformResources {
-    resourcesPackage.set("tachiyomi.i18n")
+    resourcesPackage.set("yokai.i18n")
 }
 
 tasks {
-    val localesConfigTask = project.getLocalesConfigTask(generatedAndroidResourceDir)
-    preBuild {
-        dependsOn(localesConfigTask)
+   val localesConfigTask = project.registerLocalesConfigTask(generatedAndroidResourceDir)
+   preBuild {
+       dependsOn(localesConfigTask)
+   }
+
+    withType<KotlinCompile> {
+        compilerOptions.freeCompilerArgs.addAll(
+            "-Xexpect-actual-classes",
+        )
     }
 }

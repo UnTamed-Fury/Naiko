@@ -1,12 +1,13 @@
 package eu.kanade.tachiyomi.data.track.myanimelist
 
+import eu.kanade.tachiyomi.BuildConfig
 import eu.kanade.tachiyomi.data.track.myanimelist.dto.MALOAuth
 import eu.kanade.tachiyomi.network.parseAs
+import java.io.IOException
 import kotlinx.serialization.json.Json
 import okhttp3.Interceptor
 import okhttp3.Response
 import uy.kohesive.injekt.injectLazy
-import java.io.IOException
 
 class MyAnimeListInterceptor(private val myanimelist: MyAnimeList) : Interceptor {
 
@@ -19,6 +20,7 @@ class MyAnimeListInterceptor(private val myanimelist: MyAnimeList) : Interceptor
         if (tokenExpired) {
             throw MALTokenExpired()
         }
+
         val originalRequest = chain.request()
 
         if (oauth?.isExpired() == true) {
@@ -32,7 +34,7 @@ class MyAnimeListInterceptor(private val myanimelist: MyAnimeList) : Interceptor
         // Add the authorization header to the original request
         val authRequest = originalRequest.newBuilder()
             .addHeader("Authorization", "Bearer ${oauth!!.accessToken}")
-            // .header("User-Agent", "Aniyomi v${BuildConfig.VERSION_NAME} (${BuildConfig.APPLICATION_ID})")
+            // .header("User-Agent", "null2264/yokai/${BuildConfig.VERSION_NAME} (${BuildConfig.APPLICATION_ID})")
             .build()
 
         return chain.proceed(authRequest)
@@ -64,7 +66,7 @@ class MyAnimeListInterceptor(private val myanimelist: MyAnimeList) : Interceptor
 
         return runCatching {
             if (response.isSuccessful) {
-                with(json) { response.parseAs<MALOAuth>() }
+                response.parseAs<MALOAuth>()
             } else {
                 response.close()
                 null

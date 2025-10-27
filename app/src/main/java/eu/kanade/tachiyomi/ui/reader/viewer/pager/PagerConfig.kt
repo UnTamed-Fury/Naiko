@@ -1,7 +1,8 @@
 package eu.kanade.tachiyomi.ui.reader.viewer.pager
 
-import eu.kanade.tachiyomi.ui.reader.setting.ReaderPreferences
-import eu.kanade.tachiyomi.ui.reader.viewer.ReaderPageImageView
+import com.davemorrissey.labs.subscaleview.SubsamplingScaleImageView
+import eu.kanade.tachiyomi.data.preference.PreferencesHelper
+import eu.kanade.tachiyomi.ui.reader.settings.PageLayout
 import eu.kanade.tachiyomi.ui.reader.viewer.ViewerConfig
 import eu.kanade.tachiyomi.ui.reader.viewer.ViewerNavigation
 import eu.kanade.tachiyomi.ui.reader.viewer.navigation.DisabledNavigation
@@ -15,28 +16,27 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
+import yokai.domain.ui.settings.ReaderPreferences
+import yokai.domain.ui.settings.ReaderPreferences.CutoutBehaviour
 
 /**
  * Configuration used by pager viewers.
  */
 class PagerConfig(
-    private val viewer: PagerViewer,
     scope: CoroutineScope,
+    private val viewer: PagerViewer,
+    preferences: PreferencesHelper = Injekt.get(),
     readerPreferences: ReaderPreferences = Injekt.get(),
-) : ViewerConfig(readerPreferences, scope) {
+) :
+    ViewerConfig(preferences, scope) {
 
-    var theme = readerPreferences.readerTheme().get()
+    var usePageTransitions = false
         private set
-
-    var automaticBackground = false
-        private set
-
-    var dualPageSplitChangedListener: ((Boolean) -> Unit)? = null
 
     var imageScaleType = 1
         private set
 
-    var imageZoomType = ReaderPageImageView.ZoomStartPosition.LEFT
+    var imageZoomType = ZoomType.Left
         private set
 
     var imageCropBorders = false
@@ -48,80 +48,124 @@ class PagerConfig(
     var landscapeZoom = false
         private set
 
-    init {
-        readerPreferences.readerTheme()
-            .register(
-                {
-                    theme = it
-                    automaticBackground = it == 3
-                },
-                { imagePropertyChangedListener?.invoke() },
-            )
+    var readerTheme = 0
+        private set
 
-        readerPreferences.imageScaleType()
+    var cutoutBehavior: CutoutBehaviour = CutoutBehaviour.SHOW
+        private set
+
+    var isFullscreen = true
+        private set
+
+    var shiftDoublePage = false
+
+    var doublePages = preferences.pageLayout().get() == PageLayout.DOUBLE_PAGES.value
+        set(value) {
+            field = value
+            if (!value) {
+                shiftDoublePage = false
+            }
+        }
+
+    var hingeGapSize = 0
+
+    var invertDoublePages = false
+
+    var autoDoublePages = preferences.pageLayout().get() == PageLayout.AUTOMATIC.value
+
+    var splitPages = preferences.pageLayout().get() == PageLayout.SPLIT_PAGES.value
+    var autoSplitPages = preferences.automaticSplitsPage().get()
+
+    init {
+        preferences.pageTransitions().register({ usePageTransitions = it })
+
+        preferences.fullscreen().register({ isFullscreen = it })
+
+        preferences.imageScaleType()
             .register({ imageScaleType = it }, { imagePropertyChangedListener?.invoke() })
 
-        readerPreferences.zoomStart()
-            .register({ zoomTypeFromPreference(it) }, { imagePropertyChangedListener?.invoke() })
-
-        readerPreferences.cropBorders()
-            .register({ imageCropBorders = it }, { imagePropertyChangedListener?.invoke() })
-
-        readerPreferences.navigateToPan()
-            .register({ navigateToPan = it })
-
-        readerPreferences.landscapeZoom()
-            .register({ landscapeZoom = it }, { imagePropertyChangedListener?.invoke() })
-
-        readerPreferences.navigationModePager()
+        preferences.navigationModePager()
             .register({ navigationMode = it }, { updateNavigation(navigationMode) })
 
-        readerPreferences.pagerNavInverted()
-            .register({ tappingInverted = it }, { navigator.invertMode = it })
-        readerPreferences.pagerNavInverted().changes()
-            .drop(1)
-            .onEach { navigationModeChangedListener?.invoke() }
-            .launchIn(scope)
-
-        readerPreferences.dualPageSplitPaged()
+        preferences.pagerNavInverted()
             .register(
-                { dualPageSplit = it },
+                { tappingInverted = it },
                 {
-                    imagePropertyChangedListener?.invoke()
-                    dualPageSplitChangedListener?.invoke(it)
+                    navigator.invertMode = it
                 },
             )
 
-        readerPreferences.dualPageInvertPaged()
-            .register({ dualPageInvert = it }, { imagePropertyChangedListener?.invoke() })
+        preferences.pagerNavInverted().changes()
+            .drop(1)
+            .onEach {
+                navigationModeInvertedListener?.invoke()
+            }
+            .launchIn(scope)
 
-        readerPreferences.dualPageRotateToFit()
-            .register(
-                { dualPageRotateToFit = it },
-                { imagePropertyChangedListener?.invoke() },
-            )
+        readerPreferences.pagerCutoutBehavior()
+            .register({ cutoutBehavior = it }, { imagePropertyChangedListener?.invoke() })
 
-        readerPreferences.dualPageRotateToFitInvert()
-            .register(
-                { dualPageRotateToFitInvert = it },
-                { imagePropertyChangedListener?.invoke() },
-            )
+        preferences.zoomStart()
+            .register({ zoomTypeFromPreference(it) }, { imagePropertyChangedListener?.invoke() })
+
+        preferences.cropBorders()
+            .register({ imageCropBorders = it }, { imagePropertyChangedListener?.invoke() })
+
+        preferences.navigateToPan()
+            .register({ navigateToPan = it })
+
+        preferences.landscapeZoom()
+            .register({ landscapeZoom = it }, { imagePropertyChangedListener?.invoke() })
+
+        preferences.readerTheme()
+            .register({ readerTheme = it }, { imagePropertyChangedListener?.invoke() })
+
+        preferences.invertDoublePages()
+            .register({ invertDoublePages = it }, { imagePropertyChangedListener?.invoke() })
+
+        preferences.pageLayout()
+            .changes()
+            .drop(1)
+            .onEach {
+                autoDoublePages = it == PageLayout.AUTOMATIC.value
+                splitPages = it == PageLayout.SPLIT_PAGES.value
+                if (!autoDoublePages) {
+                    doublePages = it == PageLayout.DOUBLE_PAGES.value
+                }
+                reloadChapterListener?.invoke(doublePages)
+            }
+            .launchIn(scope)
+        preferences.pageLayout()
+            .register({
+                autoDoublePages = it == PageLayout.AUTOMATIC.value
+                if (!autoDoublePages) {
+                    doublePages = it == PageLayout.DOUBLE_PAGES.value
+                    splitPages = it == PageLayout.SPLIT_PAGES.value
+                }
+            },)
+
+        preferences.automaticSplitsPage()
+            .register({ autoSplitPages = it })
+        navigationOverlayForNewUser = preferences.showNavigationOverlayNewUser().get()
+        if (navigationOverlayForNewUser) {
+            preferences.showNavigationOverlayNewUser().set(false)
+        }
     }
 
     private fun zoomTypeFromPreference(value: Int) {
         imageZoomType = when (value) {
             // Auto
             1 -> when (viewer) {
-                is L2RPagerViewer -> ReaderPageImageView.ZoomStartPosition.LEFT
-                is R2LPagerViewer -> ReaderPageImageView.ZoomStartPosition.RIGHT
-                else -> ReaderPageImageView.ZoomStartPosition.CENTER
+                is L2RPagerViewer -> ZoomType.Left
+                is R2LPagerViewer -> ZoomType.Right
+                else -> ZoomType.Center
             }
             // Left
-            2 -> ReaderPageImageView.ZoomStartPosition.LEFT
+            2 -> ZoomType.Left
             // Right
-            3 -> ReaderPageImageView.ZoomStartPosition.RIGHT
+            3 -> ZoomType.Right
             // Center
-            else -> ReaderPageImageView.ZoomStartPosition.CENTER
+            else -> ZoomType.Center
         }
     }
 
@@ -137,6 +181,16 @@ class PagerConfig(
         }
     }
 
+    fun scaleTypeIsFullFit(): Boolean {
+        return when (imageScaleType) {
+            SubsamplingScaleImageView.SCALE_TYPE_FIT_HEIGHT,
+            SubsamplingScaleImageView.SCALE_TYPE_SMART_FIT,
+            SubsamplingScaleImageView.SCALE_TYPE_CENTER_CROP,
+            -> true
+            else -> false
+        }
+    }
+
     override fun updateNavigation(navigationMode: Int) {
         navigator = when (navigationMode) {
             0 -> defaultNavigation()
@@ -148,5 +202,15 @@ class PagerConfig(
             else -> defaultNavigation()
         }
         navigationModeChangedListener?.invoke()
+    }
+
+    enum class ZoomType {
+        Left, Center, Right
+    }
+
+    companion object {
+        const val CUTOUT_PAD = 0
+        const val CUTOUT_START_EXTENDED = 1
+        const val CUTOUT_IGNORE = 2
     }
 }

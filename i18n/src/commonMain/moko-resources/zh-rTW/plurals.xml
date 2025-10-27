@@ -1,60 +1,74 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <plurals name="lock_after_mins">
-        <item quantity="other">%1$s 分鐘後</item>
-    </plurals>
-    <plurals name="update_check_notification_ext_updates">
+    <plurals name="extension_updates_available">
         <item quantity="other">%d 個擴充套件可更新</item>
     </plurals>
-    <plurals name="download_queue_summary">
-        <item quantity="other">剩餘 %1$s 項</item>
-    </plurals>
-    <plurals name="manga_num_chapters">
-        <item quantity="other">共 %1$s 章</item>
-    </plurals>
-    <plurals name="num_categories">
-        <item quantity="other">%d 個類別</item>
+    <plurals name="category_plural">
+        <item quantity="other">%d 個分類</item>
     </plurals>
     <plurals name="restore_completed_message">
         <item quantity="other">歷時 %1$s，出現 %2$s 個錯誤</item>
     </plurals>
-    <plurals name="notification_chapters_generic">
-        <item quantity="other">%1$d 篇新章節</item>
-    </plurals>
-    <plurals name="notification_chapters_multiple_and_more">
-        <item quantity="other">第 %1$s 章以及另外 %2$d 章</item>
-    </plurals>
-    <plurals name="num_trackers">
-        <item quantity="other">%d 個平臺</item>
-    </plurals>
     <plurals name="missing_chapters_warning">
         <item quantity="other">略過了 %d 章，也許是來源沒有這些章節，或其已被篩選規則排除</item>
     </plurals>
-    <plurals name="notification_new_chapters_summary">
-        <item quantity="other">共 %d 部作品</item>
+    <plurals name="chapters_plural">
+        <item quantity="other">共 %1$s 章</item>
     </plurals>
-    <plurals name="relative_time">
-        <item quantity="other">%1$d 天前</item>
+    <plurals name="cache_cleared">
+        <item quantity="other">已清除快取，%d 個檔案已被刪除</item>
+    </plurals>
+    <plurals name="remove_n_chapters">
+        <item quantity="other">移除 %1$d 個已下載的章節？</item>
+    </plurals>
+    <plurals name="after_minutes">
+        <item quantity="other">%1$s 分鐘後</item>
+    </plurals>
+    <plurals name="for_n_titles">
+        <item quantity="other">共 %d 本漫畫</item>
+    </plurals>
+    <plurals name="notification_and_n_more">
+        <item quantity="other">還有 %1$d 章</item>
+    </plurals>
+    <plurals name="deleted_chapters">
+        <item quantity="other">第%1$s章已從來源中刪除：
+\n%2$s
+\n是否刪除其下載内容？</item>
     </plurals>
     <plurals name="next_unread_chapters">
         <item quantity="other">接下來未讀的 %d 章</item>
     </plurals>
-    <plurals name="download_amount">
-        <item quantity="other">後續 %d 章</item>
+    <plurals name="_sources">
+        <item quantity="other">%d 個來源</item>
     </plurals>
-    <plurals name="missing_chapters">
-        <item quantity="other">缺漏 %1$s 章</item>
+    <plurals name="_languages">
+        <item quantity="other">%d 種語言</item>
     </plurals>
-    <plurals name="day">
-        <item quantity="other">%d 天</item>
+    <plurals name="_updates_pending">
+        <item quantity="other">有%d個更新正在等待</item>
     </plurals>
-    <plurals name="num_repos">
-        <item quantity="other">%d 處儲存庫</item>
+    <plurals name="extensions_updated_plural">
+        <item quantity="other">更新了%d個擴充套件</item>
     </plurals>
-    <plurals name="upcoming_relative_time">
-        <item quantity="other">%1$d 天後</item>
+    <plurals name="migrate_manga">
+        <item quantity="other">確定要遷移 %1$d%2$s 個漫畫系列嗎？</item>
     </plurals>
-    <plurals name="pref_pages">
-        <item quantity="other">%1$s pages</item>
+    <plurals name="manga_migrated">
+        <item quantity="other">已成功遷移 %d 個漫畫系列</item>
+    </plurals>
+    <plurals name="copy_manga">
+        <item quantity="other">確定要複製 %1$d%2$s 個漫畫系列嗎？</item>
+    </plurals>
+    <plurals name="_series_types">
+        <item quantity="other">%d 系列類型</item>
+    </plurals>
+    <plurals name="_statuses">
+        <item quantity="other">%d 狀態</item>
+    </plurals>
+    <plurals name="pages_plural">
+        <item quantity="other">%1$d 頁</item>
+    </plurals>
+    <plurals name="cleanup_done">
+        <item quantity="other">清理完成。已刪除 %d 個資料夾</item>
     </plurals>
 </resources>

@@ -2,54 +2,101 @@ package eu.kanade.tachiyomi.ui.reader
 
 import android.content.Context
 import android.graphics.Bitmap
-import android.net.Uri
+import android.graphics.drawable.BitmapDrawable
 import androidx.core.app.NotificationCompat
-import coil3.asDrawable
+import androidx.core.content.ContextCompat
 import coil3.imageLoader
 import coil3.request.CachePolicy
 import coil3.request.ImageRequest
+import com.hippo.unifile.UniFile
 import eu.kanade.tachiyomi.R
+import yokai.i18n.MR
+import yokai.util.lang.getString
+import dev.icerock.moko.resources.compose.stringResource
 import eu.kanade.tachiyomi.data.notification.NotificationHandler
 import eu.kanade.tachiyomi.data.notification.NotificationReceiver
 import eu.kanade.tachiyomi.data.notification.Notifications
-import eu.kanade.tachiyomi.util.system.cancelNotification
-import eu.kanade.tachiyomi.util.system.getBitmapOrNull
-import eu.kanade.tachiyomi.util.system.notificationBuilder
-import eu.kanade.tachiyomi.util.system.notify
-import tachiyomi.core.common.i18n.stringResource
-import tachiyomi.i18n.MR
+import eu.kanade.tachiyomi.util.system.notificationManager
+import android.R as AR
 
 /**
  * Class used to show BigPictureStyle notifications
  */
 class SaveImageNotifier(private val context: Context) {
 
-    private val notificationBuilder = context.notificationBuilder(Notifications.CHANNEL_COMMON)
-    private val notificationId: Int = Notifications.ID_DOWNLOAD_IMAGE
+    /**
+     * Notification builder.
+     */
+    private val notificationBuilder = NotificationCompat.Builder(context, Notifications.CHANNEL_COMMON)
 
     /**
-     * Called when image download/copy is complete.
-     *
-     * @param uri image file containing downloaded page image.
+     * Id of the notification.
      */
-    fun onComplete(uri: Uri) {
-        val request = ImageRequest.Builder(context)
-            .data(uri)
-            .memoryCachePolicy(CachePolicy.DISABLED)
+    private val notificationId: Int
+        get() = Notifications.ID_DOWNLOAD_IMAGE
+
+    /**
+     * Called when image download/copy is complete. This method must be called in a background
+     * thread.
+     *
+     * @param file image file containing downloaded page image.
+     */
+    fun onComplete(file: UniFile) {
+        val request = ImageRequest.Builder(context).memoryCachePolicy(CachePolicy.DISABLED).diskCachePolicy(CachePolicy.DISABLED)
+            .data(file.uri)
             .size(720, 1280)
             .target(
-                onSuccess = { showCompleteNotification(uri, it.asDrawable(context.resources).getBitmapOrNull()) },
-                onError = { onError(null) },
-            )
-            .build()
+                onSuccess = {
+                    val bitmap = (it as BitmapDrawable).bitmap
+                    if (bitmap != null) {
+                        showCompleteNotification(file, bitmap)
+                    } else {
+                        onError(null)
+                    }
+                },
+            ).build()
         context.imageLoader.enqueue(request)
+    }
+
+    private fun showCompleteNotification(file: UniFile, image: Bitmap) {
+        with(notificationBuilder) {
+            setContentTitle(context.getString(MR.strings.picture_saved))
+            setSmallIcon(R.drawable.ic_photo_24dp)
+            setStyle(NotificationCompat.BigPictureStyle().bigPicture(image))
+            setLargeIcon(image)
+            setAutoCancel(true)
+            color = ContextCompat.getColor(context, R.color.secondaryTachiyomi)
+            // Clear old actions if they exist
+            clearActions()
+
+            setContentIntent(NotificationHandler.openImagePendingActivity(context, file))
+            // Share action
+            addAction(
+                R.drawable.ic_share_24dp,
+                context.getString(MR.strings.share),
+                NotificationReceiver.shareImagePendingBroadcast(context, file.filePath!!, notificationId),
+            )
+            // Delete action
+            addAction(
+                R.drawable.ic_delete_24dp,
+                context.getString(MR.strings.delete),
+                NotificationReceiver.deleteImagePendingBroadcast(context, file.filePath!!, notificationId),
+            )
+
+            updateNotification()
+        }
     }
 
     /**
      * Clears the notification message.
      */
     fun onClear() {
-        context.cancelNotification(notificationId)
+        context.notificationManager.cancel(notificationId)
+    }
+
+    private fun updateNotification() {
+        // Displays the progress bar on notification
+        context.notificationManager.notify(notificationId, notificationBuilder.build())
     }
 
     /**
@@ -59,38 +106,10 @@ class SaveImageNotifier(private val context: Context) {
     fun onError(error: String?) {
         // Create notification
         with(notificationBuilder) {
-            setContentTitle(context.stringResource(MR.strings.download_notifier_title_error))
-            setContentText(error ?: context.stringResource(MR.strings.unknown_error))
-            setSmallIcon(android.R.drawable.ic_menu_report_image)
+            setContentTitle(context.getString(MR.strings.download_error))
+            setContentText(error ?: context.getString(MR.strings.unknown_error))
+            setSmallIcon(AR.drawable.ic_menu_report_image)
         }
         updateNotification()
-    }
-
-    private fun showCompleteNotification(uri: Uri, image: Bitmap?) {
-        with(notificationBuilder) {
-            setContentTitle(context.stringResource(MR.strings.picture_saved))
-            setSmallIcon(R.drawable.ic_photo_24dp)
-            image?.let { setStyle(NotificationCompat.BigPictureStyle().bigPicture(it)) }
-            setLargeIcon(image)
-            setAutoCancel(true)
-
-            // Clear old actions if they exist
-            clearActions()
-
-            setContentIntent(NotificationHandler.openImagePendingActivity(context, uri))
-            // Share action
-            addAction(
-                R.drawable.ic_share_24dp,
-                context.stringResource(MR.strings.action_share),
-                NotificationReceiver.shareImagePendingBroadcast(context, uri),
-            )
-
-            updateNotification()
-        }
-    }
-
-    private fun updateNotification() {
-        // Displays the progress bar on notification
-        context.notify(notificationId, notificationBuilder.build())
     }
 }

@@ -13,7 +13,6 @@ class BufferedSourceFetcher(
     private val data: BufferedSource,
     private val options: Options,
 ) : Fetcher {
-
     override suspend fun fetch(): FetchResult {
         return SourceFetchResult(
             source = ImageSource(
@@ -26,12 +25,7 @@ class BufferedSourceFetcher(
     }
 
     class Factory : Fetcher.Factory<BufferedSource> {
-
-        override fun create(
-            data: BufferedSource,
-            options: Options,
-            imageLoader: ImageLoader,
-        ): Fetcher {
+        override fun create(data: BufferedSource, options: Options, imageLoader: ImageLoader): Fetcher {
             return BufferedSourceFetcher(data, options)
         }
     }

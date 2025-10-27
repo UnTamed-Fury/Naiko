@@ -1,0 +1,67 @@
+{
+  "project_info": {
+    "project_number": "636318130901",
+    "project_id": "yokai-4034e",
+    "storage_bucket": "yokai-4034e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636318130901:android:6487a6238b24d2a357f85c",
+        "android_client_info": {
+          "package_name": "eu.kanade.tachiyomi.debugYokai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBORypbgpIKGb8s3Si6gaQlY5CLkR804OI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636318130901:android:388d6d443528368657f85c",
+        "android_client_info": {
+          "package_name": "eu.kanade.tachiyomi.nightlyYokai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBORypbgpIKGb8s3Si6gaQlY5CLkR804OI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:636318130901:android:0ae2cb126b21d3a357f85c",
+        "android_client_info": {
+          "package_name": "eu.kanade.tachiyomi.yokai"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBORypbgpIKGb8s3Si6gaQlY5CLkR804OI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
