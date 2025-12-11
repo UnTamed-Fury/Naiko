@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name" translatable="false">Yōkai</string>
-    <string name="app_short_name" translatable="false">Yōkai</string>
-    <string name="app_normalized_name" translatable="false">Yokai</string>
+    <string name="app_name" translatable="false">Naiko</string>
+    <string name="app_short_name" translatable="false">Naiko</string>
+    <string name="app_normalized_name" translatable="false">Naiko</string>
 
     <string name="action_menu_overflow_description">More options</string>
     <string name="action_bar_up_description">Navigate up</string>
@@ -521,7 +521,8 @@
     <string name="pref_display_profile">Custom display profile</string>
     <string name="pref_hardware_bitmap_threshold">Custom hardware bitmap threshold</string>
     <string name="pref_hardware_bitmap_threshold_default">Default (%d)</string>
-    <string name="pref_hardware_bitmap_threshold_summary">If reader loads a blank image incrementally reduce the threshold.\nSelected: %s</string>
+    <string name="pref_hardware_bitmap_threshold_summary">If reader loads a blank image incrementally reduce the threshold.
+Selected: %s</string>
     <string name="pref_double_tap_zoom">Double tap to zoom</string>
 
     <!-- Manga details -->
@@ -859,10 +860,12 @@
     <string name="battery_optimization_disabled">Battery optimization is already disabled</string>
     <string name="clean_up_cached_covers">Clean up cached covers</string>
     <string name="delete_old_covers_in_library_used_">Delete old and unused cached covers of
-        entries in your library that has been updated.\nCurrently using: %1$s</string>
+        entries in your library that has been updated.
+Currently using: %1$s</string>
     <string name="clear_cached_covers_non_library">Clear cached covers not in library</string>
     <string name="delete_all_covers__not_in_library_used_">Delete all covers cached that are
-        not in your library \nCurrently using: %1$s</string>
+        not in your library 
+Currently using: %1$s</string>
     <string name="most_entries">Most entries</string>
     <string name="select_uninstalled_sources">Select uninstalled sources</string>
     <string name="pref_debug_info">Debug info</string>
@@ -1163,7 +1166,7 @@
     <string name="save_search_hint">Save search name</string>
     <string name="save_search_invalid_name">Invalid saved search name</string>
     <string name="save_search_delete">Delete this saved search query?</string>
-    <string name="save_search_delete_message">Are you sure you wish to delete this saved search query: \'%1$s\'?</string>
+    <string name="save_search_delete_message">Are you sure you wish to delete this saved search query: \'%1$s\`?</string>
     <string name="search">Search</string>
     <string name="search_">Search %1$s</string>
     <string name="select_all">Select all</string>

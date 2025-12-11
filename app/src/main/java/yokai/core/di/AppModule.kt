@@ -37,6 +37,8 @@ import yokai.data.Database
 import yokai.data.DatabaseHandler
 import yokai.domain.SplashState
 import yokai.domain.storage.StorageManager
+import eu.kanade.tachiyomi.extension.NaikoExtensionManager
+import eu.kanade.tachiyomi.extension.MediaType // Added this import
 
 fun appModule(app: Application) = module {
     single { app }
@@ -175,5 +177,10 @@ fun initExpensiveComponents(app: Application) {
         Injekt.get<DownloadManager>()
 
         Injekt.get<CustomMangaManager>()
+
+        // Initialize both manga and anime extension managers.
+        Injekt.get<NaikoExtensionManager>().anime
+        Injekt.get<NaikoExtensionManager>().manga
     }
 }
+
