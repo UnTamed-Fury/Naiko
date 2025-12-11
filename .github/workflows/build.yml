@@ -22,18 +22,15 @@ jobs:
 
     - name: Grant execute permission for gradlew
       run: chmod +x gradlew
-      working-directory: ./Naiko
 
     - name: Build with Gradle
       run: ./gradlew assembleDebug
-      working-directory: ./Naiko
     
     - name: Run Tests with Gradle
       run: ./gradlew test
-      working-directory: ./Naiko
 
     - name: Upload a debug APK
       uses: actions/upload-artifact@v4
       with:
         name: app-debug
-        path: Naiko/app/build/outputs/apk/debug/app-debug.apk
+        path: app/build/outputs/apk/debug/app-debug.apk
