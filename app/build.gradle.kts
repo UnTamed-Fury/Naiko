@@ -167,8 +167,7 @@ dependencies {
     implementation(projects.aniyomiPresentation.core)
     implementation(projects.aniyomiPresentation.widget)
     implementation(projects.aniyomiSource.api)
-    implementation(projects.aniyomiSource.local)
-    implementation(projects.sourceLocal) // Refers to the source-local module from aniyomi
+    implementation(projects.aniyomiSourceLocal)
 
     // Compose
     implementation(platform(compose.bom))
