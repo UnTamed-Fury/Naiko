@@ -19,6 +19,17 @@ dependencyResolutionManagement {
         maven(url = "https://plugins.gradle.org/m2/")
         maven(url = "https://s01.oss.sonatype.org/content/repositories/releases/")
     }
+    versionCatalogs {
+        create("androidx") {
+            from(files("gradle/androidx.versions.toml"))
+        }
+        create("compose") {
+            from(files("gradle/compose.versions.toml"))
+        }
+        create("kotlinx") {
+            from(files("gradle/kotlinx.versions.toml"))
+        }
+    }
 }
 
 plugins {
