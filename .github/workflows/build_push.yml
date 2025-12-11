@@ -27,6 +27,10 @@ concurrency:
   group: ${{ github.workflow }}-${{ github.ref }}-${{ github.event_name == 'workflow_dispatch' }}
   cancel-in-progress: true
 
+permissions:
+  contents: write
+  checks: write
+
 jobs:
   build:
     name: Build app

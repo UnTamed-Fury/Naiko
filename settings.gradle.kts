@@ -19,11 +19,6 @@ dependencyResolutionManagement {
         maven(url = "https://plugins.gradle.org/m2/")
         maven(url = "https://s01.oss.sonatype.org/content/repositories/releases/")
     }
-    versionCatalogs {
-        create("libs") {
-            from(files("gradle/libs.versions.toml"))
-        }
-    }
 }
 
 plugins {

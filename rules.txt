@@ -1,0 +1,8 @@
+
+use this to see logs of each CI/CD runs -
+1. gh run list > any file u like
+2.5 gh run view <thr run code u wanna view while it run>
+2.5 just do gh run and u will get all thr commands
+
+
+latest run - 20146283267
