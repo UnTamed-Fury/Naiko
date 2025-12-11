@@ -118,8 +118,10 @@ fun appModule(app: Application) = module {
 
     single { JavaScriptEngine(app) }
 
-    single { SourceManager(app, get()) }
-    single { ExtensionManager(app) }
+    single { NaikoExtensionManager(app) }
+    single { get<NaikoExtensionManager>().anime }
+    single { get<NaikoExtensionManager>().manga }
+    single { SourceManager(app, get(), get()) }
 
     single { DownloadProvider(app) }
     single { DownloadManager(app) }

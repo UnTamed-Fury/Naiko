@@ -6,14 +6,16 @@ import java.time.format.DateTimeFormatter
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("yokai.android.application")
-    id("yokai.android.application.compose")
+    id("yokai.android.application") // Keeping yokai's plugin for its Android config
+    id("yokai.android.application.compose") // Keeping yokai's for Compose config
     alias(kotlinx.plugins.serialization)
     alias(kotlinx.plugins.parcelize)
     alias(libs.plugins.aboutlibraries)
     alias(libs.plugins.aboutlibraries.android)
     alias(libs.plugins.firebase.crashlytics) apply false
     alias(libs.plugins.google.services) apply false
+    // Add Aniyomi specific plugin for shortcut helper if needed
+    // id("com.github.zellius.shortcut-helper") // Check if this is needed and replace with alias if available in libs
 }
 
 if (gradle.startParameter.taskRequests.toString().contains("standard", true)) {
@@ -27,7 +29,7 @@ fun runCommand(command: String): String {
 }
 
 @Suppress("PropertyName")
-val _versionName = "1.10.0"
+val _versionName = "1.0.0" // Start with a new version for Naiko
 val betaCount by lazy {
     val betaTags = runCommand("git tag -l --sort=refname v${_versionName}-b*")
 
@@ -49,16 +51,16 @@ val supportedAbis = setOf("armeabi-v7a", "arm64-v8a", "x86", "x86_64")
 
 android {
     defaultConfig {
-        applicationId = "eu.kanade.tachiyomi"
-        versionCode = 158
-        versionName = _versionName
+        applicationId = "com.fury.naiko" // Changed from eu.kanade.tachiyomi
+        versionCode = 1 // Starting new for Naiko
+        versionName = _versionName // Starting new for Naiko
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled = true
 
-        buildConfigField("String", "COMMIT_COUNT", "\"${commitCount}\"")
-        buildConfigField("String", "BETA_COUNT", "\"${betaCount}\"")
-        buildConfigField("String", "COMMIT_SHA", "\"${commitHash}\"")
-        buildConfigField("String", "BUILD_TIME", "\"${buildTime}\"")
+        buildConfigField("String", "COMMIT_COUNT", """${commitCount}""")
+        buildConfigField("String", "BETA_COUNT", """${betaCount}""")
+        buildConfigField("String", "COMMIT_SHA", """${commitHash}""")
+        buildConfigField("String", "BUILD_TIME", """${buildTime}""")
         buildConfigField("Boolean", "INCLUDE_UPDATER", "false")
         buildConfigField("Boolean", "BETA", "false")
         buildConfigField("Boolean", "NIGHTLY", "false")
@@ -83,11 +85,11 @@ android {
 
     buildTypes {
         getByName("debug") {
-            applicationIdSuffix = ".debugYokai"
+            applicationIdSuffix = ".debug" // Simplified suffix
             versionNameSuffix = "-d${commitCount}"
         }
         getByName("release") {
-            applicationIdSuffix = ".yokai"
+            applicationIdSuffix = ".naiko" // Simplified suffix
             isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
@@ -107,16 +109,13 @@ android {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks.add("release")
             versionNameSuffix = "-r${commitCount}"
-            applicationIdSuffix = ".nightlyYokai"
+            applicationIdSuffix = ".nightly" // Simplified suffix
         }
     }
 
     buildFeatures {
         viewBinding = true
-        // If you're here because there's not BuildConfig, build the app first, it'll generate it for you
         buildConfig = true
-
-        // Disable some unused things
         aidl = false
         renderScript = false
         shaders = false
@@ -142,17 +141,34 @@ android {
         checkReleaseBuilds = false
     }
 
-    namespace = "eu.kanade.tachiyomi"
+    namespace = "com.fury.naiko" // Changed from eu.kanade.tachiyomi
 }
 
 dependencies {
-    implementation(projects.core.archive)
-    implementation(projects.core.main)
-    implementation(projects.data)
-    implementation(projects.domain)
-    implementation(projects.i18n)
-    implementation(projects.presentation.core)
-    implementation(projects.source.api)
+    // Yokai modules
+    implementation(projects.yokaiCore.archive)
+    implementation(projects.yokaiCore.main)
+    implementation(projects.yokaiData)
+    implementation(projects.yokaiDomain)
+    implementation(projects.yokaiI18n)
+    implementation(projects.yokaiPresentation.core)
+    implementation(projects.yokaiPresentation.widget)
+    implementation(projects.yokaiSource.api)
+
+    // Aniyomi modules
+    implementation(projects.aniyomiCoreMetadata)
+    implementation(projects.aniyomiCore.archive)
+    implementation(projects.aniyomiCore.common)
+    implementation(projects.aniyomiData)
+    implementation(projects.aniyomiDomain)
+    implementation(projects.aniyomiI18n)
+    implementation(projects.aniyomiI18nAniyomi)
+    implementation(projects.aniyomiMacrobenchmark)
+    implementation(projects.aniyomiPresentation.core)
+    implementation(projects.aniyomiPresentation.widget)
+    implementation(projects.aniyomiSource.api)
+    implementation(projects.aniyomiSource.local)
+    implementation(projects.sourceLocal) // Refers to the source-local module from aniyomi
 
     // Compose
     implementation(platform(compose.bom))
@@ -162,66 +178,38 @@ dependencies {
     implementation(compose.webview)
 
     implementation(libs.flexbox)
-
     implementation(libs.material)
-
-    // Android X libraries
     implementation(androidx.bundles.androidx)
-
     implementation(platform(libs.firebase))
-
     implementation(libs.firebase.analytics)
     implementation(libs.firebase.crashlytics)
-
-    // ReactiveX
     implementation(libs.rxandroid)
     implementation(libs.rxjava)
     implementation(libs.rxrelay)
-
-    // Chucker
     debugImplementation(libs.chucker.library)
     releaseImplementation(libs.chucker.library.no.op)
     "nightlyImplementation"(libs.chucker.library.no.op)
     "betaImplementation"(libs.chucker.library.no.op)
-
     implementation(kotlin("reflect", version = kotlinx.versions.kotlin.get()))
-
-    // JSON
     implementation(kotlinx.bundles.serialization)
-
-    // JavaScript engine
     implementation(libs.quickjs.android)
-
-    // Disk
     implementation(libs.disklrucache)
-
-    // HTML parser
+    implementation(libs.unifile)
+    implementation(libs.libarchive)
     implementation(libs.jsoup)
-
     implementation(libs.play.services.gcm)
-
-    // Database
     implementation(libs.sqlite.android)
     implementation(libs.bundles.sqlite)
-
-    // Model View Presenter
     implementation(libs.conductor)
     implementation(libs.conductor.support.preference)
-
-    // Image library
-    implementation(platform(libs.coil3.bom))
+    implementation(platform(libs.coil.bom))
     implementation(libs.bundles.coil)
-    implementation(libs.subsamplingscaleimageview) {  // modified
+    implementation(libs.subsamplingscaleimageview) {
         exclude(module = "image-decoder")
     }
     implementation(libs.image.decoder)
-
-    // Sort
     implementation(libs.java.nat.sort)
-
     implementation(libs.aboutlibraries)
-
-    // UI
     implementation(libs.fastadapter)
     implementation(libs.fastadapter.extensions.binding)
     implementation(libs.flexible.adapter)
@@ -229,29 +217,30 @@ dependencies {
     implementation(libs.viewstatepageradapter)
     implementation(libs.slice)
     implementation(libs.markwon)
-
     implementation(libs.photoview)
     implementation(libs.directionalviewpager)
     implementation(libs.viewtooltip)
     implementation(libs.taptargetview)
-
-    // Navigation
+    implementation(libs.insetter)
+    implementation(libs.compose.materialmotion)
+    implementation(libs.compose.grid)
+    implementation(libs.reorderable)
+    implementation(libs.swipe)
     implementation(libs.bundles.voyager)
-
-    // Shizuku
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
-
     implementation(platform(kotlinx.coroutines.bom))
     implementation(kotlinx.bundles.coroutines)
-
-    // TLS 1.3 support for Android < 10
-    implementation(libs.conscrypt)
-
-    // Android Chart
+    implementation(libs.conscrypt.android)
     implementation(libs.mpandroidchart)
-
     implementation(kotlinx.immutable)
+
+    // Player dependencies
+    implementation(libs.bundles.mpv.player)
+
+    // Logging
+    implementation(libs.logcat)
+    implementation(libs.kermit)
 
     // Tests
     testImplementation(libs.bundles.test)
@@ -259,17 +248,13 @@ dependencies {
     androidTestImplementation(libs.bundles.test.android)
     testImplementation(kotlinx.coroutines.test)
 
-    // For detecting memory leaks
-    // REF: https://square.github.io/leakcanary/
     debugImplementation(libs.leakcanary.android)
     implementation(libs.leakcanary.plumber)
 }
 
 tasks {
-    // See https://kotlinlang.org/docs/reference/experimental.html#experimental-status-of-experimental-api(-markers)
     withType<KotlinCompile> {
         compilerOptions.freeCompilerArgs.addAll(
-            // "-opt-in=kotlin.Experimental",
             "-opt-in=kotlin.RequiresOptIn",
             "-opt-in=kotlin.ExperimentalStdlibApi",
             "-opt-in=coil3.annotation.ExperimentalCoilApi",
@@ -278,16 +263,13 @@ tasks {
             "-opt-in=androidx.compose.ui.ExperimentalComposeUiApi",
             "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
             "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
-            // "-opt-in=com.google.accompanist.permissions.ExperimentalPermissionsApi",
             "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
             "-opt-in=kotlinx.coroutines.FlowPreview",
-            "-opt-in=kotlinx.coroutines.ExperimentalCoroutinesApi",
             "-opt-in=kotlinx.coroutines.InternalCoroutinesApi",
             "-opt-in=kotlinx.serialization.ExperimentalSerializationApi",
         )
     }
 
-    // Duplicating Hebrew string assets due to some locale code issues on different devices
     val copyHebrewStrings = task("copyHebrewStrings", type = Copy::class) {
         from("./src/main/res/values-he")
         into("./src/main/res/values-iw")
@@ -296,7 +278,6 @@ tasks {
 
     preBuild {
         dependsOn(
-            // formatKotlin,
             copyHebrewStrings
         )
     }
