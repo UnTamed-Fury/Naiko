@@ -1,9 +1,9 @@
-import mihon.buildlogic.generatedBuildDir
-import mihon.buildlogic.tasks.getLocalesConfigTask
+import naiko.buildlogic.generatedBuildDir
+import naiko.buildlogic.tasks.getLocalesConfigTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    id("mihon.library")
+    id("naiko.android.library")
     kotlin("multiplatform")
     alias(libs.plugins.moko)
 }

@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    id("mihon.library")
+    id("naiko.android.library")
     kotlin("multiplatform")
     kotlin("plugin.serialization")
 }
