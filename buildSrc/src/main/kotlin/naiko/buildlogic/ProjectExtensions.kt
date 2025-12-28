@@ -14,6 +14,9 @@ import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
+val Project.generatedBuildDir: java.io.File 
+    get() = project.layout.buildDirectory.asFile.get().resolve("generated/naiko")
+
 internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
     commonExtension.apply {
         compileSdk = AndroidConfig.COMPILE_SDK
@@ -90,6 +93,4 @@ internal fun Project.configureTest() {
         }
     }
 }
-
-val Project.generatedBuildDir: java.io.File get() = project.layout.buildDirectory.asFile.get().resolve("generated/naiko")
 
