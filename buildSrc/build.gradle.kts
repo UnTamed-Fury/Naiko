@@ -16,5 +16,6 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-gradle-plugin:2.2.21")
     implementation("org.jetbrains.kotlin:compose-compiler-gradle-plugin:2.2.21")
     implementation("com.diffplug.spotless:spotless-plugin-gradle:7.0.2")
+    implementation("org.jmailen.gradle:kotlinter-gradle:5.1.0")
     implementation(gradleApi())
 }
