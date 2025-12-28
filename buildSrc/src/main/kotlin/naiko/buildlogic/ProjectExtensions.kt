@@ -109,9 +109,4 @@ internal fun Project.configureTest() {
 
 internal fun Project.configureLinting() {
     pluginManager.apply("org.jmailen.kotlinter")
-    
-    extensions.configure<KotlinterExtension> {
-        ignoreFailures = true
-        reporters = arrayOf("checkstyle", "plain")
-    }
 }
