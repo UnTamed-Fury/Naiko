@@ -1,4 +1,4 @@
-package naiko.buildlogic.tasks
+package naiko.buildlogic
 
 import org.gradle.api.Project
 import org.gradle.api.Task

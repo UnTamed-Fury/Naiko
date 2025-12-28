@@ -1,4 +1,5 @@
-import naiko.build.generatedBuildDir
+import naiko.buildlogic.generatedBuildDir
+import naiko.buildlogic.getLocalesConfigTask
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
@@ -48,14 +49,8 @@ multiplatformResources {
 }
 
 tasks {
-   val localesConfigTask = project.registerLocalesConfigTask(generatedAndroidResourceDir)
+   val localesConfigTask = project.getLocalesConfigTask(generatedAndroidResourceDir)
    preBuild {
        dependsOn(localesConfigTask)
    }
-
-    withType<KotlinCompile> {
-        compilerOptions.freeCompilerArgs.addAll(
-            "-Xexpect-actual-classes",
-        )
-    }
 }

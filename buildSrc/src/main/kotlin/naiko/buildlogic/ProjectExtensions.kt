@@ -2,10 +2,13 @@ package naiko.buildlogic
 
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalog
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
@@ -17,7 +20,12 @@ import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 val Project.generatedBuildDir: java.io.File 
     get() = project.layout.buildDirectory.asFile.get().resolve("generated/naiko")
 
+private fun Project.getLibraryCatalog(name: String): VersionCatalog {
+    return extensions.getByType<VersionCatalogsExtension>().named(name)
+}
+
 internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
+    val libs = getLibraryCatalog("libs")
     commonExtension.apply {
         compileSdk = AndroidConfig.COMPILE_SDK
         buildToolsVersion = AndroidConfig.BUILD_TOOLS
@@ -51,18 +59,20 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
     }
 
     dependencies {
-        "coreLibraryDesugaring"("com.android.tools:desugar_jdk_libs:2.1.5")
+        "coreLibraryDesugaring"(libs.findLibrary("desugar").get())
     }
 }
 
 internal fun Project.configureCompose(commonExtension: CommonExtension<*, *, *, *, *, *>) {
+    val compose = getLibraryCatalog("compose")
+    pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
     commonExtension.apply {
         buildFeatures {
             compose = true
         }
 
         dependencies {
-            "implementation"(platform("androidx.compose:compose-bom:2025.11.00"))
+            "implementation"(platform(compose.findLibrary("bom").get()))
         }
     }
 
@@ -93,4 +103,3 @@ internal fun Project.configureTest() {
         }
     }
 }
-
