@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("naiko.android.library")
-    id("naiko.android.library.compose")
+    id("naiko.android.library.kmp")
+    id("naiko.android.library.compose.kmp")
 }
 
 android {
