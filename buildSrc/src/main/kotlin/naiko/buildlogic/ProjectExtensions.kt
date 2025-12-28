@@ -25,7 +25,7 @@ private fun Project.getLibraryCatalog(name: String): VersionCatalog {
 }
 
 internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
-    val libs = getLibraryCatalog("libs")
+    val libsCatalog = getLibraryCatalog("libs")
     commonExtension.apply {
         compileSdk = AndroidConfig.COMPILE_SDK
         buildToolsVersion = AndroidConfig.BUILD_TOOLS
@@ -59,12 +59,12 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
     }
 
     dependencies {
-        "coreLibraryDesugaring"(libs.findLibrary("desugar").get())
+        "coreLibraryDesugaring"(libsCatalog.findLibrary("desugar").get())
     }
 }
 
 internal fun Project.configureCompose(commonExtension: CommonExtension<*, *, *, *, *, *>) {
-    val compose = getLibraryCatalog("compose")
+    val composeCatalog = getLibraryCatalog("compose")
     pluginManager.apply("org.jetbrains.kotlin.plugin.compose")
     commonExtension.apply {
         buildFeatures {
@@ -72,7 +72,7 @@ internal fun Project.configureCompose(commonExtension: CommonExtension<*, *, *, 
         }
 
         dependencies {
-            "implementation"(platform(compose.findLibrary("bom").get()))
+            "implementation"(platform(composeCatalog.findLibrary("bom").get()))
         }
     }
 
