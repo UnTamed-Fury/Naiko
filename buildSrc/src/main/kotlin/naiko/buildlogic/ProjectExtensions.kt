@@ -2,13 +2,10 @@ package naiko.buildlogic
 
 import com.android.build.api.dsl.CommonExtension
 import org.gradle.api.Project
-import org.gradle.api.artifacts.VersionCatalog
-import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
@@ -17,18 +14,7 @@ import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-private fun Project.getLibraryCatalog(name: String): VersionCatalog {
-    val catalogs = extensions.getByType<VersionCatalogsExtension>()
-    return try {
-        catalogs.named(name)
-    } catch (e: Exception) {
-        // Fallback for buildSrc internal compilation
-        catalogs.named("build${name.replaceFirstChar { it.uppercase() }}")
-    }
-}
-
 internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
-    val libsCatalog = getLibraryCatalog("libs")
     commonExtension.apply {
         compileSdk = AndroidConfig.COMPILE_SDK
         buildToolsVersion = AndroidConfig.BUILD_TOOLS
@@ -62,22 +48,18 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
     }
 
     dependencies {
-        "coreLibraryDesugaring"(libsCatalog.findLibrary("desugar").get())
+        "coreLibraryDesugaring"("com.android.tools:desugar_jdk_libs:2.1.5")
     }
 }
 
 internal fun Project.configureCompose(commonExtension: CommonExtension<*, *, *, *, *, *>) {
-    val composeCatalog = getLibraryCatalog("compose")
-    // This plugin ID is now directly referenced in the main app's build.gradle.kts
-    // pluginManager.apply(kotlinx.plugins.compose.compiler.get().pluginId)
-
     commonExtension.apply {
         buildFeatures {
             compose = true
         }
 
         dependencies {
-            "implementation"(platform(composeCatalog.findLibrary("bom").get()))
+            "implementation"(platform("androidx.compose:compose-bom:2025.11.00"))
         }
     }
 
