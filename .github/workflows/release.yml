@@ -1,0 +1,145 @@
+name: Release
+
+on:
+  push:
+    branches: [ "main" ]
+  workflow_dispatch:
+    inputs:
+      version:
+        description: 'Version (without "v" prefix)'
+        required: true
+        type: string
+      beta:
+        description: 'Beta release'
+        default: false
+        required: false
+        type: boolean
+      message:
+        description: 'Message for releases'
+        default: ''
+        required: false
+        type: string
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+permissions:
+  contents: write
+
+jobs:
+  release:
+    name: Build & Release
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Android SDK
+        run: ${ANDROID_SDK_ROOT}/cmdline-tools/latest/bin/sdkmanager "build-tools;35.0.0"
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+          cache: gradle
+
+      - name: Setup Changelog Parser
+        uses: taiki-e/install-action@parse-changelog
+
+      - name: Copy CI gradle.properties
+        run: |
+          mkdir -p ~/.gradle
+          cp .github/runner-files/ci-gradle.properties ~/.gradle/gradle.properties
+
+      - name: Extract Branch Name
+        id: branch_name
+        shell: bash
+        run: echo "NAME=${GITHUB_HEAD_REF:-${GITHUB_REF#refs/heads/}}" >> $GITHUB_OUTPUT
+
+      - name: Configure Build Type
+        id: config
+        run: |
+          if [[ "${{ github.event_name }}" == "workflow_dispatch" ]]; then
+             if [[ "${{ github.event.inputs.beta }}" == "true" ]]; then
+                BETA_COUNT=$(git tag -l --sort=refname "v${{github.event.inputs.version}}-b*" | tail -n1 | sed "s/^\S*-b//g")
+                if [ -z "$BETA_COUNT" ]; then BETA_COUNT="1"; else BETA_COUNT=$((BETA_COUNT+1)); fi
+                echo "VERSION_TAG=v${{github.event.inputs.version}}-b${BETA_COUNT}" >> $GITHUB_ENV
+                echo "BUILD_TYPE=StandardBeta" >> $GITHUB_ENV
+                echo "STAGE=beta" >> $GITHUB_ENV
+             else
+                echo "VERSION_TAG=v${{github.event.inputs.version}}" >> $GITHUB_ENV
+                echo "BUILD_TYPE=StandardRelease" >> $GITHUB_ENV
+                echo "STAGE=release" >> $GITHUB_ENV
+             fi
+          else
+             echo "VERSION_TAG=r$(git rev-list --count HEAD)" >> $GITHUB_ENV
+             echo "BUILD_TYPE=StandardNightly" >> $GITHUB_ENV
+             echo "STAGE=nightly" >> $GITHUB_ENV
+             echo "COMMIT_HASH=$(git rev-parse HEAD)" >> $GITHUB_ENV
+             echo "COMMIT_SHORT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
+          fi
+
+      - name: Get Changelog
+        id: changelog
+        shell: bash
+        run: |
+          VERSION_FORMAT='^(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)\.(0|[1-9][0-9]*)(\.(0|[1-9][0-9]*))?(-[0-9A-Za-z\.-]+)?(\+[0-9A-Za-z\.-]+)?$|^Unreleased$'
+          {
+            echo "CHANGELOG<<END_OF_FILE"
+            parse-changelog CHANGELOG.md ${{ github.event.inputs.version == '' && 'Unreleased' || github.event.inputs.version }} --version-format $VERSION_FORMAT || echo "No documented changes..."
+            echo ""
+            echo "END_OF_FILE"
+          } >> "$GITHUB_OUTPUT" 2> /dev/null
+
+      - name: Build App
+        run: ./gradlew assemble${{ env.BUILD_TYPE }}
+
+      - name: Sign APK
+        uses: null2264/actions/android-signer@363cb9cf3d66bd9c72ed6860142c6b2c121d7e94
+        with:
+          releaseDir: app/build/outputs/apk/standard/${{ env.STAGE }}
+          signingKeyBase64: ${{ secrets.SIGNING_KEY }}
+          keyAlias: ${{ secrets.ALIAS }}
+          keyStorePassword: ${{ secrets.KEY_STORE_PASSWORD }}
+          keyPassword: ${{ secrets.KEY_PASSWORD }}
+          summarise: true
+
+      - name: Create Release
+        if: startsWith(env.VERSION_TAG, 'v')
+        uses: softprops/action-gh-release@v2
+        with:
+          tag_name: ${{ env.VERSION_TAG }}
+          name: Yōkai ${{ env.VERSION_TAG }}
+          body: |
+            ${{ github.event.inputs.message }}
+            
+            ${{ steps.changelog.outputs.CHANGELOG }}
+          files: |
+            app/build/outputs/apk/standard/${{ env.STAGE }}/*.apk
+          draft: true
+          prerelease: ${{ github.event.inputs.beta }}
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Create Nightly
+        if: startsWith(env.VERSION_TAG, 'r')
+        uses: softprops/action-gh-release@v2
+        with:
+          repository: null2264/yokai-nightly # User wanted to make gitlab just a mirror, but this points to separate repo. Keeping as is per instructions to "refactor... and make gitlab just a mirror".
+          tag_name: ${{ env.VERSION_TAG }}
+          name: Yōkai Nightly (${{ env.VERSION_TAG }})
+          body: |
+            Nightly build ${{ env.VERSION_TAG }}
+            Commit: ${{ env.COMMIT_SHORT_HASH }}
+            
+            ${{ steps.changelog.outputs.CHANGELOG }}
+          files: |
+            app/build/outputs/apk/standard/${{ env.STAGE }}/*.apk
+          draft: false
+          prerelease: false
+        env:
+          GITHUB_TOKEN: ${{ secrets.NIGHTLY_PAT }}
