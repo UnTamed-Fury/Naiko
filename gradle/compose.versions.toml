@@ -12,5 +12,11 @@ ui-tooling-preview = { module = "androidx.compose.ui:ui-tooling-preview" }
 icons = { module = "androidx.compose.material:material-icons-extended" }
 webview = { module = "io.github.kevinnzou:compose-webview", version = "0.33.6" }
 
+activity = { module = "androidx.activity:activity-compose", version = "1.11.0" }
+material3-core = { module = "androidx.compose.material3:material3" }
+material-icons = { module = "androidx.compose.material:material-icons-extended" }
+animation-graphics = { module = "androidx.compose.animation:animation-graphics" }
+ui-util = { module = "androidx.compose.ui:ui-util" }
+
 [bundles]
 compose = [ "animation", "foundation", "material3", "material-motion", "ui-tooling-preview", "icons" ]
