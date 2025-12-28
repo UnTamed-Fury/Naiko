@@ -22,7 +22,7 @@ private fun Project.getLibraryCatalog(name: String): VersionCatalog {
 }
 
 internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
-    val libsCatalog = getLibraryCatalog("libs")
+    val libsCatalog = getLibraryCatalog("buildLibs")
     commonExtension.apply {
         compileSdk = AndroidConfig.COMPILE_SDK
         buildToolsVersion = AndroidConfig.BUILD_TOOLS
@@ -61,7 +61,7 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
 }
 
 internal fun Project.configureCompose(commonExtension: CommonExtension<*, *, *, *, *, *>) {
-    val composeCatalog = getLibraryCatalog("compose")
+    val composeCatalog = getLibraryCatalog("buildCompose")
     // This plugin ID is now directly referenced in the main app's build.gradle.kts
     // pluginManager.apply(kotlinx.plugins.compose.compiler.get().pluginId)
 

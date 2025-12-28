@@ -7,16 +7,16 @@ println("BuildSrc Settings: Libs exists: " + catalogDir.resolve("libs.versions.t
 
 dependencyResolutionManagement {
     versionCatalogs {
-        create("libs") {
+        create("buildLibs") {
             from(files(catalogDir.resolve("libs.versions.toml")))
         }
-        create("androidx") {
+        create("buildAndroidx") {
             from(files(catalogDir.resolve("androidx.versions.toml")))
         }
-        create("compose") {
+        create("buildCompose") {
             from(files(catalogDir.resolve("compose.versions.toml")))
         }
-        create("kotlinx") {
+        create("buildKotlinx") {
             from(files(catalogDir.resolve("kotlinx.versions.toml")))
         }
     }
