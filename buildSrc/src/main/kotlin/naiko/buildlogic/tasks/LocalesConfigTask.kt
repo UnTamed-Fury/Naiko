@@ -5,7 +5,7 @@ import org.gradle.api.Task
 import org.gradle.api.tasks.TaskProvider
 import java.io.File
 
-private val emptyResourcesElement = "<resources>\s*</resources>|<resources\s*/>".toRegex()
+private val emptyResourcesElement = "<resources>\\\\s*</resources>|<resources\\\\s*/>".toRegex()
 
 fun Project.getLocalesConfigTask(outputResourceDir: File): TaskProvider<Task> {
     return tasks.register("generateLocalesConfig") {

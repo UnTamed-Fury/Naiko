@@ -139,7 +139,7 @@ jobs:
         if: startsWith(env.VERSION_TAG, 'r')
         uses: softprops/action-gh-release@v2
         with:
-          repository: null2264/yokai-nightly # User wanted to make gitlab just a mirror, but this points to separate repo. Keeping as is per instructions to "refactor... and make gitlab just a mirror".
+          repository: UnTamed-Fury/Naiko-nightly # User wanted to make gitlab just a mirror, but this points to separate repo. Keeping as is per instructions to "refactor... and make gitlab just a mirror".
           tag_name: ${{ env.VERSION_TAG }}
           name: Yōkai Nightly (${{ env.VERSION_TAG }})
           body: |

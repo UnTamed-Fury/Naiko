@@ -228,7 +228,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Add option to enable reader debug mode
 - Add option to adjust reader's hardware bitmap threshold (@AntsyLich)
   - Always use software bitmap on certain devices (@MajorTanya)
-- Add option to scan local entries from `/storage/(sdcard|emulated/0)/Android/data/<yokai>/files/local`
+- Add option to scan local entries from `/storage/(sdcard|emulated/0)/Android/data/<naiko>/files/local`
 
 ### Changes
 
@@ -591,7 +591,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 
 - Fixed crashes caused by invalid ComicInfo XML
 
-  If this caused your custom manga info to stop working, try resetting it by deleting `ComicInfoEdits.xml` file located in `Android/data/eu.kanade.tachiyomi.yokai`
+  If this caused your custom manga info to stop working, try resetting it by deleting `ComicInfoEdits.xml` file located in `Android/data/eu.kanade.tachiyomi.naiko`
 
 - Fixed crashes caused by the app trying to round NaN value
 
@@ -726,7 +726,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ### Fixes
 
 - Fixed cutout behaviour for Android P
-- Fixed some extensions doesn't detect "added to library" entries properly ([GH-40](https://github.com/null2264/yokai/issues/40))
+- Fixed some extensions doesn't detect "added to library" entries properly ([GH-40](https://github.com/UnTamed-Fury/Naiko/issues/40))
 - Fixed nightly and debug variant doesn't include their respective prefix on their app name
 - Fixed nightly version checker
 
