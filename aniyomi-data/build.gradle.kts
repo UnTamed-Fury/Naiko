@@ -41,5 +41,5 @@ dependencies {
     implementation(projects.aniyomiDomain)
     implementation(projects.aniyomiCoreCommon)
 
-    api(libs.bundles.sqldelight)
+    api(libs.bundles.db.android)
 }
