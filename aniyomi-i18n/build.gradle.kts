@@ -3,7 +3,7 @@ import naiko.buildlogic.tasks.getLocalesConfigTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
-    id("naiko.android.library")
+    id("naiko.android.library.kmp")
     kotlin("multiplatform")
     alias(libs.plugins.moko)
 }

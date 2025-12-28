@@ -1,5 +1,5 @@
 plugins {
-    id("naiko.android.library")
+    id("naiko.android.library.kmp")
     kotlin("multiplatform")
     alias(kotlinx.plugins.serialization)
     alias(libs.plugins.sqldelight)
