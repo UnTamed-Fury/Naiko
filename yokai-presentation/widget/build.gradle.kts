@@ -1,8 +1,8 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("yokai.android.library")
-    id("yokai.android.library.compose")
+    id("naiko.android.library")
+    id("naiko.android.library.compose")
     kotlin("android")
 }
 

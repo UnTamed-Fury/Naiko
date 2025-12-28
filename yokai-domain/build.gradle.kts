@@ -1,5 +1,5 @@
 plugins {
-    id("yokai.android.library")
+    id("naiko.android.library")
     kotlin("multiplatform")
     alias(kotlinx.plugins.serialization)
 }

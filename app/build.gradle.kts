@@ -6,8 +6,8 @@ import java.time.format.DateTimeFormatter
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("yokai.android.application") // Keeping yokai's plugin for its Android config
-    id("yokai.android.application.compose") // Keeping yokai's for Compose config
+    id("naiko.android.application")
+    id("naiko.android.application.compose")
     alias(kotlinx.plugins.serialization)
     alias(kotlinx.plugins.parcelize)
     alias(libs.plugins.aboutlibraries)

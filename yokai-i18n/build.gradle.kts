@@ -2,7 +2,7 @@ import yokai.build.generatedBuildDir
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("yokai.android.library")
+    id("naiko.android.library")
     kotlin("multiplatform")
     alias(libs.plugins.moko)
 }

@@ -1,15 +1,14 @@
 package naiko.buildlogic
 
 import com.android.build.api.dsl.CommonExtension
-import org.gradle.accessors.dm.LibrariesForAndroidx
-import org.gradle.accessors.dm.LibrariesForCompose
-import org.gradle.accessors.dm.LibrariesForKotlinx
-import org.gradle.accessors.dm.LibrariesForLibs
 import org.gradle.api.Project
+import org.gradle.api.artifacts.VersionCatalog
+import org.gradle.api.artifacts.VersionCatalogsExtension
 import org.gradle.api.tasks.testing.Test
 import org.gradle.api.tasks.testing.logging.TestLogEvent
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
+import org.gradle.kotlin.dsl.getByType
 import org.gradle.kotlin.dsl.provideDelegate
 import org.gradle.kotlin.dsl.the
 import org.gradle.kotlin.dsl.withType
@@ -18,10 +17,14 @@ import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
-val Project.androidx get() = the<LibrariesForAndroidx>()
-val Project.compose get() = the<LibrariesForCompose>()
-val Project.kotlinx get() = the<LibrariesForKotlinx>()
-val Project.libs get() = the<LibrariesForLibs>()
+private fun Project.getLibraryCatalog(name: String): VersionCatalog {
+    return extensions.getByType<VersionCatalogsExtension>().named(name)
+}
+
+val Project.androidx get() = getLibraryCatalog("androidx")
+val Project.compose get() = getLibraryCatalog("compose")
+val Project.kotlinx get() = getLibraryCatalog("kotlinx")
+val Project.libs get() = getLibraryCatalog("libs")
 
 internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
     commonExtension.apply {
@@ -57,7 +60,7 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
     }
 
     dependencies {
-        "coreLibraryDesugaring"(libs.desugar)
+        "coreLibraryDesugaring"(libs.findLibrary("desugar").get())
     }
 }
 
@@ -71,7 +74,7 @@ internal fun Project.configureCompose(commonExtension: CommonExtension<*, *, *, 
         }
 
         dependencies {
-            "implementation"(platform(compose.bom))
+            "implementation"(platform(compose.findLibrary("bom").get()))
         }
     }
 
