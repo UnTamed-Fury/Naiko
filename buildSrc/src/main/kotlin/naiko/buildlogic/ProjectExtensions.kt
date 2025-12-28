@@ -90,3 +90,6 @@ internal fun Project.configureTest() {
         }
     }
 }
+
+val Project.generatedBuildDir: java.io.File get() = project.layout.buildDirectory.asFile.get().resolve("generated/naiko")
+

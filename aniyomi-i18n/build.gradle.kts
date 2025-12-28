@@ -16,7 +16,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                api(libs.moko.core)
+                api(libs.moko.resources)
             }
         }
     }
