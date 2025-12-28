@@ -96,8 +96,8 @@ import eu.kanade.tachiyomi.widget.LinearLayoutManagerAccurateOffset
 import java.util.Locale
 import kotlin.math.max
 import kotlinx.coroutines.launch
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import android.R as AR
 
 /**

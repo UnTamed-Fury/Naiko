@@ -143,18 +143,18 @@ import kotlinx.coroutines.flow.combine
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import uy.kohesive.injekt.injectLazy
-import yokai.core.migration.Migrator
-import yokai.domain.base.BasePreferences
-import yokai.domain.ui.UiPreferences
+import naiko.core.migration.Migrator
+import naiko.domain.base.BasePreferences
+import naiko.domain.ui.UiPreferences
 import eu.kanade.tachiyomi.ui.library.AnimeLibraryController
 import eu.kanade.tachiyomi.ui.recents.AnimeRecentsController
 import eu.kanade.tachiyomi.ui.source.AnimeBrowseController
-import yokai.domain.recents.interactor.GetRecents
-import yokai.i18n.MR
-import yokai.presentation.core.Constants
-import yokai.presentation.extension.repo.ExtensionRepoController
-import yokai.presentation.onboarding.OnboardingController
-import yokai.util.lang.getString
+import naiko.domain.recents.interactor.GetRecents
+import naiko.i18n.MR
+import naiko.presentation.core.Constants
+import naiko.presentation.extension.repo.ExtensionRepoController
+import naiko.presentation.onboarding.OnboardingController
+import naiko.util.lang.getString
 import android.R as AR
 
 @SuppressLint("ResourceType")

@@ -18,7 +18,7 @@ import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.interactor.GetManga
+import naiko.domain.manga.interactor.GetManga
 
 class SearchController(
     private var manga: Manga? = null,

@@ -6,7 +6,7 @@ import eu.kanade.tachiyomi.data.preference.changesIn
 import kotlinx.coroutines.CoroutineScope
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.ui.settings.ReaderPreferences
+import naiko.domain.ui.settings.ReaderPreferences
 
 /**
  * Common configuration for all viewers.

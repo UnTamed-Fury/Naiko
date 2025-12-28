@@ -13,10 +13,10 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.manga.interactor.GetManga
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.manga.interactor.GetManga
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 class Cubari(delegate: HttpSource) :
     DelegatedHttpSource(delegate) {

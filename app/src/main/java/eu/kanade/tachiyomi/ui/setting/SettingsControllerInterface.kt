@@ -9,7 +9,7 @@ import dev.icerock.moko.resources.StringResource
 import eu.kanade.tachiyomi.ui.base.controller.BaseLegacyController
 import eu.kanade.tachiyomi.ui.main.MainActivity
 import eu.kanade.tachiyomi.util.view.activityBinding
-import yokai.util.lang.getString
+import naiko.util.lang.getString
 
 interface SettingsControllerInterface {
     fun getTitleRes(): StringResource? = null

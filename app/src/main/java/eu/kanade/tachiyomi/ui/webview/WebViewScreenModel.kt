@@ -13,9 +13,9 @@ import eu.kanade.tachiyomi.util.system.toast
 import okhttp3.HttpUrl.Companion.toHttpUrlOrNull
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.i18n.MR
-import yokai.presentation.StatsScreenState
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.presentation.StatsScreenState
+import naiko.util.lang.getString
 
 class WebViewScreenModel(
     val sourceId: Long?,

@@ -22,7 +22,7 @@ import eu.kanade.tachiyomi.databinding.DialogTextInputBinding
 import eu.kanade.tachiyomi.widget.TriStateCheckBox
 import eu.kanade.tachiyomi.widget.materialdialogs.TriStateMultiChoiceDialogAdapter
 import eu.kanade.tachiyomi.widget.materialdialogs.TriStateMultiChoiceListener
-import yokai.util.lang.getString
+import naiko.util.lang.getString
 
 fun Context.materialAlertDialog() = MaterialAlertDialogBuilder(withOriginalWidth())
 

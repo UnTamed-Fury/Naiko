@@ -30,8 +30,8 @@ import eu.kanade.tachiyomi.util.view.setPositiveButton
 import eu.kanade.tachiyomi.util.view.setTitle
 import eu.kanade.tachiyomi.widget.E2EBottomSheetDialog
 import uy.kohesive.injekt.injectLazy
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import android.R as AR
 
 class ExpandedFilterSheet(

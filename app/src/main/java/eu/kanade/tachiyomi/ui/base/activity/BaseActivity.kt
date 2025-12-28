@@ -23,7 +23,7 @@ import eu.kanade.tachiyomi.util.system.setThemeByPref
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.SplashState
+import naiko.domain.SplashState
 import android.R as AR
 
 abstract class BaseActivity<VB : ViewBinding> : AppCompatActivity() {

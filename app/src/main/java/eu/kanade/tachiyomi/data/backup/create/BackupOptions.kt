@@ -2,7 +2,7 @@ package eu.kanade.tachiyomi.data.backup.create
 
 import dev.icerock.moko.resources.StringResource
 import kotlinx.collections.immutable.persistentListOf
-import yokai.i18n.MR
+import naiko.i18n.MR
 
 data class BackupOptions(
     val libraryEntries: Boolean = true,

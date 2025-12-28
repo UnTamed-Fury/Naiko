@@ -5,7 +5,7 @@ import androidx.compose.runtime.ProvidableCompositionLocal
 import androidx.compose.runtime.compositionLocalOf
 import androidx.compose.runtime.staticCompositionLocalOf
 import com.bluelinelabs.conductor.Router
-import yokai.domain.DialogHostState
+import naiko.domain.DialogHostState
 
 val <T> ProvidableCompositionLocal<T?>.currentOrThrow
     @Composable

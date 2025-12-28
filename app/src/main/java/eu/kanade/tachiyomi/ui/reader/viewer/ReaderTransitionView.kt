@@ -16,8 +16,8 @@ import eu.kanade.tachiyomi.domain.manga.models.Manga
 import eu.kanade.tachiyomi.ui.reader.model.ChapterTransition
 import eu.kanade.tachiyomi.util.isLocal
 import eu.kanade.tachiyomi.util.system.ThemeUtil
-import yokai.presentation.reader.ChapterTransition
-import yokai.presentation.theme.YokaiTheme
+import naiko.presentation.reader.ChapterTransition
+import naiko.presentation.theme.NaikoTheme
 
 class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :
     AbstractComposeView(context, attrs) {
@@ -52,7 +52,7 @@ class ReaderTransitionView @JvmOverloads constructor(context: Context, attrs: At
     @Composable
     override fun Content() {
         data?.let {
-            YokaiTheme {
+            NaikoTheme {
                 CompositionLocalProvider (
                     LocalTextStyle provides MaterialTheme.typography.bodySmall,
                     LocalContentColor provides ThemeUtil.readerContentColor(it.theme, MaterialTheme.colorScheme.onBackground),

@@ -10,7 +10,7 @@ import eu.kanade.tachiyomi.ui.setting.onChange
 import eu.kanade.tachiyomi.ui.setting.titleMRes
 import eu.kanade.tachiyomi.util.system.LocaleHelper
 import uy.kohesive.injekt.injectLazy
-import yokai.i18n.MR
+import naiko.i18n.MR
 
 class ExtensionFilterController : SettingsLegacyController() {
 

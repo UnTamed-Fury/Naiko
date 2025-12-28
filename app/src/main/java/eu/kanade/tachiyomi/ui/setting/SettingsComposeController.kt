@@ -2,7 +2,7 @@ package eu.kanade.tachiyomi.ui.setting
 
 import androidx.compose.runtime.Composable
 import eu.kanade.tachiyomi.ui.base.controller.BaseComposeController
-import yokai.presentation.settings.ComposableSettings
+import naiko.presentation.settings.ComposableSettings
 
 abstract class SettingsComposeController: BaseComposeController(), SettingsControllerInterface {
     override fun getTitle(): String? = __getTitle()

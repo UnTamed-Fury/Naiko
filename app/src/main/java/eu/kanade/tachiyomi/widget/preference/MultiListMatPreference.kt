@@ -12,7 +12,7 @@ import androidx.preference.Preference.SummaryProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.icerock.moko.resources.StringResource
 import eu.kanade.tachiyomi.util.system.disableItems
-import yokai.util.lang.getString
+import naiko.util.lang.getString
 import android.R as AR
 
 class MultiListMatPreference @JvmOverloads constructor(

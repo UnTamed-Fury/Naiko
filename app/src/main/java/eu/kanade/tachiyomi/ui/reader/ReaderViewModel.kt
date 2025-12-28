@@ -72,23 +72,23 @@ import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.chapter.interactor.InsertChapter
-import yokai.domain.chapter.interactor.UpdateChapter
-import yokai.domain.chapter.models.ChapterUpdate
-import yokai.domain.download.DownloadPreferences
-import yokai.domain.history.interactor.GetHistory
-import yokai.domain.history.interactor.UpsertHistory
-import yokai.domain.library.LibraryPreferences
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.manga.interactor.InsertManga
-import yokai.domain.manga.interactor.UpdateManga
-import yokai.domain.manga.models.MangaUpdate
-import yokai.domain.storage.StorageManager
-import yokai.domain.track.interactor.GetTrack
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.category.interactor.GetCategories
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.chapter.interactor.InsertChapter
+import naiko.domain.chapter.interactor.UpdateChapter
+import naiko.domain.chapter.models.ChapterUpdate
+import naiko.domain.download.DownloadPreferences
+import naiko.domain.history.interactor.GetHistory
+import naiko.domain.history.interactor.UpsertHistory
+import naiko.domain.library.LibraryPreferences
+import naiko.domain.manga.interactor.GetManga
+import naiko.domain.manga.interactor.InsertManga
+import naiko.domain.manga.interactor.UpdateManga
+import naiko.domain.manga.models.MangaUpdate
+import naiko.domain.storage.StorageManager
+import naiko.domain.track.interactor.GetTrack
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 /**
  * Presenter used by the activity to perform background operations.

@@ -5,8 +5,8 @@ import android.util.AttributeSet
 import android.view.View
 import com.google.android.material.slider.Slider
 import eu.kanade.tachiyomi.R
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import dev.icerock.moko.resources.compose.stringResource
 import eu.kanade.tachiyomi.databinding.LibraryDisplayLayoutBinding
 import eu.kanade.tachiyomi.util.bindToPreference

@@ -19,8 +19,8 @@ import eu.kanade.tachiyomi.util.system.localeContext
 import eu.kanade.tachiyomi.util.system.notificationBuilder
 import eu.kanade.tachiyomi.util.system.notificationManager
 import uy.kohesive.injekt.injectLazy
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import java.util.regex.*
 import android.R as AR
 

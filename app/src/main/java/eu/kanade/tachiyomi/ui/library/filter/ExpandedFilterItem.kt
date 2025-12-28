@@ -14,8 +14,8 @@ import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.databinding.ExpandedFilterItemBinding
 import eu.kanade.tachiyomi.databinding.ExpandedFilterItemTextViewBinding
 import eu.kanade.tachiyomi.util.system.dpToPx
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 class ExpandedFilterItem(val filter: LibraryFilter) : AbstractItem<FastAdapter.ViewHolder<ExpandedFilterItem>>() {
 

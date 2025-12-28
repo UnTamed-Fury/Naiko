@@ -82,15 +82,15 @@ import kotlinx.coroutines.sync.withPermit
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.manga.interactor.GetLibraryManga
-import yokai.domain.manga.interactor.UpdateManga
-import yokai.domain.manga.models.cover
-import yokai.domain.track.interactor.GetTrack
-import yokai.domain.track.interactor.InsertTrack
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.category.interactor.GetCategories
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.manga.interactor.GetLibraryManga
+import naiko.domain.manga.interactor.UpdateManga
+import naiko.domain.manga.models.cover
+import naiko.domain.track.interactor.GetTrack
+import naiko.domain.track.interactor.InsertTrack
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 class LibraryUpdateJob(private val context: Context, workerParams: WorkerParameters) :
     CoroutineWorker(context, workerParams) {

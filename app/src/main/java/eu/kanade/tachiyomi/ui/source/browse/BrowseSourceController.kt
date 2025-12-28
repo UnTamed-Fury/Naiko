@@ -76,12 +76,12 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.collectLatest
 import kotlinx.coroutines.launch
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.source.browse.filter.models.SavedSearch
-import yokai.i18n.MR
-import yokai.presentation.core.icons.CustomIcons
-import yokai.presentation.core.icons.LocalSource
-import yokai.util.lang.getString
+import naiko.domain.manga.interactor.GetManga
+import naiko.domain.source.browse.filter.models.SavedSearch
+import naiko.i18n.MR
+import naiko.presentation.core.icons.CustomIcons
+import naiko.presentation.core.icons.LocalSource
+import naiko.util.lang.getString
 
 /**
  * Controller to manage the catalogues available in the app.

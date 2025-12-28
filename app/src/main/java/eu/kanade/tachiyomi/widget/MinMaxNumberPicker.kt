@@ -7,8 +7,8 @@ import android.widget.EditText
 import android.widget.NumberPicker
 import androidx.core.view.doOnLayout
 import eu.kanade.tachiyomi.R
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import dev.icerock.moko.resources.compose.stringResource
 import eu.kanade.tachiyomi.util.view.findDescendant
 

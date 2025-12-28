@@ -2,8 +2,8 @@ package eu.kanade.tachiyomi.util.manga
 
 import eu.kanade.tachiyomi.domain.manga.models.Manga
 import eu.kanade.tachiyomi.util.chapter.ChapterUtil
-import yokai.domain.manga.interactor.UpdateManga
-import yokai.domain.manga.models.MangaUpdate
+import naiko.domain.manga.interactor.UpdateManga
+import naiko.domain.manga.models.MangaUpdate
 
 object MangaUtil {
     suspend fun setScanlatorFilter(updateManga: UpdateManga, manga: Manga, filteredScanlators: Set<String>) {

@@ -16,7 +16,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.ui.settings.ReaderPreferences
+import naiko.domain.ui.settings.ReaderPreferences
 
 /**
  * Configuration used by webtoon viewers.

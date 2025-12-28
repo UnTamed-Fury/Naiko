@@ -23,9 +23,9 @@ import kotlinx.coroutines.flow.onStart
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.download.DownloadPreferences
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.download.DownloadPreferences
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 /**
  * This class is used to manage chapter downloads in the application. It must be instantiated once

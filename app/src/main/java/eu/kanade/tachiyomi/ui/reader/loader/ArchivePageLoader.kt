@@ -4,7 +4,7 @@ import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
 import eu.kanade.tachiyomi.util.lang.compareToCaseInsensitiveNaturalOrder
 import eu.kanade.tachiyomi.util.system.ImageUtil
-import yokai.core.archive.ArchiveReader
+import naiko.core.archive.ArchiveReader
 
 /**
  * Loader used to load a chapter from an archive file.

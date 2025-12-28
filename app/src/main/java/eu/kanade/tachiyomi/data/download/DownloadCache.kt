@@ -47,7 +47,7 @@ import kotlinx.serialization.encoding.Encoder
 import kotlinx.serialization.protobuf.ProtoBuf
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.storage.StorageManager
+import naiko.domain.storage.StorageManager
 
 /**
  * Cache where we dump the downloads directory from the filesystem. This class is needed because

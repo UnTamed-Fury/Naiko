@@ -23,12 +23,12 @@ import java.text.DecimalFormat
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.manga.models.cover
-import yokai.i18n.MR
-import yokai.util.coil.loadManga
-import yokai.util.lang.getString
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.manga.interactor.GetManga
+import naiko.domain.manga.models.cover
+import naiko.i18n.MR
+import naiko.util.coil.loadManga
+import naiko.util.lang.getString
 
 class MigrationProcessHolder(
     private val view: View,

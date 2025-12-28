@@ -15,7 +15,7 @@ import eu.kanade.tachiyomi.databinding.TabbedBottomSheetBinding
 import eu.kanade.tachiyomi.util.system.dpToPx
 import eu.kanade.tachiyomi.util.system.rootWindowInsetsCompat
 import eu.kanade.tachiyomi.util.view.expand
-import yokai.util.lang.getString
+import naiko.util.lang.getString
 import kotlin.math.max
 
 abstract class TabbedBottomSheetDialog(private val activity: Activity) :

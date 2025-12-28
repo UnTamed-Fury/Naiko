@@ -37,7 +37,7 @@ import okio.buffer
 import okio.sink
 import okio.source
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.models.MangaCover
+import naiko.domain.manga.models.MangaCover
 
 class MangaCoverFetcher(
     private val mangaId: Long?,

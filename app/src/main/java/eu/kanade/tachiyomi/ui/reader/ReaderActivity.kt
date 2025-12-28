@@ -170,11 +170,11 @@ import kotlinx.coroutines.flow.sample
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.base.BasePreferences
-import yokai.domain.ui.settings.ReaderPreferences
-import yokai.domain.ui.settings.ReaderPreferences.LandscapeCutoutBehaviour
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.base.BasePreferences
+import naiko.domain.ui.settings.ReaderPreferences
+import naiko.domain.ui.settings.ReaderPreferences.LandscapeCutoutBehaviour
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import android.R as AR
 
 /**

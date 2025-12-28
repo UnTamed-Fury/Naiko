@@ -48,10 +48,10 @@ import eu.kanade.tachiyomi.util.view.withFadeTransaction
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.base.BasePreferences
-import yokai.domain.base.BasePreferences.ExtensionInstaller
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.base.BasePreferences
+import naiko.domain.base.BasePreferences.ExtensionInstaller
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import android.R as AR
 
 class ExtensionBottomSheet @JvmOverloads constructor(context: Context, attrs: AttributeSet? = null) :

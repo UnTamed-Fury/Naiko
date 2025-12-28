@@ -37,14 +37,14 @@ import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.data.DatabaseHandler
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.history.interactor.GetHistory
-import yokai.domain.manga.interactor.GetLibraryManga
-import yokai.domain.track.interactor.GetTrack
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.data.DatabaseHandler
+import naiko.domain.category.interactor.GetCategories
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.history.interactor.GetHistory
+import naiko.domain.manga.interactor.GetLibraryManga
+import naiko.domain.track.interactor.GetTrack
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 class StatsDetailsPresenter(
     private val prefs: PreferencesHelper = Injekt.get(),

@@ -2,8 +2,8 @@ package eu.kanade.tachiyomi.ui.recents
 
 import android.view.View
 import eu.kanade.tachiyomi.R
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import dev.icerock.moko.resources.compose.stringResource
 import eu.kanade.tachiyomi.databinding.RecentsFooterItemBinding
 import eu.kanade.tachiyomi.ui.manga.chapter.BaseChapterHolder

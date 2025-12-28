@@ -27,9 +27,9 @@ import eu.kanade.tachiyomi.ui.source.browse.BrowseSourceController
 import eu.kanade.tachiyomi.util.system.launchIO
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.manga.models.cover
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.manga.models.cover
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import kotlin.math.min
 
 class MangaShortcutManager(

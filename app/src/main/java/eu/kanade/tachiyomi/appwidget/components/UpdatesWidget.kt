@@ -22,8 +22,8 @@ import eu.kanade.tachiyomi.appwidget.util.calculateRowAndColumnCount
 import eu.kanade.tachiyomi.appwidget.util.stringResource
 import eu.kanade.tachiyomi.ui.main.MainActivity
 import eu.kanade.tachiyomi.ui.main.SearchActivity
-import yokai.i18n.MR
-import yokai.presentation.core.Constants
+import naiko.i18n.MR
+import naiko.presentation.core.Constants
 
 @Composable
 fun UpdatesWidget(data: List<Pair<Long, Bitmap?>>?) {

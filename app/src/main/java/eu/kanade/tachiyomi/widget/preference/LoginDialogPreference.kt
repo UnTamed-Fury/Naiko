@@ -16,7 +16,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.cancel
 import rx.Subscription
 import uy.kohesive.injekt.injectLazy
-import yokai.util.lang.getString
+import naiko.util.lang.getString
 
 abstract class LoginDialogPreference(
     private val usernameLabelRes: StringResource? = null,

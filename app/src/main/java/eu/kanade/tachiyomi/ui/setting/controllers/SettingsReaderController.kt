@@ -28,11 +28,11 @@ import eu.kanade.tachiyomi.util.system.DeviceUtil
 import eu.kanade.tachiyomi.util.system.isTablet
 import eu.kanade.tachiyomi.util.view.activityBinding
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.ui.settings.ReaderPreferences
-import yokai.domain.ui.settings.ReaderPreferences.CutoutBehaviour
-import yokai.domain.ui.settings.ReaderPreferences.LandscapeCutoutBehaviour
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.ui.settings.ReaderPreferences
+import naiko.domain.ui.settings.ReaderPreferences.CutoutBehaviour
+import naiko.domain.ui.settings.ReaderPreferences.LandscapeCutoutBehaviour
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import eu.kanade.tachiyomi.data.preference.PreferenceKeys as Keys
 import eu.kanade.tachiyomi.ui.setting.summaryMRes as summaryRes
 import eu.kanade.tachiyomi.ui.setting.titleMRes as titleRes

@@ -63,10 +63,10 @@ import kotlinx.coroutines.sync.Semaphore
 import kotlinx.coroutines.sync.withPermit
 import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.manga.interactor.UpdateManga
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.manga.interactor.GetManga
+import naiko.domain.manga.interactor.UpdateManga
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import android.R as AR
 
 class MigrationListController(bundle: Bundle? = null) :

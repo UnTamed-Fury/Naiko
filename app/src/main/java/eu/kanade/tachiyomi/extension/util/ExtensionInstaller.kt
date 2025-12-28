@@ -47,7 +47,7 @@ import kotlinx.coroutines.launch
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.base.BasePreferences
+import naiko.domain.base.BasePreferences
 
 /**
  * The installer which installs, updates and uninstalls the extensions.

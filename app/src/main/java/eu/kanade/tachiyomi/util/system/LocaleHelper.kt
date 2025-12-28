@@ -2,8 +2,8 @@ package eu.kanade.tachiyomi.util.system
 
 import android.content.Context
 import androidx.core.os.LocaleListCompat
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import eu.kanade.tachiyomi.ui.source.SourcePresenter
 import java.util.Locale
 

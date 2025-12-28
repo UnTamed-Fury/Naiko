@@ -23,8 +23,8 @@ import kotlinx.coroutines.launch
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.recents.RecentsPreferences
-import yokai.domain.ui.UiPreferences
+import naiko.domain.recents.RecentsPreferences
+import naiko.domain.ui.UiPreferences
 
 class AnimeRecentsPresenter(
     val uiPreferences: UiPreferences = Injekt.get(),

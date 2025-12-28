@@ -86,14 +86,14 @@ import rikka.sui.Sui
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.base.BasePreferences.ExtensionInstaller
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.extension.interactor.TrustExtension
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.source.SourcePreferences
-import yokai.domain.ui.settings.ReaderPreferences
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.base.BasePreferences.ExtensionInstaller
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.extension.interactor.TrustExtension
+import naiko.domain.manga.interactor.GetManga
+import naiko.domain.source.SourcePreferences
+import naiko.domain.ui.settings.ReaderPreferences
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import android.R as AR
 import eu.kanade.tachiyomi.ui.setting.summaryMRes as summaryRes
 import eu.kanade.tachiyomi.ui.setting.titleMRes as titleRes

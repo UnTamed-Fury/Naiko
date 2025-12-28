@@ -27,8 +27,8 @@ import eu.kanade.tachiyomi.util.view.activityBinding
 import eu.kanade.tachiyomi.util.view.fadeTransactionHandler
 import eu.kanade.tachiyomi.util.view.openInBrowser
 import eu.kanade.tachiyomi.util.view.withFadeTransaction
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import eu.kanade.tachiyomi.ui.setting.titleMRes as titleRes
 
 class SettingsMainController : SettingsLegacyController(), FloatingSearchInterface {

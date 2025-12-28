@@ -21,7 +21,7 @@ import eu.kanade.tachiyomi.util.system.DeviceUtil
 import eu.kanade.tachiyomi.util.system.getParcelableCompat
 import eu.kanade.tachiyomi.util.system.toast
 import uy.kohesive.injekt.injectLazy
-import yokai.i18n.MR
+import naiko.i18n.MR
 
 /**
  * Broadcast used to install extensions, that receives callbacks from package installer.

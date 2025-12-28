@@ -2,7 +2,7 @@ package eu.kanade.tachiyomi.extension.model
 
 import dev.icerock.moko.resources.StringResource
 import eu.kanade.tachiyomi.data.preference.PreferencesHelper
-import yokai.i18n.MR
+import naiko.i18n.MR
 
 enum class InstalledExtensionsOrder(val value: Int, val nameRes: StringResource) {
     Name(0, MR.strings.name),

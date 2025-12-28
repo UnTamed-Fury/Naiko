@@ -10,16 +10,16 @@ import java.util.*
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.data.DatabaseHandler
-import yokai.domain.chapter.interactor.DeleteChapter
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.chapter.interactor.InsertChapter
-import yokai.domain.chapter.interactor.UpdateChapter
-import yokai.domain.chapter.models.ChapterUpdate
-import yokai.domain.chapter.services.ChapterRecognition
-import yokai.domain.library.LibraryPreferences
-import yokai.domain.manga.interactor.UpdateManga
-import yokai.domain.manga.models.MangaUpdate
+import naiko.data.DatabaseHandler
+import naiko.domain.chapter.interactor.DeleteChapter
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.chapter.interactor.InsertChapter
+import naiko.domain.chapter.interactor.UpdateChapter
+import naiko.domain.chapter.models.ChapterUpdate
+import naiko.domain.chapter.services.ChapterRecognition
+import naiko.domain.library.LibraryPreferences
+import naiko.domain.manga.interactor.UpdateManga
+import naiko.domain.manga.models.MangaUpdate
 
 /**
  * Helper method for syncing the list of chapters from the source with the ones from the database.

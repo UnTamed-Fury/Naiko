@@ -9,11 +9,11 @@ import eu.kanade.tachiyomi.data.library.CustomMangaManager
 import eu.kanade.tachiyomi.domain.manga.models.Manga
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.data.DatabaseHandler
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.history.interactor.GetHistory
-import yokai.domain.track.interactor.GetTrack
+import naiko.data.DatabaseHandler
+import naiko.domain.category.interactor.GetCategories
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.history.interactor.GetHistory
+import naiko.domain.track.interactor.GetTrack
 
 class MangaBackupCreator(
     private val customMangaManager: CustomMangaManager = Injekt.get(),

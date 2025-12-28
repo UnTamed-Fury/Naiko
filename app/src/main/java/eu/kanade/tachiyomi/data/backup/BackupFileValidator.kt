@@ -7,7 +7,7 @@ import eu.kanade.tachiyomi.source.SourceManager
 import eu.kanade.tachiyomi.util.BackupUtil
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.util.lang.getString
+import naiko.util.lang.getString
 
 class BackupFileValidator(
     private val sourceManager: SourceManager = Injekt.get(),

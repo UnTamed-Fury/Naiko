@@ -145,15 +145,15 @@ android {
 }
 
 dependencies {
-    // Yokai modules
-    implementation(projects.yokaiCoreArchive)
-    implementation(projects.yokaiCoreMain)
-    implementation(projects.yokaiData)
-    implementation(projects.yokaiDomain)
-    implementation(projects.yokaiI18n)
-    implementation(projects.yokaiPresentationCore)
-    implementation(projects.yokaiPresentationWidget)
-    implementation(projects.yokaiSourceApi)
+    // Naiko modules
+    implementation(projects.naikoCoreArchive)
+    implementation(projects.naikoCoreMain)
+    implementation(projects.naikoData)
+    implementation(projects.naikoDomain)
+    implementation(projects.naikoI18n)
+    implementation(projects.naikoPresentationCore)
+    implementation(projects.naikoPresentationWidget)
+    implementation(projects.naikoSourceApi)
 
     // Aniyomi modules
     implementation(projects.aniyomiCoreMetadata)

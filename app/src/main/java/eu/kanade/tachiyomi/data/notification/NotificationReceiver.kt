@@ -32,10 +32,10 @@ import java.io.File
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.chapter.interactor.UpdateChapter
-import yokai.domain.manga.interactor.GetManga
-import yokai.presentation.core.Constants
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.chapter.interactor.UpdateChapter
+import naiko.domain.manga.interactor.GetManga
+import naiko.presentation.core.Constants
 import eu.kanade.tachiyomi.BuildConfig.APPLICATION_ID as ID
 
 /**

@@ -9,8 +9,8 @@ import eu.davidea.flexibleadapter.items.IFlexible
 import eu.kanade.tachiyomi.databinding.MangaListItemBinding
 import eu.kanade.tachiyomi.domain.manga.models.Manga
 import eu.kanade.tachiyomi.util.view.setCards
-import yokai.domain.manga.models.cover
-import yokai.util.coil.loadManga
+import naiko.domain.manga.models.cover
+import naiko.util.coil.loadManga
 
 /**
  * Class used to hold the displayed data of a manga in the catalogue, like the cover or the title.

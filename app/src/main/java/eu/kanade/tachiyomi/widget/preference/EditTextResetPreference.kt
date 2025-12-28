@@ -16,7 +16,7 @@ import androidx.preference.Preference.SummaryProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.util.view.setNeutralButton
-import yokai.i18n.MR
+import naiko.i18n.MR
 import android.R as AR
 
 class EditTextResetPreference @JvmOverloads constructor(

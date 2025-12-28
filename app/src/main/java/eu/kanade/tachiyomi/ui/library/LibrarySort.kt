@@ -4,7 +4,7 @@ import androidx.annotation.DrawableRes
 import dev.icerock.moko.resources.StringResource
 import eu.kanade.tachiyomi.R
 import eu.kanade.tachiyomi.ui.base.MaterialMenuSheet
-import yokai.i18n.MR
+import naiko.i18n.MR
 
 enum class LibrarySort(
     val mainValue: Int,

@@ -10,7 +10,7 @@ import eu.kanade.tachiyomi.source.model.UpdateStrategy
 import eu.kanade.tachiyomi.util.chapter.ChapterUtil
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.protobuf.ProtoNumber
-import yokai.domain.library.custom.model.CustomMangaInfo
+import naiko.domain.library.custom.model.CustomMangaInfo
 
 @Suppress("DEPRECATION")
 @Serializable

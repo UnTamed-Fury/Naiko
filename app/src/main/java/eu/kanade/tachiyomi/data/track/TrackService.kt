@@ -10,9 +10,9 @@ import eu.kanade.tachiyomi.network.NetworkHelper
 import kotlinx.collections.immutable.ImmutableList
 import okhttp3.OkHttpClient
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.history.interactor.GetHistory
-import yokai.domain.manga.interactor.GetManga
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.history.interactor.GetHistory
+import naiko.domain.manga.interactor.GetManga
 
 abstract class TrackService(val id: Long) {
 

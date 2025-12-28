@@ -10,7 +10,7 @@ import androidx.preference.PreferenceManager
 import eu.kanade.tachiyomi.util.system.getParcelableCompat
 import eu.kanade.tachiyomi.util.system.localeContext
 import eu.kanade.tachiyomi.util.system.toast
-import yokai.i18n.MR
+import naiko.i18n.MR
 
 class AppUpdateBroadcast : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {

@@ -1,7 +1,7 @@
 package eu.kanade.tachiyomi.ui.reader.settings
 
 import dev.icerock.moko.resources.StringResource
-import yokai.i18n.MR
+import naiko.i18n.MR
 
 enum class ReaderBackgroundColor(val prefValue: Int, val stringRes: StringResource, val longStringRes: StringResource? = null) {
     WHITE(0, MR.strings.white),

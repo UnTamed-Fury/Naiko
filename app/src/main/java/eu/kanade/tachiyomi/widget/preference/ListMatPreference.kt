@@ -8,7 +8,7 @@ import androidx.core.content.edit
 import androidx.preference.Preference.SummaryProvider
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.icerock.moko.resources.StringResource
-import yokai.util.lang.getString
+import naiko.util.lang.getString
 
 open class ListMatPreference @JvmOverloads constructor(
     activity: Activity?,

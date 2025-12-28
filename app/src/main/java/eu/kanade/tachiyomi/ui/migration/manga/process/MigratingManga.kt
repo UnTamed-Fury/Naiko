@@ -9,7 +9,7 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.MutableStateFlow
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.interactor.GetManga
+import naiko.domain.manga.interactor.GetManga
 
 class MigratingManga(
     private val sourceManager: SourceManager,

@@ -14,7 +14,7 @@ import eu.kanade.tachiyomi.util.system.materialAlertDialog
 import eu.kanade.tachiyomi.util.view.setTitle
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.util.lang.getString
+import naiko.util.lang.getString
 import android.R as AR
 
 open class MatPreference @JvmOverloads constructor(

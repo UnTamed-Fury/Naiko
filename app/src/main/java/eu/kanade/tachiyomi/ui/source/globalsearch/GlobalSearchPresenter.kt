@@ -28,9 +28,9 @@ import kotlinx.coroutines.sync.withPermit
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.manga.interactor.InsertManga
-import yokai.domain.manga.interactor.UpdateManga
+import naiko.domain.manga.interactor.GetManga
+import naiko.domain.manga.interactor.InsertManga
+import naiko.domain.manga.interactor.UpdateManga
 
 /**
  * Presenter of [GlobalSearchController]

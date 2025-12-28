@@ -65,7 +65,7 @@
         <item name="bottomSheetDialogTheme">@style/BottomSheetDialogTheme</item>
         <item name="actionBarTheme">@style/Theme.ActionBar.DayNight</item>
         <item name="preferenceTheme">@style/Tachiyomi.PreferenceTheme</item>
-        <item name="materialAlertDialogTheme">@style/Theme.Widget.Yokai.AlertDialog</item>
+        <item name="materialAlertDialogTheme">@style/Theme.Widget.Naiko.AlertDialog</item>
 
         <!-- Custom Attributes-->
         <item name="actionBarTintColor">?attr/colorOnBackground</item>

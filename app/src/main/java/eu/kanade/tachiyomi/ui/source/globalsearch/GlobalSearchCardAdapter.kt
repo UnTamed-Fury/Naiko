@@ -4,7 +4,7 @@ import eu.davidea.flexibleadapter.FlexibleAdapter
 import eu.kanade.tachiyomi.data.preference.PreferencesHelper
 import eu.kanade.tachiyomi.domain.manga.models.Manga
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.ui.UiPreferences
+import naiko.domain.ui.UiPreferences
 
 /**
  * Adapter that holds the manga items from search results.

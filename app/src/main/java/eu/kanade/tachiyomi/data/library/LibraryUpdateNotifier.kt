@@ -37,9 +37,9 @@ import kotlinx.coroutines.DelicateCoroutinesApi
 import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.launch
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.models.cover
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.manga.models.cover
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import android.R as AR
 
 class LibraryUpdateNotifier(private val context: Context) {

@@ -8,7 +8,7 @@ import eu.kanade.tachiyomi.domain.manga.models.Manga
 import eu.kanade.tachiyomi.util.storage.DiskUtil
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.manga.models.MangaCover
+import naiko.domain.manga.models.MangaCover
 
 class MangaKeyer : Keyer<Manga> {
     override fun key(data: Manga, options: Options): String {

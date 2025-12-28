@@ -21,7 +21,7 @@ import kotlinx.coroutines.flow.onStart
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.download.DownloadPreferences
+import naiko.domain.download.DownloadPreferences
 
 class AnimeDownloadManager(
     val context: Context,

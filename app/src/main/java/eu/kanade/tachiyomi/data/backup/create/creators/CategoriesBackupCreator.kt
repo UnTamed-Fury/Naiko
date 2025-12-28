@@ -4,7 +4,7 @@ import eu.kanade.tachiyomi.data.backup.create.BackupOptions
 import eu.kanade.tachiyomi.data.backup.models.BackupCategory
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.category.interactor.GetCategories
+import naiko.domain.category.interactor.GetCategories
 
 class CategoriesBackupCreator(
     private val getCategories: GetCategories = Injekt.get(),

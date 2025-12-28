@@ -16,12 +16,12 @@ import eu.kanade.tachiyomi.util.system.withDefContext
 import java.util.*
 import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.history.interactor.GetHistory
-import yokai.domain.ui.UiPreferences
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.category.interactor.GetCategories
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.history.interactor.GetHistory
+import naiko.domain.ui.UiPreferences
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 /**
  * Adapter storing a list of manga in a certain category.

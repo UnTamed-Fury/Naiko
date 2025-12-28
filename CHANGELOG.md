@@ -881,7 +881,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 
 ### Changes
 
-- Local source now try to find entries not only in `Yōkai/` but also in `Yokai/` and `TachiyomiJ2K/` for easier migration
+- Local source now try to find entries not only in `Yōkai/` but also in `Naiko/` and `TachiyomiJ2K/` for easier migration
 
 ### Other
 

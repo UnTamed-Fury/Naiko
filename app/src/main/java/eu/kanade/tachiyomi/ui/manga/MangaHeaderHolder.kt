@@ -46,9 +46,9 @@ import eu.kanade.tachiyomi.util.system.getResourceColor
 import eu.kanade.tachiyomi.util.system.isInNightMode
 import eu.kanade.tachiyomi.util.system.isLTR
 import eu.kanade.tachiyomi.util.view.resetStrokeColor
-import yokai.i18n.MR
-import yokai.util.coil.loadManga
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.coil.loadManga
+import naiko.util.lang.getString
 import android.R as AR
 
 @SuppressLint("ClickableViewAccessibility")

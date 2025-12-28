@@ -9,13 +9,13 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.category.interactor.DeleteCategories
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.category.interactor.InsertCategories
-import yokai.domain.category.interactor.UpdateCategories
-import yokai.domain.category.models.CategoryUpdate
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.category.interactor.DeleteCategories
+import naiko.domain.category.interactor.GetCategories
+import naiko.domain.category.interactor.InsertCategories
+import naiko.domain.category.interactor.UpdateCategories
+import naiko.domain.category.models.CategoryUpdate
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 /**
  * Presenter of [CategoryController]. Used to manage the categories of the library.

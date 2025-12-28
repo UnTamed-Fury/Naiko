@@ -17,16 +17,16 @@ import nl.adaptivity.xmlutil.serialization.XML
 import nl.adaptivity.xmlutil.serialization.XmlSerialName
 import nl.adaptivity.xmlutil.serialization.XmlValue
 import uy.kohesive.injekt.injectLazy
-import yokai.core.metadata.COMIC_INFO_EDITS_FILE
-import yokai.core.metadata.ComicInfo
-import yokai.core.metadata.ComicInfoPublishingStatus
-import yokai.core.metadata.copyFromComicInfo
-import yokai.domain.library.custom.interactor.CreateCustomManga
-import yokai.domain.library.custom.interactor.DeleteCustomManga
-import yokai.domain.library.custom.interactor.GetCustomManga
-import yokai.domain.library.custom.interactor.RelinkCustomManga
-import yokai.domain.library.custom.model.CustomMangaInfo
-import yokai.domain.library.custom.model.CustomMangaInfo.Companion.getMangaInfo
+import naiko.core.metadata.COMIC_INFO_EDITS_FILE
+import naiko.core.metadata.ComicInfo
+import naiko.core.metadata.ComicInfoPublishingStatus
+import naiko.core.metadata.copyFromComicInfo
+import naiko.domain.library.custom.interactor.CreateCustomManga
+import naiko.domain.library.custom.interactor.DeleteCustomManga
+import naiko.domain.library.custom.interactor.GetCustomManga
+import naiko.domain.library.custom.interactor.RelinkCustomManga
+import naiko.domain.library.custom.model.CustomMangaInfo
+import naiko.domain.library.custom.model.CustomMangaInfo.Companion.getMangaInfo
 
 class CustomMangaManager(val context: Context) {
     private val scope = CoroutineScope(Dispatchers.IO)
@@ -199,13 +199,13 @@ class CustomMangaManager(val context: Context) {
     }
 
     @Serializable
-    @XmlSerialName("ComicListYokai", "http://www.w3.org/2001/XMLSchema", "yk")
+    @XmlSerialName("ComicListNaiko", "http://www.w3.org/2001/XMLSchema", "yk")
     data class ComicList(
-        val comics: List<ComicInfoYokai>? = null,
+        val comics: List<ComicInfoNaiko>? = null,
     ) {
         @Serializable
-        @XmlSerialName("ComicInfoYokai", "http://www.w3.org/2001/XMLSchema", "yk")
-        data class ComicInfoYokai(
+        @XmlSerialName("ComicInfoNaiko", "http://www.w3.org/2001/XMLSchema", "yk")
+        data class ComicInfoNaiko(
             @XmlValue(true) val value: ComicInfo,
             var id: Long? = null,
         ) {
@@ -218,7 +218,7 @@ class CustomMangaManager(val context: Context) {
                     description: String? = null,
                     genre: Array<String>? = null,
                     status: Int? = null,
-                ): ComicInfoYokai {
+                ): ComicInfoNaiko {
                     return create(
                         id = id,
                         title = title,
@@ -238,8 +238,8 @@ class CustomMangaManager(val context: Context) {
                     description: String? = null,
                     genre: String? = null,
                     status: Int? = null,
-                ): ComicInfoYokai {
-                    return ComicInfoYokai(
+                ): ComicInfoNaiko {
+                    return ComicInfoNaiko(
                         id = id,
                         value = ComicInfo(
                             title = null,

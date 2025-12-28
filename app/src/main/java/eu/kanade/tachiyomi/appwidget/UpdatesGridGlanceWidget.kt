@@ -45,8 +45,8 @@ import kotlinx.coroutines.MainScope
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.manga.models.cover
-import yokai.domain.recents.interactor.GetRecents
+import naiko.domain.manga.models.cover
+import naiko.domain.recents.interactor.GetRecents
 
 class UpdatesGridGlanceWidget : GlanceAppWidget() {
     private val app: Application by injectLazy()

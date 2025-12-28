@@ -12,10 +12,10 @@ import kotlinx.coroutines.SupervisorJob
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.download.DownloadPreferences
-import yokai.domain.storage.StorageManager
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.download.DownloadPreferences
+import naiko.domain.storage.StorageManager
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 class AnimeDownloadProvider(private val context: Context) {
 

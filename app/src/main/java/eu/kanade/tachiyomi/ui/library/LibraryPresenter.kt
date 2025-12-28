@@ -65,23 +65,23 @@ import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.category.interactor.SetMangaCategories
-import yokai.domain.category.interactor.UpdateCategories
-import yokai.domain.category.models.CategoryUpdate
-import yokai.domain.chapter.interactor.GetChapter
-import yokai.domain.chapter.interactor.UpdateChapter
-import yokai.domain.chapter.models.ChapterUpdate
-import yokai.domain.history.interactor.GetHistory
-import yokai.domain.library.LibraryPreferences
-import yokai.domain.manga.interactor.GetLibraryManga
-import yokai.domain.manga.interactor.GetManga
-import yokai.domain.manga.interactor.UpdateManga
-import yokai.domain.manga.models.MangaUpdate
-import yokai.domain.track.interactor.GetTrack
-import yokai.i18n.MR
-import yokai.util.isLewd
-import yokai.util.lang.getString
+import naiko.domain.category.interactor.GetCategories
+import naiko.domain.category.interactor.SetMangaCategories
+import naiko.domain.category.interactor.UpdateCategories
+import naiko.domain.category.models.CategoryUpdate
+import naiko.domain.chapter.interactor.GetChapter
+import naiko.domain.chapter.interactor.UpdateChapter
+import naiko.domain.chapter.models.ChapterUpdate
+import naiko.domain.history.interactor.GetHistory
+import naiko.domain.library.LibraryPreferences
+import naiko.domain.manga.interactor.GetLibraryManga
+import naiko.domain.manga.interactor.GetManga
+import naiko.domain.manga.interactor.UpdateManga
+import naiko.domain.manga.models.MangaUpdate
+import naiko.domain.track.interactor.GetTrack
+import naiko.i18n.MR
+import naiko.util.isLewd
+import naiko.util.lang.getString
 
 typealias LibraryMap = Map<Category, List<LibraryItem>>
 typealias LibraryMutableMap = MutableMap<Category, List<LibraryItem>>

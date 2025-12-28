@@ -10,10 +10,10 @@ import eu.kanade.tachiyomi.source.Source
 import eu.kanade.tachiyomi.source.online.HttpSource
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.util.system.withIOContext
-import yokai.core.archive.util.archiveReader
-import yokai.core.archive.util.epubReader
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.core.archive.util.archiveReader
+import naiko.core.archive.util.epubReader
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 /**
  * Loader used to retrieve the [PageLoader] for a given chapter.

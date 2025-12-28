@@ -50,7 +50,7 @@ import kotlinx.coroutines.withContext
 import rikka.sui.Sui
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.i18n.MR
+import naiko.i18n.MR
 
 private const val TABLET_UI_MIN_SCREEN_WIDTH_DP = 720
 

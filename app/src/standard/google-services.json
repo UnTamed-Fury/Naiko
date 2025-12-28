@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:636318130901:android:6487a6238b24d2a357f85c",
         "android_client_info": {
-          "package_name": "eu.kanade.tachiyomi.debugYokai"
+          "package_name": "eu.kanade.tachiyomi.debugNaiko"
         }
       },
       "oauth_client": [],
@@ -28,7 +28,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:636318130901:android:388d6d443528368657f85c",
         "android_client_info": {
-          "package_name": "eu.kanade.tachiyomi.nightlyYokai"
+          "package_name": "eu.kanade.tachiyomi.nightlyNaiko"
         }
       },
       "oauth_client": [],

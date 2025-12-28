@@ -43,15 +43,15 @@ rootProject.name = "Naiko"
 // Main Naiko app module
 include(":app")
 
-// Yokai modules (originally from the 'yokai' folder)
-include(":yokai-core-archive")
-include(":yokai-core-main")
-include(":yokai-data")
-include(":yokai-domain")
-include(":yokai-i18n")
-include(":yokai-presentation-core")
-include(":yokai-presentation-widget") // Renamed from presentation:widget for consistency
-include(":yokai-source-api")
+// Naiko modules (originally from the 'yokai' folder)
+include(":naiko-core-archive")
+include(":naiko-core-main")
+include(":naiko-data")
+include(":naiko-domain")
+include(":naiko-i18n")
+include(":naiko-presentation-core")
+include(":naiko-presentation-widget") // Renamed from presentation:widget for consistency
+include(":naiko-source-api")
 
 // Aniyomi modules (originally from the 'aniyomi' folder)
 include(":aniyomi-core-metadata")

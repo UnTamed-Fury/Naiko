@@ -11,7 +11,7 @@ import eu.kanade.tachiyomi.source.model.Page
 import eu.kanade.tachiyomi.ui.reader.model.ReaderChapter
 import eu.kanade.tachiyomi.ui.reader.model.ReaderPage
 import uy.kohesive.injekt.injectLazy
-import yokai.core.archive.util.archiveReader
+import naiko.core.archive.util.archiveReader
 
 /**
  * Loader used to load a chapter from the downloaded chapters.

@@ -1,7 +1,7 @@
 <div align="center">
 
 <a href="https://github.com/null2264/yokai">
-    <img src="./.github/readme-images/app-icon.webp" alt="Yokai logo" height="200px" width="200px" />
+    <img src="./.github/readme-images/app-icon.webp" alt="Naiko logo" height="200px" width="200px" />
 </a>
 
 # Yōkai
@@ -20,12 +20,12 @@ A free and open source manga reader
 [![License: Apache-2.0](https://img.shields.io/github/license/null2264/yokai?labelColor=27303D&color=0877d2)](/LICENSE)
 [![Translation status](https://img.shields.io/weblate/progress/yokai?labelColor=27303D&color=946300)](https://hosted.weblate.org/engage/yokai/)
 
-<img src="./.github/readme-images/screens.gif" alt="Yokai screenshots" />
+<img src="./.github/readme-images/screens.gif" alt="Naiko screenshots" />
 
 ## Download
 
-[![Yokai Stable](https://img.shields.io/github/v/release/null2264/yokai?maxAge=3600&label=Stable&labelColor=06599d&color=043b69&filter=v*)](https://github.com/null2264/yokai/releases)
-[![Yokai Nightly](https://img.shields.io/github/v/release/null2264/yokai-nightly?maxAge=3600&label=Nightly&labelColor=2c2c47&color=1c1c39&filter=r*)](https://github.com/null2264/yokai-nightly/releases)
+[![Naiko Stable](https://img.shields.io/github/v/release/null2264/yokai?maxAge=3600&label=Stable&labelColor=06599d&color=043b69&filter=v*)](https://github.com/null2264/yokai/releases)
+[![Naiko Nightly](https://img.shields.io/github/v/release/null2264/yokai-nightly?maxAge=3600&label=Nightly&labelColor=2c2c47&color=1c1c39&filter=r*)](https://github.com/null2264/yokai-nightly/releases)
 
 *Requires Android 6.0 or higher.*
 
@@ -139,7 +139,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 Thank you to all the people who have contributed!
 
 <a href="https://github.com/null2264/yokai/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=null2264/yokai" alt="Yokai app contributors" title="Yokai app contributors" width="600"/>
+    <img src="https://contrib.rocks/image?repo=null2264/yokai" alt="Naiko app contributors" title="Naiko app contributors" width="600"/>
 </a>
 
 ### Disclaimer

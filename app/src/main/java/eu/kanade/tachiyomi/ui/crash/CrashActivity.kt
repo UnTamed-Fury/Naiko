@@ -23,10 +23,10 @@ import eu.kanade.tachiyomi.util.CrashLogUtil
 import eu.kanade.tachiyomi.util.system.setThemeByPref
 import kotlinx.coroutines.launch
 import uy.kohesive.injekt.injectLazy
-import yokai.i18n.MR
-import yokai.presentation.onboarding.InfoScreen
-import yokai.presentation.theme.Size
-import yokai.presentation.theme.YokaiTheme
+import naiko.i18n.MR
+import naiko.presentation.onboarding.InfoScreen
+import naiko.presentation.theme.Size
+import naiko.presentation.theme.NaikoTheme
 
 class CrashActivity : AppCompatActivity() {
     internal val preferences: PreferencesHelper by injectLazy()
@@ -40,7 +40,7 @@ class CrashActivity : AppCompatActivity() {
             val scope = rememberCoroutineScope()
             val context = LocalContext.current
 
-            YokaiTheme {
+            NaikoTheme {
                 InfoScreen(
                     icon = Icons.Outlined.BugReport,
                     headingText = stringResource(MR.strings.crash_screen_title),

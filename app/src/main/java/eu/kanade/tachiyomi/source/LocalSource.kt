@@ -31,18 +31,18 @@ import nl.adaptivity.xmlutil.serialization.XML
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.core.archive.util.archiveReader
-import yokai.core.archive.util.epubReader
-import yokai.core.metadata.COMIC_INFO_FILE
-import yokai.core.metadata.ComicInfo
-import yokai.core.metadata.copyFromComicInfo
-import yokai.core.metadata.toComicInfo
-import yokai.domain.chapter.services.ChapterRecognition
-import yokai.domain.source.SourcePreferences
-import yokai.domain.storage.StorageManager
-import yokai.i18n.MR
-import yokai.util.fillMetadata
-import yokai.util.lang.getString
+import naiko.core.archive.util.archiveReader
+import naiko.core.archive.util.epubReader
+import naiko.core.metadata.COMIC_INFO_FILE
+import naiko.core.metadata.ComicInfo
+import naiko.core.metadata.copyFromComicInfo
+import naiko.core.metadata.toComicInfo
+import naiko.domain.chapter.services.ChapterRecognition
+import naiko.domain.source.SourcePreferences
+import naiko.domain.storage.StorageManager
+import naiko.i18n.MR
+import naiko.util.fillMetadata
+import naiko.util.lang.getString
 
 class LocalSource(private val context: Context) : CatalogueSource, UnmeteredSource {
     companion object {

@@ -14,7 +14,7 @@ import eu.kanade.tachiyomi.ui.library.LibraryItem
 import eu.kanade.tachiyomi.util.system.dpToPx
 import eu.kanade.tachiyomi.util.system.pxToDp
 import eu.kanade.tachiyomi.util.system.rootWindowInsetsCompat
-import yokai.domain.ui.UiPreferences
+import naiko.domain.ui.UiPreferences
 import kotlin.math.abs
 import kotlin.math.max
 import kotlin.math.pow

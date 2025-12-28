@@ -11,8 +11,8 @@ import eu.kanade.tachiyomi.data.track.updateNewTrackInfo
 import eu.kanade.tachiyomi.domain.manga.models.Manga
 import kotlinx.collections.immutable.ImmutableList
 import kotlinx.collections.immutable.persistentListOf
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 
 class Suwayomi(private val context: Context, id: Long) : TrackService(id), EnhancedTrackService {
     val api by lazy { TachideskApi() }

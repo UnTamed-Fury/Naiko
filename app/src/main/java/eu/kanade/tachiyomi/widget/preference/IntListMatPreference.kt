@@ -6,7 +6,7 @@ import android.util.AttributeSet
 import androidx.core.content.edit
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.icerock.moko.resources.StringResource
-import yokai.util.lang.getString
+import naiko.util.lang.getString
 
 class IntListMatPreference @JvmOverloads constructor(
     activity: Activity?,

@@ -16,7 +16,7 @@ import java.util.concurrent.TimeUnit
 import kotlinx.serialization.json.Json
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.base.models.Version
+import naiko.domain.base.models.Version
 
 class AppUpdateChecker(
     private val json: Json = Injekt.get(),

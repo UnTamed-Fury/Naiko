@@ -39,7 +39,7 @@ import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.i18n.MR
+import naiko.i18n.MR
 import java.lang.ref.WeakReference
 import kotlin.math.max
 

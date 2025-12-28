@@ -20,8 +20,8 @@ import eu.kanade.tachiyomi.source.sourcePreferences
 import eu.kanade.tachiyomi.ui.library.LibrarySort
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.base.BasePreferences
-import yokai.domain.ui.settings.ReaderPreferences
+import naiko.domain.base.BasePreferences
+import naiko.domain.ui.settings.ReaderPreferences
 
 class PreferenceBackupRestorer(
     private val context: Context,
@@ -60,7 +60,7 @@ class PreferenceBackupRestorer(
             }
             // end j2k fork differences
 
-            // << Yokai-J2K compat
+            // << Naiko-J2K compat
             if (key == "extension_installer" && value is IntPreferenceValue) {
                 val enum = BasePreferences.ExtensionInstaller.migrate(value.value)
                 preferenceStore.getEnum(key, enum).set(enum)
@@ -78,7 +78,7 @@ class PreferenceBackupRestorer(
                 preferenceStore.getEnum(key, enum).set(enum)
                 return@forEach
             }
-            // >> Yokai-J2K compat
+            // >> Naiko-J2K compat
 
             when (value) {
                 is IntPreferenceValue -> {

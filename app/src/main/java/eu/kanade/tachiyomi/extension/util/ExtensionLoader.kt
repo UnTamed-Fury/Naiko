@@ -22,7 +22,7 @@ import kotlinx.coroutines.async
 import kotlinx.coroutines.awaitAll
 import kotlinx.coroutines.runBlocking
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.extension.interactor.TrustExtension
+import naiko.domain.extension.interactor.TrustExtension
 import java.io.File
 import java.nio.file.Files
 import java.nio.file.attribute.BasicFileAttributes

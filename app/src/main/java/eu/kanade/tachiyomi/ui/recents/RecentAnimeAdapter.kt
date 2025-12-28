@@ -14,8 +14,8 @@ import kotlinx.coroutines.flow.drop
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.recents.RecentsPreferences
-import yokai.domain.ui.UiPreferences
+import naiko.domain.recents.RecentsPreferences
+import naiko.domain.ui.UiPreferences
 import java.text.DecimalFormat
 import java.text.DecimalFormatSymbols
 import java.text.SimpleDateFormat

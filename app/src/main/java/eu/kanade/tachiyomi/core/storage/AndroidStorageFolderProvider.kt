@@ -3,8 +3,8 @@ package eu.kanade.tachiyomi.core.storage
 import android.content.Context
 import android.os.Environment
 import androidx.core.net.toUri
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import java.io.File
 
 class AndroidStorageFolderProvider(

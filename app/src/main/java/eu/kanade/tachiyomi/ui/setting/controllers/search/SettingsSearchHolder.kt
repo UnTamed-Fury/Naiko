@@ -4,8 +4,8 @@ import android.view.View
 import androidx.core.graphics.ColorUtils
 import eu.davidea.viewholders.FlexibleViewHolder
 import eu.kanade.tachiyomi.R
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import dev.icerock.moko.resources.compose.stringResource
 import eu.kanade.tachiyomi.databinding.SettingsSearchControllerCardBinding
 import eu.kanade.tachiyomi.ui.setting.SettingsLegacyController

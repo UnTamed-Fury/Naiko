@@ -17,9 +17,9 @@ import eu.kanade.tachiyomi.util.system.toast
 import eu.kanade.tachiyomi.util.view.setComposeContent
 import okhttp3.HttpUrl.Companion.toHttpUrl
 import uy.kohesive.injekt.injectLazy
-import yokai.i18n.MR
-import yokai.presentation.webview.WebViewScreenContent
-import yokai.util.lang.getString
+import naiko.i18n.MR
+import naiko.presentation.webview.WebViewScreenContent
+import naiko.util.lang.getString
 
 open class WebViewActivity : BaseWebViewActivity() {
 

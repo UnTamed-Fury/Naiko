@@ -19,8 +19,8 @@ import eu.kanade.tachiyomi.util.view.setNegativeButton
 import eu.kanade.tachiyomi.util.view.setPositiveButton
 import eu.kanade.tachiyomi.util.view.setTitle
 import io.noties.markwon.Markwon
-import yokai.i18n.MR
-import yokai.presentation.settings.screen.about.AboutScreen
+import naiko.i18n.MR
+import naiko.presentation.settings.screen.about.AboutScreen
 import android.R as AR
 
 class AboutController : BaseComposeController() {

@@ -49,7 +49,7 @@
             android:inputType="textPassword" />
     </com.google.android.material.textfield.TextInputLayout>
 
-    <yokai.presentation.component.LoadingButtonComposeView
+    <naiko.presentation.component.LoadingButtonComposeView
         android:id="@+id/login"
         android:layout_width="match_parent"
         android:layout_height="55dp"

@@ -21,8 +21,8 @@ import androidx.compose.ui.unit.dp
 import androidx.core.view.isVisible
 import androidx.recyclerview.widget.RecyclerView
 import eu.kanade.tachiyomi.databinding.SourceFilterSheetSavedSearchBinding
-import yokai.domain.source.browse.filter.models.SavedSearch
-import yokai.presentation.theme.YokaiTheme
+import naiko.domain.source.browse.filter.models.SavedSearch
+import naiko.presentation.theme.NaikoTheme
 
 class SavedSearchesAdapter(
     val searches: () -> List<SavedSearch>,
@@ -47,7 +47,7 @@ class SavedSearchesAdapter(
     inner class SavedSearchesViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         fun bind() {
             binding.savedSearches.setContent {
-                YokaiTheme {
+                NaikoTheme {
                     Content()
                 }
             }

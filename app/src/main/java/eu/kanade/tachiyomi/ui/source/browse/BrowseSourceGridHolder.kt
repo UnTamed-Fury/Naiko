@@ -12,8 +12,8 @@ import eu.kanade.tachiyomi.databinding.MangaGridItemBinding
 import eu.kanade.tachiyomi.domain.manga.models.Manga
 import eu.kanade.tachiyomi.ui.library.LibraryCategoryAdapter
 import eu.kanade.tachiyomi.util.view.setCards
-import yokai.domain.manga.models.cover
-import yokai.util.coil.loadManga
+import naiko.domain.manga.models.cover
+import naiko.util.coil.loadManga
 
 /**
  * Class used to hold the displayed data of a manga in the library, like the cover or the title.

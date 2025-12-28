@@ -143,9 +143,9 @@ import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.ui.UiPreferences
-import yokai.i18n.MR
-import yokai.util.lang.getString
+import naiko.domain.ui.UiPreferences
+import naiko.i18n.MR
+import naiko.util.lang.getString
 import android.R as AR
 
 open class LibraryController(

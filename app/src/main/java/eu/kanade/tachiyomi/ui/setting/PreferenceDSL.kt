@@ -29,7 +29,7 @@ import eu.kanade.tachiyomi.widget.preference.IntListMatPreference
 import eu.kanade.tachiyomi.widget.preference.ListMatPreference
 import eu.kanade.tachiyomi.widget.preference.MultiListMatPreference
 import eu.kanade.tachiyomi.widget.preference.TriStateListPreference
-import yokai.util.lang.getString
+import naiko.util.lang.getString
 import android.R as AR
 
 @DslMarker

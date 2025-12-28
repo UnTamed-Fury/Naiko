@@ -29,8 +29,8 @@ import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.parcelize.Parcelize
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.base.BasePreferences
-import yokai.domain.extension.interactor.TrustExtension
+import naiko.domain.base.BasePreferences
+import naiko.domain.extension.interactor.TrustExtension
 
 /**
  * The manager of extensions installed as another apk which extend the available sources. It handles

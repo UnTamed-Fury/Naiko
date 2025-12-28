@@ -29,8 +29,8 @@ import eu.kanade.tachiyomi.util.system.workManager
 import java.util.concurrent.TimeUnit
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
-import yokai.domain.backup.BackupPreferences
-import yokai.domain.storage.StorageManager
+import naiko.domain.backup.BackupPreferences
+import naiko.domain.storage.StorageManager
 
 class BackupCreatorJob(private val context: Context, workerParams: WorkerParameters) :
     CoroutineWorker(context, workerParams) {

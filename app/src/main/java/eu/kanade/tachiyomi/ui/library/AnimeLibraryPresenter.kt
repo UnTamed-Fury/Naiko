@@ -65,23 +65,23 @@ import kotlinx.coroutines.withContext
 import uy.kohesive.injekt.Injekt
 import uy.kohesive.injekt.api.get
 import uy.kohesive.injekt.injectLazy
-import yokai.domain.category.interactor.GetCategories
-import yokai.domain.category.interactor.SetAnimeCategories
-import yokai.domain.category.interactor.UpdateCategories
-import yokai.domain.category.models.CategoryUpdate
-import yokai.domain.episode.interactor.GetEpisode
-import yokai.domain.episode.interactor.UpdateEpisode
-import yokai.domain.episode.models.EpisodeUpdate
-import yokai.domain.history.interactor.GetHistory
-import yokai.domain.library.LibraryPreferences
-import yokai.domain.anime.interactor.GetLibraryAnime
-import yokai.domain.anime.interactor.GetAnime
-import yokai.domain.anime.interactor.UpdateAnime
-import yokai.domain.anime.models.AnimeUpdate
-import yokai.domain.track.interactor.GetTrack
-import yokai.i18n.MR
-import yokai.util.isLewd
-import yokai.util.lang.getString
+import naiko.domain.category.interactor.GetCategories
+import naiko.domain.category.interactor.SetAnimeCategories
+import naiko.domain.category.interactor.UpdateCategories
+import naiko.domain.category.models.CategoryUpdate
+import naiko.domain.episode.interactor.GetEpisode
+import naiko.domain.episode.interactor.UpdateEpisode
+import naiko.domain.episode.models.EpisodeUpdate
+import naiko.domain.history.interactor.GetHistory
+import naiko.domain.library.LibraryPreferences
+import naiko.domain.anime.interactor.GetLibraryAnime
+import naiko.domain.anime.interactor.GetAnime
+import naiko.domain.anime.interactor.UpdateAnime
+import naiko.domain.anime.models.AnimeUpdate
+import naiko.domain.track.interactor.GetTrack
+import naiko.i18n.MR
+import naiko.util.isLewd
+import naiko.util.lang.getString
 
 typealias LibraryMap = Map<Category, List<LibraryItem>>
 typealias LibraryMutableMap = MutableMap<Category, List<LibraryItem>>
