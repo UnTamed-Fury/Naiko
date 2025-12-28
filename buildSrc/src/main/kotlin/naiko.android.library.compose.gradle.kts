@@ -10,4 +10,3 @@ plugins {
 android {
     configureCompose(this)
 }
-id("naiko.code.lint")

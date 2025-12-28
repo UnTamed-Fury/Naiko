@@ -16,6 +16,7 @@ import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginE
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
+import org.jmailen.gradle.kotlinter.KotlinterExtension
 
 val Project.generatedBuildDir: java.io.File 
     get() = project.layout.buildDirectory.asFile.get().resolve("generated/naiko")
@@ -61,6 +62,8 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
     dependencies {
         "coreLibraryDesugaring"(libsCatalog.findLibrary("desugar").get())
     }
+    
+    configureLinting()
 }
 
 internal fun Project.configureCompose(commonExtension: CommonExtension<*, *, *, *, *, *>) {
@@ -101,5 +104,14 @@ internal fun Project.configureTest() {
         testLogging {
             events(TestLogEvent.PASSED, TestLogEvent.SKIPPED, TestLogEvent.FAILED)
         }
+    }
+}
+
+internal fun Project.configureLinting() {
+    pluginManager.apply("org.jmailen.kotlinter")
+    
+    extensions.configure<KotlinterExtension> {
+        ignoreFailures = true
+        reporters = arrayOf("checkstyle", "plain")
     }
 }

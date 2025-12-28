@@ -12,4 +12,3 @@ android {
     configureAndroid(this)
     configureTest()
 }
-id("naiko.code.lint")
