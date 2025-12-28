@@ -18,11 +18,17 @@ import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
 
 private fun Project.getLibraryCatalog(name: String): VersionCatalog {
-    return extensions.getByType<VersionCatalogsExtension>().named(name)
+    val catalogs = extensions.getByType<VersionCatalogsExtension>()
+    return try {
+        catalogs.named(name)
+    } catch (e: Exception) {
+        // Fallback for buildSrc internal compilation
+        catalogs.named("build${name.replaceFirstChar { it.uppercase() }}")
+    }
 }
 
 internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
-    val libsCatalog = getLibraryCatalog("buildLibs")
+    val libsCatalog = getLibraryCatalog("libs")
     commonExtension.apply {
         compileSdk = AndroidConfig.COMPILE_SDK
         buildToolsVersion = AndroidConfig.BUILD_TOOLS
@@ -61,7 +67,7 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
 }
 
 internal fun Project.configureCompose(commonExtension: CommonExtension<*, *, *, *, *, *>) {
-    val composeCatalog = getLibraryCatalog("buildCompose")
+    val composeCatalog = getLibraryCatalog("compose")
     // This plugin ID is now directly referenced in the main app's build.gradle.kts
     // pluginManager.apply(kotlinx.plugins.compose.compiler.get().pluginId)
 
