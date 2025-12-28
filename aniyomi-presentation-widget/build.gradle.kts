@@ -24,8 +24,8 @@ dependencies {
 
     implementation(kotlinx.immutables)
 
-    implementation(platform(libs.coil.bom))
-    implementation(libs.coil.core)
+    implementation(platform(libs.coil3.bom))
+    implementation(libs.coil3)
 
     api(libs.injekt)
 }
