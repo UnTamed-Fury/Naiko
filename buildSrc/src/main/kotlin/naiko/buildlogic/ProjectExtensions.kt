@@ -22,7 +22,7 @@ private fun Project.getLibraryCatalog(name: String): VersionCatalog {
 }
 
 internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
-    val libs = getLibraryCatalog("libs")
+    val libsCatalog = getLibraryCatalog("libs")
     commonExtension.apply {
         compileSdk = AndroidConfig.COMPILE_SDK
         buildToolsVersion = AndroidConfig.BUILD_TOOLS
@@ -56,12 +56,12 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
     }
 
     dependencies {
-        "coreLibraryDesugaring"(libs.findLibrary("desugar").get())
+        "coreLibraryDesugaring"(libsCatalog.findLibrary("desugar").get())
     }
 }
 
 internal fun Project.configureCompose(commonExtension: CommonExtension<*, *, *, *, *, *>) {
-    val compose = getLibraryCatalog("compose")
+    val composeCatalog = getLibraryCatalog("compose")
     // This plugin ID is now directly referenced in the main app's build.gradle.kts
     // pluginManager.apply(kotlinx.plugins.compose.compiler.get().pluginId)
 
@@ -71,7 +71,7 @@ internal fun Project.configureCompose(commonExtension: CommonExtension<*, *, *, 
         }
 
         dependencies {
-            "implementation"(platform(compose.findLibrary("bom").get()))
+            "implementation"(platform(composeCatalog.findLibrary("bom").get()))
         }
     }
 
