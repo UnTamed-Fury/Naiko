@@ -43,6 +43,9 @@ flexbox = { module = "com.google.android.flexbox:flexbox", version = "3.0.0" }
 flexible-adapter-ui = { module = "com.github.arkon.FlexibleAdapter:flexible-adapter-ui", version.ref = "flexible-adapter" }
 flexible-adapter = { module = "com.github.arkon.FlexibleAdapter:flexible-adapter", version.ref = "flexible-adapter" }
 image-decoder = { module = "com.github.tachiyomiorg:image-decoder", version = "41c059e540" }
+sqlite-framework = { module = "androidx.sqlite:sqlite-framework", version.ref = "sqlite" }
+preferencektx = "androidx.preference:preference-ktx:1.2.1"
+
 injekt = "com.github.mihonapp:injekt:91edab2317"
 
 kermit = { module = "co.touchlab:kermit", version.ref = "kermit" }
