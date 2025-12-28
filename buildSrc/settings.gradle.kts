@@ -9,6 +9,13 @@ pluginManagement {
     repositories {
         gradlePluginPortal()
     }
+    resolutionStrategy {
+        eachPlugin {
+            if (requested.id.id == "org.jmailen.kotlinter") {
+                useVersion("5.1.0")
+            }
+        }
+    }
 }
 
 dependencyResolutionManagement {
