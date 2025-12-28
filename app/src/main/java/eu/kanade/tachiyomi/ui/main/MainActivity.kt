@@ -145,6 +145,10 @@ import kotlinx.coroutines.flow.onEach
 import uy.kohesive.injekt.injectLazy
 import yokai.core.migration.Migrator
 import yokai.domain.base.BasePreferences
+import yokai.domain.ui.UiPreferences
+import eu.kanade.tachiyomi.ui.library.AnimeLibraryController
+import eu.kanade.tachiyomi.ui.recents.AnimeRecentsController
+import eu.kanade.tachiyomi.ui.source.AnimeBrowseController
 import yokai.domain.recents.interactor.GetRecents
 import yokai.i18n.MR
 import yokai.presentation.core.Constants
@@ -211,6 +215,7 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
         }
 
     private val basePreferences: BasePreferences by injectLazy()
+    private val uiPreferences: UiPreferences by injectLazy()
 
     // Ideally we want this to be inside the controller itself, but Conductor doesn't support the new ActivityResult API
     // Should be fine once we moved completely to Compose..... someday....
@@ -472,6 +477,23 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
 
         setNavBarColor(content.rootWindowInsetsCompat)
         binding.appBar.mainActivity = this
+
+        binding.toolbar.findViewById<com.google.android.material.materialswitch.MaterialSwitch>(R.id.universal_toggle)?.apply {
+            isChecked = uiPreferences.isAnimeMode().get()
+            setOnCheckedChangeListener { _, isChecked ->
+                uiPreferences.isAnimeMode().set(isChecked)
+                val id = nav.selectedItemId
+                setRoot(
+                    when (id) {
+                        R.id.nav_library -> if (isChecked) AnimeLibraryController() else if (basePreferences.composeLibrary().get()) LibraryComposeController() else LibraryController()
+                        R.id.nav_recents -> if (isChecked) AnimeRecentsController() else RecentsController()
+                        else -> if (isChecked) AnimeBrowseController() else BrowseController()
+                    },
+                    id,
+                )
+            }
+        }
+
         nav.isVisible = false
         content.doOnApplyWindowInsetsCompat { v, insets, _ ->
             setNavBarColor(insets)
@@ -537,11 +559,12 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
             continueSwitchingTabs = false
             val currentRoot = router.backstack.firstOrNull()
             if (currentRoot?.tag()?.toIntOrNull() != id) {
+                val isAnime = uiPreferences.isAnimeMode().get()
                 setRoot(
                     when (id) {
-                        R.id.nav_library -> if (basePreferences.composeLibrary().get()) LibraryComposeController() else LibraryController()
-                        R.id.nav_recents -> RecentsController()
-                        else -> BrowseController()
+                        R.id.nav_library -> if (isAnime) AnimeLibraryController() else if (basePreferences.composeLibrary().get()) LibraryComposeController() else LibraryController()
+                        R.id.nav_recents -> if (isAnime) AnimeRecentsController() else RecentsController()
+                        else -> if (isAnime) AnimeBrowseController() else BrowseController()
                     },
                     id,
                 )
@@ -1427,6 +1450,7 @@ open class MainActivity : BaseActivity<MainActivityBinding>() {
         reEnableBackPressedCallBack()
         setFloatingToolbar(canShowFloatingToolbar(to))
         val onRoot = router.backstackSize == 1
+        binding.toolbar.findViewById<View>(R.id.universal_toggle)?.isVisible = onRoot
         val navIcon = if (onRoot) searchDrawable else backDrawable
         binding.toolbar.navigationIcon = if (onRoot) null else backDrawable
         binding.searchToolbar.navigationIcon = if (binding.appBar.useLargeToolbar) searchDrawable else navIcon

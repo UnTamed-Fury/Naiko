@@ -119,8 +119,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 * If it could be device-dependent, try reproducing on another device (if possible).
 * For large logs use [Pastebin](https://pastebin.com/) (or similar).
 * Don't group unrelated requests into one issue.
-- **DO**: [Example #1](https://git.mihon.tech/tachiyomi/tachiyomi/issues/24), [Example #2](https://git.mihon.tech/tachiyomi/tachiyomi/issues/71).
-- **DON'T**: [Example #1](https://git.mihon.tech/tachiyomi/tachiyomi/issues/75).
+* **DO**: [Example #1](https://git.mihon.tech/tachiyomi/tachiyomi/issues/24), [Example #2](https://git.mihon.tech/tachiyomi/tachiyomi/issues/71).
+* **DON'T**: [Example #1](https://git.mihon.tech/tachiyomi/tachiyomi/issues/75).
 
 </details>
 

@@ -3,6 +3,7 @@
 All notable changes to this project will be documented in this file.
 
 The format is simplified version of [Keep a Changelog](https://keepachangelog.com/en/1.1.0/):
+
 - `Additions` - New features
 - `Changes` - Behaviour/visual changes
 - `Fixes` - Bugfixes
@@ -11,6 +12,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [Unreleased]
 
 ### Additions
+
 - Add random library sort
 - Add the ability to save search queries
 - Add toggle to enable/disable hide source on swipe (@Hiirbaf)
@@ -18,12 +20,14 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Add option to zoom into full covers (@Hiirbaf)
 
 ### Changes
+
 - Temporarily disable log file
 - Categories' header now show filtered count when you search the library when you have "Show number of items" enabled (@LeeSF03)
 - Chapter progress now saved everything the page is changed
 - Adjust sorting order to be more consistent (@Astyyyyy)
 
 ### Fixes
+
 - Allow users to bypass onboarding's permission step if Shizuku is installed
 - Fix Recents page shows "No recent chapters" instead of a loading screen
 - Fix not fully loaded entries can't be selected on Library page
@@ -37,9 +41,11 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Fix crashes caused by RecyclerView stable id (@MuhamadSyabitHidayattulloh)
 
 ### Translation
+
 - Update translations from Weblate
 
 ### Other
+
 - Refactor Library to utilize Flow even more
 - Refactor EmptyView to use Compose
 - Refactor Reader ChapterTransition to use Compose (@arkon)
@@ -101,51 +107,62 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.9.7.3]
 
 ### Fixes
+
 - More `Comparison method violates its general contract!` crash prevention
 
 ## [1.9.7.2]
 
 ### Fixes
+
 - Fix MyAnimeList timeout issue
 
 ## [1.9.7.1]
 
 ### Fixes
+
 - Prevent `Comparison method violates its general contract!` crashes
 
 ## [1.9.7]
 
 ### Changes
+
 - Adjust log file to only log important information by default
 
 ### Fixes
+
 - Fix sorting by latest chapter is not working properly
 - Prevent some NPE crashes
 - Fix some flickering issues when browsing sources
 - Fix download count is not updating
 
 ### Translation
+
 - Update Korean translation (@Meokjeng)
 
 ### Other
+
 - Update NDK to v27.2.12479018
 
 ## [1.9.6]
 
 ### Fixes
+
 - Fix some crashes
 
 ## [1.9.5]
 
 ### Changes
+
 - Entries from local source now behaves similar to entries from online sources
 
 ### Fixes
+
 - Fix new chapters not showing up in `Recents > Grouped`
 - Add potential workarounds for duplicate chapter bug
 - Fix favorite state is not being updated when browsing source
 
 ### Other
+
 - Update dependency androidx.compose:compose-bom to v2024.12.01
 - Update plugin kotlinter to v5
 - Update plugin gradle-versions to v0.51.0
@@ -154,15 +171,18 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.9.4]
 
 ### Fixes
+
 - Fix chapter date fetch always null causing it to not appear on Updates tab
 
 ## [1.9.3]
 
 ### Fixes
+
 - Fix slow chapter load
 - Fix chapter bookmark state is not persistent
 
 ### Other
+
 - Refactor downloader
   - Replace RxJava usage with Kotlin coroutines
   - Replace DownloadQueue with Flow to hopefully fix ConcurrentModificationException entirely
@@ -170,20 +190,24 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.9.2]
 
 ### Changes
+
 - Adjust chapter title-details contrast
 - Make app updater notification consistent with other notifications
 
 ### Fixes
+
 - Fix "Remove from read" not working properly
 
 ## [1.9.1]
 
 ### Fixes
+
 - Fix chapters cannot be opened from `Recents > Grouped` and `Recents > All`
 - Fix crashes caused by malformed XML
 - Fix potential memory leak
 
 ### Other
+
 - Update dependency io.github.kevinnzou:compose-webview to v0.33.6
 - Update dependency org.jsoup:jsoup to v1.18.3
 - Update voyager to v1.1.0-beta03
@@ -197,6 +221,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.9.0]
 
 ### Additions
+
 - Sync DoH provider list with upstream (added Mullvad, Control D, Njalla, and Shecan)
 - Add option to enable verbose logging
 - Add category hopper long-press action to open random series from **any** category
@@ -206,6 +231,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Add option to scan local entries from `/storage/(sdcard|emulated/0)/Android/data/<yokai>/files/local`
 
 ### Changes
+
 - Enable 'Split Tall Images' by default (@Smol-Ame)
 - Minor visual adjustments
 - Tell user to restart the app when User-Agent is changed (@NGB-Was-Taken)
@@ -216,6 +242,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Custom cover is now compressed to WebP to prevent OOM crashes
 
 ### Fixes
+
 - Fix only few DoH provider is actually being used (Cloudflare, Google, AdGuard, and Quad9)
 - Fix "Group by Ungrouped" showing duplicate entries
 - Fix reader sometimes won't load images
@@ -231,6 +258,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Fix crashes trying to load Library caused by cover being too large
 
 ### Other
+
 - Simplify network helper code
 - Fully migrated from StorIO to SQLDelight
 - Update dependency com.android.tools:desugar_jdk_libs to v2.1.3
@@ -276,53 +304,63 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.8.5.13]
 
 ### Fixed
+
 - Fix version checker
 
 ## [1.8.5.12]
 
 ### Fixed
+
 - Fixed scanlator data sometimes disappear
 
 ## [1.8.5.11]
 
 ### Fixed
+
 - Fixed crashes caused by Bangumi invalid status
 
 ## [1.8.5.10]
 
 ### Fixes
+
 - Fixed scanlator filter not working properly
 
 ## [1.8.5.9]
 
 ### Changes
+
 - Revert create backup to use file picker
 
 ## [1.8.5.8]
 
 ### Other
+
 - Separate backup error log when destination is null or not a file
 - Replace com.github.inorichi.injekt with com.github.null2264.injekt
 
 ## [1.8.5.7]
 
 ### Fixes
+
 - Fixed more NPE crashes
 
 ## [1.8.5.6]
 
 ### Fixes
+
 - Fixed NPE crash on tablets
 
 ## [1.8.5.5]
 
 ### Fixes
+
 - Fixed crashes caused by certain extension implementation
 - Fixed "Theme buttons based on cover" doesn't work properly
 - Fixed library cover images looks blurry then become sharp after going to
   entry's detail screen
 
 ### Other
+
 - More StorIO to SQLDelight migration effort
 - Update dependency dev.chrisbanes.compose:compose-bom to v2024.08.00-alpha02
 - Update kotlin monorepo to v2.0.20
@@ -332,23 +370,28 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.8.5.4]
 
 ### Fixes
+
 - Fixed custom cover set from reader didn't show up on manga details
 
 ## [1.8.5.3]
 
 ### Additions
+
 - Add toggle to enable/disable chapter swipe action(s)
 - Add toggle to enable/disable webtoon double tap to zoom
 
 ### Changes
+
 - Custom cover now shown globally
 
 ### Fixes
+
 - Fixed chapter number parsing (@Naputt1)
 - Reduced library flickering (still happened in some cases when the cached image size is too different from the original image size, but should be reduced quite a bit)
 - Fixed entry details header didn't update when being removed from library
 
 ### Other
+
 - Refactor chapter recognition (@stevenyomi)
 - (Re)added unit test for chapter recognition
 - More StorIO to SQLDelight migration effort
@@ -359,25 +402,30 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.8.5.2]
 
 ### Fixes
+
 - Fixed some preference not being saved properly
 
 ### Other
+
 - Update dependency co.touchlab:kermit to v2.0.4
 - Update lifecycle to v2.8.4
 
 ## [1.8.5.1]
 
 ### Fixes
+
 - Fixed library showing duplicate entry when using dynamic category
 
 ## [1.8.5]
 
 ### Additions
+
 - Add missing "Max automatic backups" option on experimental Data and Storage setting menu
 - Add information on when was the last time backup automatically created to experimental Data and Storage setting menu
 - Add monochrome icon
 
 ### Changes
+
 - Add more info to WorkerInfo page
   - Added "next scheduled run"
   - Added attempt count
@@ -394,6 +442,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Use Coil pipeline to handle HEIF images
 
 ### Fixes
+
 - Fixed auto backup, auto extension update, and app update checker stop working
   if it crash/failed
 - Fixed crashes when trying to reload extension repo due to connection issue
@@ -408,11 +457,13 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Fixed MAL start date parsing (@MajorTanya)
 
 ### Translation
+
 - Update Japanese translation (@akir45)
 - Update Brazilian Portuguese translation (@AshbornXS)
 - Update Filipino translation (@infyProductions)
 
 ### Other
+
 - Re-added several social media links to Mihon
 - Some code refactors
   - Simplify some messy code
@@ -447,9 +498,11 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.8.4.6]
 
 ### Fixes
+
 - Fixed scanlator filter not working properly if it contains " & "
 
 ### Other
+
 - Removed dependency com.dmitrymalkovich.android:material-design-dimens
 - Replace dependency br.com.simplepass:loading-button-android with
   com.github.leandroBorgesFerreira:LoadingButtonAndroid
@@ -459,31 +512,37 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.8.4.5]
 
 ### Fixes
+
 - Fixed incorrect library entry chapter count
 
 ## [1.8.4.4]
 
 ### Fixes
+
 - Fixed incompatibility issue with J2K backup file
 
 ## [1.8.4.3]
 
 ### Fixes
+
 - Fixed "Open source repo" icon's colour
 
 ## [1.8.4.2]
 
 ### Changes
+
 - Changed "Open source repo" icon to prevent confusion
 
 ## [1.8.4.1]
 
 ### Fixes
+
 - Fixed saving combined pages not doing anything
 
 ## [1.8.4]
 
 ### Additions
+
 - Added option to change long tap browse and recents nav behaviour
   - Added browse long tap behaviour to open global search (@AshbornXS)
   - Added recents long tap behaviour to open last read chapter (@AshbornXS)
@@ -491,6 +550,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Added beta version of "Data and storage" settings (can be accessed by long tapping "Data and storage")
 
 ### Changes
+
 - Remove download location redirection from `Settings > Downloads`
 - Moved cache related stuff from `Settings > Advanced` to `Settings > Data and storage`
 - Improve webview (@AshbornXS)
@@ -504,6 +564,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Only show "open repo url" button when repo url is not empty
 
 ### Fixes
+
 - Fix potential crashes for some custom Android rom
 - Allow MultipartBody.Builder for extensions
 - Refresh extension repo now actually refresh extension(s) trust status
@@ -515,6 +576,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - Fixed split layout caused non-split images to not load
 
 ### Other
+
 - Migrate some StorIO queries to SQLDelight, should improve stability
 - Migrate from Timber to Kermit
 - Update okhttp monorepo to v5.0.0-alpha.14
@@ -526,6 +588,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.8.3.4]
 
 ### Fixes
+
 - Fixed crashes caused by invalid ComicInfo XML
 
   If this caused your custom manga info to stop working, try resetting it by deleting `ComicInfoEdits.xml` file located in `Android/data/eu.kanade.tachiyomi.yokai`
@@ -535,115 +598,140 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.8.3.3]
 
 ### Changes
+
 - Crash report can now actually be disabled
 
 ### Other
+
 - Loading GlobalExceptionHandler before Crashlytics
 
 ## [1.8.3.2]
 
 ### Other
+
 - Some more NullPointerException prevention that I missed
 
 ## [1.8.3.1]
 
 ### Other
+
 - A bunch of NullPointerException prevention
 
 ## [1.8.3]
 
 ### Additions
+
 - Extensions now can be trusted by repo
 
 ### Changes
+
 - Extensions now required to have `repo.json`
 
 ### Other
+
 - Migrate to SQLDelight
 - Custom manga info is now stored in the database
 
 ## [1.8.2]
 
 ### Additions
+
 - Downloaded chapters now include ComicInfo file
 - (LocalSource) entry chapters' info can be edited using ComicInfo
 
 ### Fixes
+
 - Fixed smart background colour by page failing causing the image to not load
 - Fixed downloaded chapter can't be opened if it's too large
 - Downloaded page won't auto append chapter ID even tho the option is enabled
 
 ### Other
+
 - Re-route nightly to use its own repo, should fix "What's new" page
 
 ## [1.8.1.2]
 
 ### Additions
+
 - Added a couple new tags to set entry as SFW (`sfw` and `non-erotic`)
 
 ### Fixes
+
 - Fixed smart background colour by page failing causing the image to not load
 
 ### Other
+
 - Re-route nightly to use its own repo, should fix "What's new" page
 
 ## [1.8.1.1]
 
 ### Fixes
+
 - Fixed crashes when user try to edit an entry
 
 ## [1.8.1]
 
 ### Additions
+
 - (Experimental) Option to append chapter ID to download filename to avoid conflict
 
 ### Changes
+
 - Changed notification icon to use Yōkai's logo instead
 - Yōkai is now ComicInfo compliant. [Click here to learn more](https://anansi-project.github.io/docs/comicinfo/intro)
 - Removed "Couldn't split downloaded image" notification to reduce confusion. It has nothing to do with unsuccessful split, it just think it shouldn't split the image
 
 ### Fixes
+
 - Fixed not being able to open different chapter when a chapter is already opened
 - Fixed not being able to read chapters from local source
 - Fixed local source can't detect archives
 
 ### Other
+
 - Wrap SplashState to singleton factory, might fix issue where splash screen shown multiple times
 - Use Okio instead of `java.io`, should improve reader stability (especially long strip)
 
 ## [1.8.0.2]
 
 ### Fixes
+
 - Fixed app crashes when backup directory is null
 - Fixed app asking for All Files access permission when it's no longer needed
 
 ## [1.8.0.1]
 
 ### Additions
+
 - Added CrashScreen
 
 ### Fixes
+
 - Fixed version checker for nightly against hotfix patch version
 - Fixed download cache causes the app to crash
 
 ## [1.8.0]
 
 ### Additions
+
 - Added cutout support for some pre-Android P devices
 - Added option to add custom colour profile
 - Added onboarding screen
 
 ### Changes
+
 - Permanently enable 32-bit colour mode
 - Unified Storage™ ([Click here](https://mihon.app/docs/faq/storage#migrating-from-tachiyomi-v0-14-x-or-earlier) to learn more about it)
 
 ### Fixes
+
 - Fixed cutout behaviour for Android P
 - Fixed some extensions doesn't detect "added to library" entries properly ([GH-40](https://github.com/null2264/yokai/issues/40))
 - Fixed nightly and debug variant doesn't include their respective prefix on their app name
 - Fixed nightly version checker
 
 ### Other
+
 - Update dependency com.github.tachiyomiorg:image-decoder to e08e9be535
 - Update dependency com.github.null2264:subsampling-scale-image-view to 338caedb5f
 - Added Unit Test for version checker
@@ -691,48 +779,58 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.7.14]
 
 ### Changes
+
 - Added splash to reader (in case it being opened from shortcut)
 - Increased long strip split height
 - Use normalized app name by default as folder name
 
 ### Fixes
+
 - Fixed cutout support being broken
 
 ### Other
+
 - Move AppState from DI to Application class to reduce race condition
 
 ## [1.7.13]
 
 ### Additions
+
 - Ported Tachi's cutout option
 - Added Doki theme (dark only)
 
 ### Changes
+
 - Repositioned cutout options in settings
 - Splash icon now uses coloured variant of the icon
 - Removed deep link for sources, this should be handled by extensions
 - Removed braces from nightly (and debug) app name
 
 ### Fixes
+
 - Fixed preference summary not updating after being changed once
 - Fixed legacy appbar is visible on compose when being launched from deeplink
 - Fixed some app icon not generated properly
 - Fixed splash icon doesn't fit properly on Android 12+
 
 ### Other
+
 - Migrate to using Android 12's SplashScreen API
 - Clean up unused variables from ExtensionInstaller
 
 ## [1.7.12]
 
 ### Additions
+
 - Scanlator filter is now being backed up (@jobobby04)
 
 ### Fixes
+
 - Fixed error handling for MAL tracking (@AntsyLich)
 - Fixed extension installer preference incompatibility with modern Tachi
 
 ### Other
+
 - Split PreferencesHelper even more
 - Simplify extension install issue fix (@AwkwardPeak7)
 - Update dependency com.github.tachiyomiorg:image-decoder to fbd6601290
@@ -742,88 +840,108 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ## [1.7.11]
 
 ### Fixes
+
 - Fixed MAL tracker issue (@AntsyLich)
 - Fixed trusting extension caused it to appear twice
 
 ### Other
+
 - Change Shikimori client from Tachi's to Yōkai's
 - Move TrackPreferences to PreferenceModule
 
 ## [1.7.10]
 
 ### Addition
+
 - Content type filter to hide SFW/NSFW entries
 - Confirmation before revoking all trusted extension
 
 ### Changes
+
 - Revert Webcomic -> Webtoon
 
 ### Fixes
+
 - Fix app bar disappearing on (scrolled) migration page
 - Fix installed extensions stuck in "installable" state
 - Fix untrusted extensions not having an icon
 
 ### Other
+
 - Changed (most) trackers' client id and secret
 - Add or changed user-agent for trackers
 
 ## [1.7.9]
 
 ### Other
+
 - Sync project with J2K [v1.7.4](https://github.com/Jays2Kings/tachiyomiJ2K/releases/tag/v1.7.4)
 
 ## [1.7.8]
 
 ### Changes
+
 - Local source now try to find entries not only in `Yōkai/` but also in `Yokai/` and `TachiyomiJ2K/` for easier migration
 
 ### Other
+
 - Changed AniList and MAL clientId, you may need to logout and re-login
 
 ## [1.7.7]
 
 ### Changes
+
 - Hopper icon now changes depending on currently active group type (J2K)
 
 ### Fixes
+
 - Fixed bookmarked entries not being detected as bookmarked on certain extensions
 
 ## [1.7.6]
 
 ### Additions
+
 - Shortcut to Extension Repos from Browser -> Extensions page
 - Added confirmation before extension repo deletion
 
 ### Changes
+
 - Adjusted dialogs background colour to be more consistent with app theme
 
 ### Fixes
+
 - Fixed visual glitch where page sometime empty on launch
 - Fixed extension interceptors receiving compressed responses (T)
 
 ### Other
+
 - Newly added strings from v1.7.5 is now translatable
 
 ## [1.7.5]
 
 ### Additions
+
 - Ported custom extension repo from upstream
 
 ### Changes
+
 - Removed built-in extension repo
 - Removed links related to Tachiyomi
 - Ported upstream's trust extension logic
 - Rebrand to Yōkai
 
 ### Other
+
 - Start migrating to Compose
 
 ## [1.7.4]
 
 ### Changes
+
 - Rename project to Yōkai (Z)
 - Replace Tachiyomi's purged extensions with Keiyoushi extensions (Temporary solution until I ported custom extension repo feature) (Z)
 - Unread count now respect scanlator filter (J2K)
 
 ### Fixes
+
 - Fixed visual glitch on certain page (J2K)
