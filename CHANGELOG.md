@@ -464,7 +464,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 
 ### Other
 
-- Re-added several social media links to Mihon
+- Re-added several social media links to Naiko
 - Some code refactors
   - Simplify some messy code
   - Rewrite version checker
@@ -721,7 +721,7 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 ### Changes
 
 - Permanently enable 32-bit colour mode
-- Unified Storage™ ([Click here](https://mihon.app/docs/faq/storage#migrating-from-tachiyomi-v0-14-x-or-earlier) to learn more about it)
+- Unified Storage™ ([Click here](https://naiko.app/docs/faq/storage#migrating-from-tachiyomi-v0-14-x-or-earlier) to learn more about it)
 
 ### Fixes
 

@@ -856,7 +856,7 @@
     <string name="onboarding_finish">Aloita</string>
     <string name="onboarding_storage_info">Valitse kansio, johon %1$s tallentaa lukulataukset, varmuuskopiot ja paljon muuta.\n\nErillinen kansio on suositeltavaa.\n\nValittu kansio: %2$s</string>
     <string name="onboarding_storage_action_select">Valitse kansio</string>
-    <string name="onboarding_storage_help_info">Päivitämässä vanhemmasta versiosta, eikä varma mitä valita? Katso lisätietoja Mihon-tallennusoppaan Tachiyomi-päivitysosiosta.</string>
+    <string name="onboarding_storage_help_info">Päivitämässä vanhemmasta versiosta, eikä varma mitä valita? Katso lisätietoja Naiko-tallennusoppaan Tachiyomi-päivitysosiosta.</string>
     <string name="onboarding_permission_notifications_description">Saat ilmoituksen kirjaston päivityksistä ja muusta.</string>
     <string name="onboarding_permission_ignore_battery_opts">Tausta akun käyttö</string>
     <string name="onboarding_permission_ignore_battery_opts_description">Vältä keskeytyksiä pitkäaikaisissa kirjastopäivityksissä, latauksissa ja varmuuskopioiden palautuksissa.</string>

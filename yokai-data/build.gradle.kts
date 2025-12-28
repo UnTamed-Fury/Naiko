@@ -10,14 +10,14 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                api(projects.domain)
+                api(projects.yokaiDomain)
                 api(libs.bundles.db)
             }
         }
         val androidMain by getting {
             dependencies {
                 api(libs.bundles.db.android)
-                implementation(projects.source.api)
+                implementation(projects.yokaiSourceApi)
             }
         }
     }

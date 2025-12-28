@@ -22,7 +22,7 @@ kotlin {
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.core.common)
+                implementation(projects.aniyomiCoreCommon)
                 api(libs.preferencektx)
 
                 // Workaround for https://youtrack.jetbrains.com/issue/KT-57605

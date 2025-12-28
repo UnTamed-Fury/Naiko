@@ -9,7 +9,7 @@
     <string name="relative_time_now">Now</string>
     <string name="action_stop">Stop</string>
     <string name="action_continue">Continue</string>
-    <!-- Changed from mihon -->
+    <!-- Changed from naiko -->
     <string name="manga">Manga</string>
     <string name="pref_library_summary">Categories, global update, chapter/episode swipe</string>
     <string name="pref_behavior">Chapter behavior</string>

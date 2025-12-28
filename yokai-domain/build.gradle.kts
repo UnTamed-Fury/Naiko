@@ -9,7 +9,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.source.api)
+                implementation(projects.yokaiSourceApi)
             }
         }
         commonTest {

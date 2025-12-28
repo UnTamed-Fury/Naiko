@@ -146,27 +146,27 @@ android {
 
 dependencies {
     // Yokai modules
-    implementation(projects.yokaiCore.archive)
-    implementation(projects.yokaiCore.main)
+    implementation(projects.yokaiCoreArchive)
+    implementation(projects.yokaiCoreMain)
     implementation(projects.yokaiData)
     implementation(projects.yokaiDomain)
     implementation(projects.yokaiI18n)
-    implementation(projects.yokaiPresentation.core)
-    implementation(projects.yokaiPresentation.widget)
-    implementation(projects.yokaiSource.api)
+    implementation(projects.yokaiPresentationCore)
+    implementation(projects.yokaiPresentationWidget)
+    implementation(projects.yokaiSourceApi)
 
     // Aniyomi modules
     implementation(projects.aniyomiCoreMetadata)
-    implementation(projects.aniyomiCore.archive)
-    implementation(projects.aniyomiCore.common)
+    implementation(projects.aniyomiCoreArchive)
+    implementation(projects.aniyomiCoreCommon)
     implementation(projects.aniyomiData)
     implementation(projects.aniyomiDomain)
     implementation(projects.aniyomiI18n)
     implementation(projects.aniyomiI18nAniyomi)
     implementation(projects.aniyomiMacrobenchmark)
-    implementation(projects.aniyomiPresentation.core)
-    implementation(projects.aniyomiPresentation.widget)
-    implementation(projects.aniyomiSource.api)
+    implementation(projects.aniyomiPresentationCore)
+    implementation(projects.aniyomiPresentationWidget)
+    implementation(projects.aniyomiSourceApi)
     implementation(projects.aniyomiSourceLocal)
 
     // Compose

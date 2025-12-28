@@ -14,11 +14,11 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.common)
-    implementation(projects.domain)
-    implementation(projects.presentationCore)
-    api(projects.i18n)
-    api(projects.i18nAniyomi)
+    implementation(projects.aniyomiCoreCommon)
+    implementation(projects.aniyomiDomain)
+    implementation(projects.aniyomiPresentationCore)
+    api(projects.aniyomiI18n)
+    api(projects.aniyomiI18nAniyomi)
 
     implementation(compose.glance)
     implementation(libs.material)

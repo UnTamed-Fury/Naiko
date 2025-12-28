@@ -28,8 +28,8 @@ kotlin {
 }
 
 dependencies {
-    api(projects.core.common)
-    api(projects.i18n)
+    api(projects.aniyomiCoreCommon)
+    api(projects.aniyomiI18n)
 
     // Compose
     implementation(compose.activity)

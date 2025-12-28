@@ -10,21 +10,21 @@ kotlin {
     sourceSets {
         val commonMain by getting {
             dependencies {
-                implementation(projects.sourceApi)
-                api(projects.i18n)
-                api(projects.i18nAniyomi)
+                implementation(projects.aniyomiSourceApi)
+                api(projects.aniyomiI18n)
+                api(projects.aniyomiI18nAniyomi)
 
                 implementation(libs.unifile)
             }
         }
         val androidMain by getting {
             dependencies {
-                implementation(projects.core.archive)
-                implementation(projects.core.common)
-                implementation(projects.coreMetadata)
+                implementation(projects.aniyomiCoreArchive)
+                implementation(projects.aniyomiCoreCommon)
+                implementation(projects.aniyomiCoreMetadata)
 
                 // Move ChapterRecognition to separate module?
-                implementation(projects.domain)
+                implementation(projects.aniyomiDomain)
 
                 implementation(kotlinx.bundles.serialization)
             }

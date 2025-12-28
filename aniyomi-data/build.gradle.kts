@@ -37,9 +37,9 @@ kotlin {
 }
 
 dependencies {
-    implementation(projects.sourceApi)
-    implementation(projects.domain)
-    implementation(projects.core.common)
+    implementation(projects.aniyomiSourceApi)
+    implementation(projects.aniyomiDomain)
+    implementation(projects.aniyomiCoreCommon)
 
     api(libs.bundles.sqldelight)
 }

@@ -188,7 +188,7 @@ class AboutScreen : Screen() {
                     item {
                         TextPreferenceWidget(
                             title = stringResource(MR.strings.helpful_translation_links),
-                            onPreferenceClick = { uriHandler.openUri("https://mihon.app/docs/contribute#helpful-links") },
+                            onPreferenceClick = { uriHandler.openUri("https://naiko.app/docs/contribute#helpful-links") },
                         )
                     }
 
@@ -210,12 +210,12 @@ class AboutScreen : Screen() {
                             LinkIcon(
                                 label = "Website",
                                 icon = Icons.Outlined.Public,
-                                url = "https://mihon.app",
+                                url = "https://naiko.app",
                             )
                             LinkIcon(
                                 label = "Discord",
                                 icon = CustomIcons.Discord,
-                                url = "https://discord.gg/mihon",
+                                url = "https://discord.gg/naiko",
                             )
                             LinkIcon(
                                 label = "GitHub",

@@ -96,9 +96,9 @@ body:
           required: true
         - label: If this is an issue with an extension, or a request for an extension, I should be contacting the extensions repository's maintainer/support for help ([Browse → Extensions → Find the extension → Settings → Tap the `[<>]` icon](https://cdn.aap.my.id/extension-repo-link.png), it *should* redirect you to the maintainer).
           required: true
-        - label: I am reporting an issue exclusive to this fork. I have also checked that is not an issue on the [main version of Mihon](https://github.com/mihonapp/mihon).
+        - label: I am reporting an issue exclusive to this fork. I have also checked that is not an issue on the [main version of Naiko](https://github.com/naikoapp/naiko).
           required: true
-        - label: I have tried the [troubleshooting guide](https://mihon.app/docs/guides/troubleshooting/).
+        - label: I have tried the [troubleshooting guide](https://naiko.app/docs/guides/troubleshooting/).
           required: true
         - label: I have updated the app to version **[1.9.7.3](https://github.com/null2264/yokai/releases/latest)**.
           required: true

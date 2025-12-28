@@ -81,7 +81,7 @@ internal class StorageStep : OnboardingStep {
                 modifier = Modifier.fillMaxWidth(),
                 onClick = {
                     handler.openUri(
-                        "https://mihon.app/docs/faq/storage#migrating-from-tachiyomi-v0-14-x-or-earlier"
+                        "https://naiko.app/docs/faq/storage#migrating-from-tachiyomi-v0-14-x-or-earlier"
                     )
                 },
             ) {

@@ -5,7 +5,7 @@ plugins {
 }
 
 android {
-    namespace = "mihon.core.archive"
+    namespace = "naiko.core.archive"
 }
 
 dependencies {

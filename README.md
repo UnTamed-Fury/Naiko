@@ -12,7 +12,7 @@
 
 A free and open source manga reader
 
-[![Discord: Mihon](https://img.shields.io/discord/1195734228319617024.svg?label=&labelColor=6A7EC2&color=7389D8&logo=discord&logoColor=FFFFFF)](https://discord.gg/mihon)
+[![Discord: Naiko](https://img.shields.io/discord/1195734228319617024.svg?label=&labelColor=6A7EC2&color=7389D8&logo=discord&logoColor=FFFFFF)](https://discord.gg/naiko)
 [![Mirror: GitLab](https://img.shields.io/badge/mirror-GitLab-orange.svg?labelColor=27303D)](https://gitlab.com/null2264/yokai)
 [![Mirror: git.aap](https://img.shields.io/badge/mirror-git.aap-red.svg?labelColor=27303D)](https://git.aap.my.id/null2264/yokai)
 
@@ -52,7 +52,7 @@ As of the time of writing, this fork is currently focusing on migrating to a muc
 </details>
 
 <details open="">
-    <summary><h3>From upstream (Tachiyomi/Mihon)</h3></summary>
+    <summary><h3>From upstream (Tachiyomi/Naiko)</h3></summary>
 
 * Local reading of downloaded content.
 * A configurable reader with multiple viewers, reading directions and other settings.
@@ -105,7 +105,7 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 
 <details><summary>Issues</summary>
 
-**Before reporting a new issue, take a look at the [FAQ](https://mihon.app/docs/faq/general), the [changelog](https://github.com/null2264/yokai/releases) and the already opened [issues](https://github.com/null2264/yokai/issues).**
+**Before reporting a new issue, take a look at the [FAQ](https://naiko.app/docs/faq/general), the [changelog](https://github.com/null2264/yokai/releases) and the already opened [issues](https://github.com/null2264/yokai/issues).**
 
 </details>
 
@@ -119,8 +119,8 @@ Pull requests are welcome. For major changes, please open an issue first to disc
 * If it could be device-dependent, try reproducing on another device (if possible).
 * For large logs use [Pastebin](https://pastebin.com/) (or similar).
 * Don't group unrelated requests into one issue.
-* **DO**: [Example #1](https://git.mihon.tech/tachiyomi/tachiyomi/issues/24), [Example #2](https://git.mihon.tech/tachiyomi/tachiyomi/issues/71).
-* **DON'T**: [Example #1](https://git.mihon.tech/tachiyomi/tachiyomi/issues/75).
+* **DO**: [Example #1](https://git.naiko.tech/tachiyomi/tachiyomi/issues/24), [Example #2](https://git.naiko.tech/tachiyomi/tachiyomi/issues/71).
+* **DON'T**: [Example #1](https://git.naiko.tech/tachiyomi/tachiyomi/issues/75).
 
 </details>
 

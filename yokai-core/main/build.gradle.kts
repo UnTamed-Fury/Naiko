@@ -14,7 +14,7 @@ kotlin {
     sourceSets {
         commonMain {
             dependencies {
-                implementation(projects.i18n)
+                implementation(projects.yokaiI18n)
 
                 // Logging
                 api(libs.bundles.logging)

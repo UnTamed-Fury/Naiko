@@ -1035,7 +1035,7 @@
     <string name="available_disk_space_info">Disponible: %1$s / Total: %2$s</string>
     <string name="download_with_id_details">Puede solucionar el problema con los conflictos entre los capítulos descargados cuando tienen el mismo nombre</string>
     <string name="download_with_id">Auto-anexar ID</string>
-    <string name="onboarding_storage_help_info">¿Actualizas desde una versión anterior y no sabes qué elegir? Consulta la sección de actualización de Tachiyomi en la guía de almacenamiento de Mihon para más información.</string>
+    <string name="onboarding_storage_help_info">¿Actualizas desde una versión anterior y no sabes qué elegir? Consulta la sección de actualización de Tachiyomi en la guía de almacenamiento de Naiko para más información.</string>
     <string name="onboarding_storage_help_action">Guía de almacenamiento</string>
     <string name="onboarding_permission_type_required">Obligatorio</string>
     <string name="onboarding_permission_type_optional">Opcional pero recomendado</string>

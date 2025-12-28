@@ -12,7 +12,7 @@
     <string name="onboarding_finish">Get started</string>
     <string name="onboarding_storage_info">Select a folder where %1$s will store chapter downloads, backups, and more.\n\nA dedicated folder is recommended.\n\nSelected folder: %2$s</string>
     <string name="onboarding_storage_action_select">Select a folder</string>
-    <string name="onboarding_storage_help_info">Updating from an older version and not sure what to select? Refer to the Tachiyomi upgrade section on the Mihon storage guide for more information.</string>
+    <string name="onboarding_storage_help_info">Updating from an older version and not sure what to select? Refer to the Tachiyomi upgrade section on the Naiko storage guide for more information.</string>
     <string name="onboarding_storage_help_action">Storage guide</string>
     <string name="onboarding_permission_type_required">Required</string>
     <string name="onboarding_permission_type_optional">Optional but recommended</string>

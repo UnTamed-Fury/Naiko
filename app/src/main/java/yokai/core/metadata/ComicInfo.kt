@@ -42,7 +42,7 @@ fun getComicInfo(
         ComicInfoPublishingStatus.toComicInfoValue(manga.status.toLong())
     ),
     categories = categories?.let { ComicInfo.CategoriesTachiyomi(it.joinToString()) },
-    source = ComicInfo.SourceMihon(sourceName),
+    source = ComicInfo.SourceNaiko(sourceName),
     language = lang?.let { ComicInfo.LanguageJ2K(it) },
 )
 
@@ -121,7 +121,7 @@ data class ComicInfo(
     val web: Web?,
     val publishingStatus: PublishingStatusTachiyomi?,
     val categories: CategoriesTachiyomi?,
-    val source: SourceMihon?,
+    val source: SourceNaiko?,
     val language: LanguageJ2K?,
 ) {
     @XmlElement(false)
@@ -199,8 +199,8 @@ data class ComicInfo(
     data class CategoriesTachiyomi(@XmlValue(true) val value: String = "")
 
     @Serializable
-    @XmlSerialName("SourceMihon", "http://www.w3.org/2001/XMLSchema", "mh")
-    data class SourceMihon(@XmlValue(true) val value: String = "")
+    @XmlSerialName("SourceNaiko", "http://www.w3.org/2001/XMLSchema", "mh")
+    data class SourceNaiko(@XmlValue(true) val value: String = "")
 
     @Serializable
     @XmlSerialName("LanguageJ2K", "http://www.w3.org/2001/XMLSchema", "j2k")

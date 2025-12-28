@@ -5,7 +5,7 @@
     <string name="onboarding_finish">始める</string>
     <string name="onboarding_storage_info">%1$s がチャプターのダウンロードやバックアップなどを保存するフォルダを選択してください。\n\n専用フォルダを推奨します。\n\n選択したフォルダ: %2$s</string>
     <string name="onboarding_storage_action_select">フォルダーを選択</string>
-    <string name="onboarding_storage_help_info">旧バージョンからアップデートし、何を選ぶべきか分からない場合は、MihonストレージガイドのTachiyomi upgradeセクションを参照してください。</string>
+    <string name="onboarding_storage_help_info">旧バージョンからアップデートし、何を選ぶべきか分からない場合は、NaikoストレージガイドのTachiyomi upgradeセクションを参照してください。</string>
     <string name="onboarding_storage_help_action">ストレージガイド</string>
     <string name="onboarding_permission_type_required">必須</string>
     <string name="onboarding_permission_type_optional">オプションですが、お勧めします</string>

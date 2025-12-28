@@ -18,7 +18,7 @@ kotlin {
 }
 
 dependencies {
-    implementation(projects.i18n)
+    implementation(projects.aniyomiI18n)
 
     api(libs.logcat)
 

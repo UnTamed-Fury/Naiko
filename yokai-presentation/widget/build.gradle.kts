@@ -20,12 +20,12 @@ android {
 }
 
 dependencies {
-    implementation(projects.core.main)
-    implementation(projects.data)
-    implementation(projects.domain)
-    implementation(projects.i18n)
-    implementation(projects.presentation.core)
-    implementation(projects.source.api)  // Access to SManga
+    implementation(projects.yokaiCoreMain)
+    implementation(projects.yokaiData)
+    implementation(projects.yokaiDomain)
+    implementation(projects.yokaiI18n)
+    implementation(projects.yokaiPresentationCore)
+    implementation(projects.yokaiSourceApi)  // Access to SManga
 
     implementation(androidx.glance.appwidget)
 

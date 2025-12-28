@@ -1005,7 +1005,7 @@
     <string name="no_location_set">Aucun emplacement de stockage défini</string>
     <string name="invalid_location">Emplacement non valide: %s</string>
     <string name="invalid_location_generic">Emplacement invalide</string>
-    <string name="onboarding_storage_help_info">Vous effectuez une mise à jour à partir d\'une ancienne version et vous ne savez pas quoi sélectionner ? Reportez-vous à la section Mise à niveau Tachiyomi dans le guide de stockage Mihon pour plus d\'information.</string>
+    <string name="onboarding_storage_help_info">Vous effectuez une mise à jour à partir d\'une ancienne version et vous ne savez pas quoi sélectionner ? Reportez-vous à la section Mise à niveau Tachiyomi dans le guide de stockage Naiko pour plus d\'information.</string>
     <string name="onboarding_permission_install_apps_description">Pour installer l\'application sur les mises à jour.</string>
     <string name="recents_long_tap_default">Montrer la queue de téléchargement</string>
     <string name="crop_borders_long_strip">Rogner les bords (Bande longue)</string>

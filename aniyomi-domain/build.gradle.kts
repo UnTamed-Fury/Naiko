@@ -20,8 +20,8 @@ kotlin {
 }
 
 dependencies {
-    implementation(projects.sourceApi)
-    implementation(projects.core.common)
+    implementation(projects.aniyomiSourceApi)
+    implementation(projects.aniyomiCoreCommon)
 
     implementation(platform(kotlinx.coroutines.bom))
     implementation(kotlinx.bundles.coroutines)

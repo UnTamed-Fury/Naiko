@@ -965,7 +965,7 @@
     <string name="onboarding_finish">Magsimula</string>
     <string name="onboarding_storage_info">Pumili ng folder kung saan mag-imbak ang %1$s ng mga na-download ng kabanata, mga backup, at higit pa. \n \nInirerekomenda ang isang nakalaang folder. \n \nNapiling folder: %2$s</string>
     <string name="onboarding_storage_action_select">Pumili ng folder</string>
-    <string name="onboarding_storage_help_info">Nag-a-update mula sa isang mas lumang bersyon at hindi sigurado kung ano ang pipiliin? Sumangguni sa Tachiyomi upgrade na seksyon sa Mihon storage guide para sa higit pang impormasyon.</string>
+    <string name="onboarding_storage_help_info">Nag-a-update mula sa isang mas lumang bersyon at hindi sigurado kung ano ang pipiliin? Sumangguni sa Tachiyomi upgrade na seksyon sa Naiko storage guide para sa higit pang impormasyon.</string>
     <string name="onboarding_storage_help_action">Gabay sa storage</string>
     <string name="onboarding_permission_type_required">Kinakailangan</string>
     <string name="onboarding_permission_type_optional">Opsyonal ngunit inirerekomenda</string>
