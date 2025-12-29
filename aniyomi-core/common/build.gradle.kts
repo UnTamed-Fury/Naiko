@@ -46,11 +46,10 @@ dependencies {
     // Sort
     implementation(libs.java.nat.sort)
 
-    // JavaScript engine
-    implementation(libs.quickjs.android)
-
-    // FFmpeg-kit
-    implementation(libs.ffmpeg.kit)
+                // JavaScript engine
+                implementation(libs.quickjs.android)
+            }
+        }
 
     // Tests
     testImplementation(libs.bundles.test)
