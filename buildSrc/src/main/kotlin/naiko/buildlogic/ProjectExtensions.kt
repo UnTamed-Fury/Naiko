@@ -56,6 +56,12 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
             getByName("release")
             getByName("debug")
         }
+        commonExtension.flavorDimensions.add("default")
+        commonExtension.productFlavors {
+            create("standard") {
+                dimension = "default"
+            }
+        }
     }
 
     tasks.withType<KotlinCompile>().configureEach {
