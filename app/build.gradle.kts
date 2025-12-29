@@ -218,9 +218,6 @@ dependencies {
     implementation(libs.mpandroidchart)
     implementation(kotlinx.immutable)
 
-    // Player dependencies
-    implementation(libs.bundles.mpv)
-
     // Logging
     implementation(libs.logcat)
     implementation(libs.kermit)
