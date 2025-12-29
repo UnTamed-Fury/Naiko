@@ -43,17 +43,23 @@ rootProject.name = "Naiko"
 // Main Naiko app module
 include(":app")
 
-// Naiko modules (originally from the 'yokai' folder)
+// Naiko modules
 include(":naiko-core-archive")
 include(":naiko-core-main")
 include(":naiko-data")
 include(":naiko-domain")
 include(":naiko-i18n")
 include(":naiko-presentation-core")
-include(":naiko-presentation-widget") // Renamed from presentation:widget for consistency
+include(":naiko-presentation-widget")
 include(":naiko-source-api")
 
-// Aniyomi modules (originally from the 'aniyomi' folder)
+project(":naiko-core-archive").projectDir = file("naiko-core/archive")
+project(":naiko-core-main").projectDir = file("naiko-core/main")
+project(":naiko-presentation-core").projectDir = file("naiko-presentation/core")
+project(":naiko-presentation-widget").projectDir = file("naiko-presentation/widget")
+project(":naiko-source-api").projectDir = file("naiko-source/api")
+
+// Aniyomi modules
 include(":aniyomi-core-metadata")
 include(":aniyomi-core-archive")
 include(":aniyomi-core-common")
@@ -66,4 +72,7 @@ include(":aniyomi-presentation-core")
 include(":aniyomi-presentation-widget")
 include(":aniyomi-source-api")
 include(":aniyomi-source-local")
-include(":source-local")
+
+project(":aniyomi-core-archive").projectDir = file("aniyomi-core/archive")
+project(":aniyomi-core-common").projectDir = file("aniyomi-core/common")
+project(":aniyomi-source-local").projectDir = file("source-local")
