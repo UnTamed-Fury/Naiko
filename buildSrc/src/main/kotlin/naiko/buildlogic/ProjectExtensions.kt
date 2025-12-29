@@ -55,15 +55,6 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
         commonExtension.buildTypes {
             getByName("release")
             getByName("debug")
-            create("nightly") {
-                initWith(getByName("release"))
-            }
-        }
-        commonExtension.flavorDimensions.add("default")
-        commonExtension.productFlavors {
-            create("standard") {
-                dimension = "default"
-            }
         }
     }
 
