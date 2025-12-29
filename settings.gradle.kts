@@ -18,6 +18,7 @@ dependencyResolutionManagement {
         maven(url = "https://www.jitpack.io")
         maven(url = "https://plugins.gradle.org/m2/")
         maven(url = "https://s01.oss.sonatype.org/content/repositories/releases/")
+        maven(url = "https://github.com/arthenica/ffmpeg-kit/raw/master")
     }
     versionCatalogs {
         create("androidx") {
