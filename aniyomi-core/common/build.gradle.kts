@@ -46,10 +46,8 @@ dependencies {
     // Sort
     implementation(libs.java.nat.sort)
 
-                // JavaScript engine
-                implementation(libs.quickjs.android)
-            }
-        }
+    // JavaScript engine
+    implementation(libs.quickjs.android)
 
     // Tests
     testImplementation(libs.bundles.test)
