@@ -1,6 +1,7 @@
 plugins {
     id("naiko.android.library.kmp")
     id("naiko.android.library.compose.kmp")
+    kotlin("android")
 }
 
 android {
