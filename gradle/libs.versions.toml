@@ -114,6 +114,7 @@ viewtooltip = { module = "com.github.CarlosEsco:ViewTooltip", version = "f79a895
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-screenmodel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
+ffmpeg-kit = "com.arthenica:ffmpeg-kit:6.0-2"
 
 [plugins]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
