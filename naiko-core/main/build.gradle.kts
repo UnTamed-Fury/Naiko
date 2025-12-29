@@ -1,7 +1,7 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
 plugins {
-    id("naiko.android.library")
+    id("naiko.android.library.kmp")
     kotlin("multiplatform")
     alias(kotlinx.plugins.serialization)
 }
