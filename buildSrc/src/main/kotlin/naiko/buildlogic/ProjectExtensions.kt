@@ -57,6 +57,7 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
             getByName("debug")
             create("nightly") {
                 initWith(getByName("release"))
+                matchingFallbacks.add("release")
             }
         }
     }
