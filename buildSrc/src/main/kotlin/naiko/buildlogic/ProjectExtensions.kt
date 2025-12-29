@@ -51,8 +51,8 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
         }
     }
 
-    if (commonExtension is LibraryExtension) {
-        commonExtension.buildTypes {
+    if (project.pluginManager.hasPlugin("com.android.library")) {
+        (commonExtension as LibraryExtension).buildTypes {
             getByName("release")
             getByName("debug")
             create("nightly") {
