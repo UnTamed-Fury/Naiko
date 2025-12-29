@@ -41,4 +41,5 @@ dependencies {
     implementation(projects.aniyomiCoreCommon)
 
     api(libs.bundles.db.android)
+    api(libs.sqldelight.coroutines)
 }
