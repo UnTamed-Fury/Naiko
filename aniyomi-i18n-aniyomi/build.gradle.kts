@@ -1,3 +1,5 @@
+import naiko.buildlogic.generatedBuildDir
+import naiko.buildlogic.getLocalesConfigTask
 import org.jetbrains.kotlin.gradle.ExperimentalKotlinGradlePluginApi
 
 plugins {
