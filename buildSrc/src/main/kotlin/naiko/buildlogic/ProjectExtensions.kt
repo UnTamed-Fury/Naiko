@@ -1,6 +1,7 @@
 package naiko.buildlogic
 
 import com.android.build.api.dsl.CommonExtension
+import com.android.build.gradle.LibraryExtension
 import org.gradle.api.Project
 import org.gradle.api.artifacts.VersionCatalog
 import org.gradle.api.artifacts.VersionCatalogsExtension
@@ -16,13 +17,18 @@ import org.jetbrains.kotlin.compose.compiler.gradle.ComposeCompilerGradlePluginE
 import org.jetbrains.kotlin.compose.compiler.gradle.ComposeFeatureFlag
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 import org.jetbrains.kotlin.gradle.dsl.JvmTarget
-import org.jmailen.gradle.kotlinter.KotlinterExtension
 
-val Project.generatedBuildDir: java.io.File 
+val Project.generatedBuildDir: java.io.File
     get() = project.layout.buildDirectory.asFile.get().resolve("generated/naiko")
 
 private fun Project.getLibraryCatalog(name: String): VersionCatalog {
-    return extensions.getByType<VersionCatalogsExtension>().named(name)
+    val catalogs = extensions.getByType<VersionCatalogsExtension>()
+    return try {
+        catalogs.named(name)
+    } catch (e: Exception) {
+        // Fallback for buildSrc internal compilation
+        catalogs.named("build${name.replaceFirstChar { it.uppercase() }}")
+    }
 }
 
 internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, *, *, *>) {
@@ -45,6 +51,13 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
         }
     }
 
+    if (commonExtension is LibraryExtension) {
+        commonExtension.buildTypes {
+            getByName("release")
+            getByName("debug")
+        }
+    }
+
     tasks.withType<KotlinCompile>().configureEach {
         compilerOptions {
             jvmTarget.set(AndroidConfig.JvmTarget)
@@ -62,7 +75,7 @@ internal fun Project.configureAndroid(commonExtension: CommonExtension<*, *, *, 
     dependencies {
         "coreLibraryDesugaring"(libsCatalog.findLibrary("desugar").get())
     }
-    
+
     configureLinting()
 }
 
