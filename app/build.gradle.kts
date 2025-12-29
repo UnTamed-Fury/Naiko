@@ -71,7 +71,7 @@ android {
             abiFilters += supportedAbis
         }
 
-        missingDimensionStrategy("default", "standard")
+        missingDimensionStrategy("type", "standard")
     }
 
     splits {
@@ -123,17 +123,17 @@ android {
         shaders = false
     }
 
-    flavorDimensions.add("default")
+    flavorDimensions.add("type")
 
     productFlavors {
         create("standard") {
             buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
-            dimension = "default"
+            dimension = "type"
         }
         create("dev") {
             resourceConfigurations.clear()
             resourceConfigurations.add("en")
-            dimension = "default"
+            dimension = "type"
         }
     }
 
