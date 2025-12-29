@@ -4,164 +4,79 @@
     <img src="./.github/readme-images/app-icon.webp" alt="Naiko logo" height="200px" width="200px" />
 </a>
 
-# Yōkai
+# Naiko
 
 </div>
 
 <div align="center">
 
-A free and open source manga reader
+A free and open source manga reader for Android
 
 [![Discord: Naiko](https://img.shields.io/discord/1195734228319617024.svg?label=&labelColor=6A7EC2&color=7389D8&logo=discord&logoColor=FFFFFF)](https://discord.gg/naiko)
-[![Mirror: GitLab](https://img.shields.io/badge/mirror-GitLab-orange.svg?labelColor=27303D)](https://gitlab.com/UnTamed-Fury/Naiko)
-[![Mirror: git.aap](https://img.shields.io/badge/mirror-git.aap-red.svg?labelColor=27303D)](https://git.aap.my.id/UnTamed-Fury/Naiko)
-
-[![CI](https://github.com/UnTamed-Fury/Naiko/actions/workflows/build_push.yml/badge.svg?labelColor=27303D)](https://github.com/UnTamed-Fury/Naiko/actions/workflows/build_push.yml)
 [![License: Apache-2.0](https://img.shields.io/github/license/UnTamed-Fury/Naiko?labelColor=27303D&color=0877d2)](/LICENSE)
-[![Translation status](https://img.shields.io/weblate/progress/naiko?labelColor=27303D&color=946300)](https://hosted.weblate.org/engage/naiko/)
+[![CI](https://github.com/UnTamed-Fury/Naiko/actions/workflows/pr-check.yml/badge.svg)](https://github.com/UnTamed-Fury/Naiko/actions)
 
 <img src="./.github/readme-images/screens.gif" alt="Naiko screenshots" />
 
 ## Download
 
 [![Naiko Stable](https://img.shields.io/github/v/release/UnTamed-Fury/Naiko?maxAge=3600&label=Stable&labelColor=06599d&color=043b69&filter=v*)](https://github.com/UnTamed-Fury/Naiko/releases)
-[![Naiko Nightly](https://img.shields.io/github/v/release/UnTamed-Fury/Naiko-nightly?maxAge=3600&label=Nightly&labelColor=2c2c47&color=1c1c39&filter=r*)](https://github.com/UnTamed-Fury/Naiko-nightly/releases)
+[![Naiko Nightly](https://img.shields.io/github/v/release/UnTamed-Fury/Naiko?maxAge=3600&label=Nightly&labelColor=2c2c47&color=1c1c39&include_prereleases)](https://github.com/UnTamed-Fury/Naiko/releases)
 
 *Requires Android 6.0 or higher.*
 
-## About Fork
+## About
 
-This fork was created for personal usage, the name Yōkai is chosen in theme of my "paranormal" fork collection, all of them are made for personal purposes, to explore the language used to made them, explore new tech, or simply want to add my own twists that may not accepted by upstream as a PR.
+Naiko is a modern, high-performance manga reader for Android, built with Kotlin and Jetpack Compose. It focuses on speed, stability, and a beautiful user interface.
 
-Updates are sporadic, sometime fast, sometime slow.
-
-As of the time of writing, this fork is currently focusing on migrating to a much more modern infrastructure, some features may be added, but most changes are happening behind the scene.
+This project is a refactored and modernized fork, incorporating the best features from various open-source readers while maintaining a clean and efficient codebase.
 
 ## Features
 
-<div align="left">
+- **Local Reading**: Enjoy your downloaded manga offline.
+- **Configurable Reader**: Multiple viewers, reading directions, and personalized settings.
+- **Tracker Integration**: Support for MyAnimeList, AniList, Kitsu, Shikimori, and Bangumi.
+- **Library Organization**: Categories, drag-and-drop sorting, and dynamic categories.
+- **Material You Design**: Beautiful UI themed by your manga covers.
+- **Advanced Updates**: Automatic extension and app updates.
+- **Backup & Restore**: Easily migrate your data locally or to the cloud.
 
-<details open="">
-    <summary><h3>From Yōkai</h3></summary>
+## Development
 
-* NSFW/SFW library filter (taken from [TachiyomiSY](https://github.com/jobobby04/TachiyomiSY)).
-* Fix backup incompatibility with upstream.
-* New theme.
-* Local Source chapters now reads ComicInfo.xml for chapter title, number, and scanlator.
+Naiko uses a modern CI/CD pipeline powered by GitHub Actions:
 
-</details>
+- **PR Check**: Automated builds and unit tests for every pull request.
+- **Nightly Builds**: Daily builds representing the latest state of the `main` branch.
+- **Releases**: Automated release generation with changelogs.
+- **Dependency Checks**: Weekly checks to keep the project up-to-date.
 
-<details open="">
-    <summary><h3>From upstream (Tachiyomi/Naiko)</h3></summary>
+### Building from Source
 
-* Local reading of downloaded content.
-* A configurable reader with multiple viewers, reading directions and other settings.
-* Tracker support:
-  [MyAnimeList](https://myanimelist.net/),
-  [AniList](https://anilist.co/),
-  [Kitsu](https://kitsu.app/explore/anime),
-  [Manga Updates](https://www.mangaupdates.com/),
-  [Shikimori](https://shikimori.one),
-  and [Bangumi](https://bgm.tv/) support.
-* Categories to organize your library.
-* Light and dark themes.
-* Schedule updating your library for new chapters.
-* Create backups locally to read offline or to your desired cloud service.
-
-</details>
-
-<details>
-    <summary><h3>From J2K</h3></summary>
-
-* UI redesign.
-* New Manga details screens, themed by their manga covers.
-* Combine 2 pages while reading into a single one for a better tablet experience.
-* An expanded toolbar for easier one handed use (with the option to reduce the size back down).
-* Floating searchbar to easily start a search in your library or while browsing.
-* Library redesigned as a single list view: See categories listed in a vertical view, that can be collasped or expanded with a tap.
-* Staggered Library grid.
-* Drag & Drop Sorting in Library.
-* Dynamic Categories: Group your library automatically by the tags, tracking status, source, and more.
-* New Recents page: Providing quick access to newly added manga, new chapters, and to continue where you left on in a series.
-* Stats Page.
-* New Themes.
-* Dynamic Shortcuts: open the latest chapter of what you were last reading right from your homescreen.
-* [New material snackbar](.github/readme-images/material%20snackbar.png): Removing manga now auto deletes chapters and has an undo button in case you change your mind.
-* Batch Auto-Source Migration (taken from [TachiyomiEH](https://github.com/NerdNumber9/TachiyomiEH)).
-* [Share sheets upgrade for Android 10](.github/readme-images/share%20menu.png)
-* View all chapters right in the reader.
-* A lot more Material Design You additions.
-* Android 12 features such as automatic extension and app updates.
-
-</details>
-
-</div>
+```bash
+./gradlew assembleDebug
+```
 
 ## Contributing
 
-Pull requests are welcome. For major changes, please open an issue first to discuss what you would like to change.
-
-<div align="left">
-
-<details><summary>Issues</summary>
-
-**Before reporting a new issue, take a look at the [FAQ](https://naiko.app/docs/faq/general), the [changelog](https://github.com/UnTamed-Fury/Naiko/releases) and the already opened [issues](https://github.com/UnTamed-Fury/Naiko/issues).**
-
-</details>
-
-<details><summary>Bugs</summary>
-
-* Include version (**Settings → About → Version**).
-  * If not latest, try updating, it may have already been solved.
-  * Dev version is equal to the number of commits as seen in the main page.
-* Include steps to reproduce (if not obvious from description).
-* Include screenshot (if needed).
-* If it could be device-dependent, try reproducing on another device (if possible).
-* For large logs use [Pastebin](https://pastebin.com/) (or similar).
-* Don't group unrelated requests into one issue.
-* **DO**: [Example #1](https://git.naiko.tech/tachiyomi/tachiyomi/issues/24), [Example #2](https://git.naiko.tech/tachiyomi/tachiyomi/issues/71).
-* **DON'T**: [Example #1](https://git.naiko.tech/tachiyomi/tachiyomi/issues/75).
-
-</details>
-
-<details><summary>Feature Requests</summary>
-
-* Write a detailed issue, explaning what it should do or how.
-  * Avoid writing just "like X app does"
-* Include screenshot (if needed).
-
-</details>
-
-</div>
+We welcome contributions! Please see [CONTRIBUTING.md](CONTRIBUTING.md) for details on how to get started.
 
 ### Credits
 
-Thank you to all the people who have contributed!
+Naiko is built on the hard work of many contributors from the Tachiyomi, Aniyomi, and J2K communities.
 
 <a href="https://github.com/UnTamed-Fury/Naiko/graphs/contributors">
-    <img src="https://contrib.rocks/image?repo=UnTamed-Fury/Naiko" alt="Naiko app contributors" title="Naiko app contributors" width="600"/>
+    <img src="https://contrib.rocks/image?repo=UnTamed-Fury/Naiko" alt="Naiko contributors" title="Naiko contributors" width="600"/>
 </a>
 
 ### Disclaimer
 
-The developer(s) of this application does not have any affiliation with the content providers available, and this application hosts zero content.
+The developers of this application do not have any affiliation with the content providers available. This application does not host any content.
 
 ### License
 
-<pre>
-Copyright © 2015 Javier Tomás
-Copyright © 2024 null2264
+Copyright © 2015 Javier Tomás  
+Copyright © 2025 Naiko Project Contributors
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at
+Licensed under the Apache License, Version 2.0. See [LICENSE](LICENSE) for details.
 
-http://www.apache.org/licenses/LICENSE-2.0
-
-Unless required by applicable law or agreed to in writing, software
-distributed under the License is distributed on an "AS IS" BASIS,
-WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-See the License for the specific language governing permissions and
-limitations under the License.
-</pre>
 </div>

@@ -89,30 +89,28 @@ android {
             versionNameSuffix = "-d${commitCount}"
         }
         getByName("release") {
-            applicationIdSuffix = ".naiko" // Simplified suffix
             isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
-            buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
-        }
-        create("beta") {
-            initWith(getByName("release"))
-            buildConfigField("boolean", "BETA", "true")
-            buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
+            
+            val isNightly = project.providers.gradleProperty("nightly").isPresent
+            val isBeta = project.providers.gradleProperty("beta").isPresent
 
-            matchingFallbacks.add("release")
-            versionNameSuffix = "-b${betaCount}"
-        }
-        create("nightly") {
-            initWith(getByName("release"))
-            buildConfigField("boolean", "BETA", "true")
-            buildConfigField("boolean", "NIGHTLY", "true")
-            buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
-
-            signingConfig = signingConfigs.getByName("debug")
-            matchingFallbacks.add("release")
-            versionNameSuffix = "-r${commitCount}"
-            applicationIdSuffix = ".nightly" // Simplified suffix
+            if (isNightly) {
+                applicationIdSuffix = ".nightly"
+                versionNameSuffix = "-r${commitCount}"
+                buildConfigField("Boolean", "NIGHTLY", "true")
+                buildConfigField("Boolean", "BETA", "true")
+                buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
+                signingConfig = signingConfigs.getByName("debug")
+            } else if (isBeta) {
+                versionNameSuffix = "-b${betaCount}"
+                buildConfigField("Boolean", "BETA", "true")
+                buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
+            } else {
+                applicationIdSuffix = ".naiko"
+                buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
+            }
         }
     }
 
@@ -176,8 +174,6 @@ dependencies {
     implementation(libs.rxrelay)
     debugImplementation(libs.chucker.library)
     releaseImplementation(libs.chucker.library.no.op)
-    "nightlyImplementation"(libs.chucker.library.no.op)
-    "betaImplementation"(libs.chucker.library.no.op)
     implementation(kotlin("reflect", version = kotlinx.versions.kotlin.get()))
     implementation(kotlinx.bundles.serialization)
     implementation(libs.quickjs.android)

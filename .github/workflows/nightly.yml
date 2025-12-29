@@ -39,11 +39,11 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
 
       - name: Build Nightly APK
-        run: ./gradlew assembleNightly
+        run: ./gradlew assembleRelease -Pnightly
 
       - name: Upload Artifact
         uses: actions/upload-artifact@v4
         with:
           name: naiko-nightly
-          path: app/build/outputs/apk/nightly/*.apk
+          path: app/build/outputs/apk/release/*.apk
           retention-days: 7

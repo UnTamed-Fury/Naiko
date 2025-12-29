@@ -9,6 +9,18 @@ The format is simplified version of [Keep a Changelog](https://keepachangelog.co
 - `Fixes` - Bugfixes
 - `Other` - Technical changes/updates
 
+## [2.0.0]
+
+### Changes
+
+- Major project refactor and rebranding to **Naiko**.
+- Modernized CI/CD pipeline with dedicated workflows for PR checks, Nightly builds, and Releases.
+- Simplified build configuration by removing complex product flavors.
+- Implemented property-based build configuration for better dependency resolution.
+- Cleaned up project structure and modernized Markdown documentation.
+- Switched to standard Android Library structure for core modules to improve build stability.
+- Integrated automated changelog generation for releases.
+
 ## [Unreleased]
 
 ### Additions

@@ -3,7 +3,7 @@
 
 ---
 
-Thanks for your interest in contributing to Yōkai!
+Thanks for your interest in contributing to Naiko!
 
 # Code contributions
 
@@ -18,8 +18,9 @@ Before you start, please note that the ability to use following technologies is 
 
 - Basic [Android development](https://developer.android.com/)
 - [Kotlin](https://kotlinlang.org/)
+- [Jetpack Compose](https://developer.android.com/compose)
 
 ### Tools
 
-- [Android Studio](https://developer.android.com/studio)
+- [Android Studio Ladybug](https://developer.android.com/studio) or newer.
 - Emulator or phone with developer options enabled to test changes.
