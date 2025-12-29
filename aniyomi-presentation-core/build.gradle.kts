@@ -1,7 +1,8 @@
+import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+
 plugins {
-    id("naiko.android.library.kmp")
-    id("naiko.android.library.compose.kmp")
-    kotlin("android")
+    id("naiko.android.library")
+    id("naiko.android.library.compose")
 }
 
 android {
@@ -13,9 +14,9 @@ android {
     }
 }
 
-kotlin {
-    compilerOptions {
-        freeCompilerArgs.addAll(
+tasks {
+    withType<KotlinCompile> {
+        compilerOptions.freeCompilerArgs.addAll(
             "-opt-in=androidx.compose.animation.ExperimentalAnimationApi",
             "-opt-in=androidx.compose.animation.graphics.ExperimentalAnimationGraphicsApi",
             "-opt-in=androidx.compose.foundation.ExperimentalFoundationApi",
