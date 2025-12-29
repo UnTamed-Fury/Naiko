@@ -150,7 +150,6 @@ dependencies {
     implementation(projects.aniyomiDomain)
     implementation(projects.aniyomiI18n)
     implementation(projects.aniyomiI18nAniyomi)
-    implementation(projects.aniyomiMacrobenchmark)
     implementation(projects.aniyomiPresentationCore)
     implementation(projects.aniyomiPresentationWidget)
     implementation(projects.aniyomiSourceApi)
