@@ -70,6 +70,8 @@ android {
             //noinspection ChromeOsAbiSupport
             abiFilters += supportedAbis
         }
+
+        missingDimensionStrategy("default", "standard")
     }
 
     splits {
