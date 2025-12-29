@@ -39,7 +39,7 @@ jobs:
           cache-encryption-key: ${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
 
       - name: Build Release APK
-        run: ./gradlew assembleStandardRelease
+        run: ./gradlew assembleRelease
 
       # Note: Real signing requires keystore secrets. 
       # If not present, this will build unsigned or debug-signed depending on gradle config.
@@ -57,6 +57,6 @@ jobs:
         if: ${{ inputs.dry_run != 'true' }}
         with:
           body: ${{ steps.changelog.outputs.changelog }}
-          files: app/build/outputs/apk/standard/release/*.apk
+          files: app/build/outputs/apk/release/*.apk
           draft: true
           prerelease: ${{ contains(github.ref, 'beta') || contains(github.ref, 'rc') }}

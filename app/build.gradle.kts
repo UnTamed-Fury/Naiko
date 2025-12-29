@@ -18,7 +18,7 @@ plugins {
     // id("com.github.zellius.shortcut-helper") // Check if this is needed and replace with alias if available in libs
 }
 
-if (gradle.startParameter.taskRequests.toString().contains("standard", true)) {
+if (!gradle.startParameter.taskRequests.toString().contains("Debug", true)) {
     apply<CrashlyticsPlugin>()
     apply<GoogleServicesPlugin>()
 }
@@ -70,8 +70,6 @@ android {
             //noinspection ChromeOsAbiSupport
             abiFilters += supportedAbis
         }
-
-        missingDimensionStrategy("type", "standard")
     }
 
     splits {
@@ -95,10 +93,12 @@ android {
             isShrinkResources = true
             isMinifyEnabled = true
             proguardFiles("proguard-android-optimize.txt", "proguard-rules.pro")
+            buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
         }
         create("beta") {
             initWith(getByName("release"))
             buildConfigField("boolean", "BETA", "true")
+            buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
 
             matchingFallbacks.add("release")
             versionNameSuffix = "-b${betaCount}"
@@ -107,6 +107,7 @@ android {
             initWith(getByName("release"))
             buildConfigField("boolean", "BETA", "true")
             buildConfigField("boolean", "NIGHTLY", "true")
+            buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
 
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks.add("release")
@@ -121,20 +122,6 @@ android {
         aidl = false
         renderScript = false
         shaders = false
-    }
-
-    flavorDimensions.add("type")
-
-    productFlavors {
-        create("standard") {
-            buildConfigField("Boolean", "INCLUDE_UPDATER", "true")
-            dimension = "type"
-        }
-        create("dev") {
-            resourceConfigurations.clear()
-            resourceConfigurations.add("en")
-            dimension = "type"
-        }
     }
 
     lint {
