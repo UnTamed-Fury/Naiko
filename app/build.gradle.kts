@@ -201,7 +201,7 @@ dependencies {
     implementation(libs.bundles.sqlite)
     implementation(libs.conductor)
     implementation(libs.conductor.support.preference)
-    implementation(platform(libs.coil.bom))
+    implementation(platform(libs.coil3.bom))
     implementation(libs.bundles.coil)
     implementation(libs.subsamplingscaleimageview) {
         exclude(module = "image-decoder")
@@ -221,8 +221,8 @@ dependencies {
     implementation(libs.viewtooltip)
     implementation(libs.taptargetview)
     implementation(libs.insetter)
-    implementation(libs.compose.materialmotion)
-    implementation(libs.compose.grid)
+    implementation(compose.material.motion)
+    implementation(compose.grid)
     implementation(libs.reorderable)
     implementation(libs.swipe)
     implementation(libs.bundles.voyager)
@@ -235,7 +235,7 @@ dependencies {
     implementation(kotlinx.immutable)
 
     // Player dependencies
-    implementation(libs.bundles.mpv.player)
+    implementation(libs.bundles.mpv)
 
     // Logging
     implementation(libs.logcat)
