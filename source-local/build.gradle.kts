@@ -40,4 +40,6 @@ kotlin {
     }
 }
 
-
+android {
+    namespace = "tachiyomi.source.local"
+}
