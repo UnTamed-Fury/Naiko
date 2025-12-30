@@ -218,6 +218,10 @@ dependencies {
     implementation(libs.mpandroidchart)
     implementation(kotlinx.immutable)
 
+    // Video player
+    implementation(libs.naiko.mpv)
+    implementation(libs.ffmpeg.kit)
+
     // Logging
     implementation(libs.logcat)
     implementation(libs.kermit)

@@ -26,6 +26,7 @@ kotlin {
                 // Move ChapterRecognition to separate module?
                 implementation(projects.aniyomiDomain)
 
+                implementation(libs.ffmpeg.kit)
                 implementation(kotlinx.bundles.serialization)
             }
         }

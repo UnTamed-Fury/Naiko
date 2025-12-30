@@ -34,6 +34,7 @@ dependencies {
 
     implementation(libs.unifile)
     implementation(libs.libarchive)
+    implementation(libs.ffmpeg.kit)
 
     api(kotlinx.coroutines.core)
     api(kotlinx.serialization.json)

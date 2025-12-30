@@ -27,5 +27,5 @@ dependencies {
     implementation(platform(libs.coil3.bom))
     implementation(libs.coil3)
 
-    api(libs.injekt)
+    api(libs.koin.injekt)
 }

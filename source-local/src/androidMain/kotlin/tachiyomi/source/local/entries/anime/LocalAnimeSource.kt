@@ -325,8 +325,6 @@ actual class LocalAnimeSource(
         tempFileSuffix: String,
         updateImage: (InputStream) -> Unit,
     ) {
-        logcat(LogPriority.WARN) { "FFmpegKit usage disabled for build fix." }
-        /*
         val tempFile = File.createTempFile(
             "tmp_",
             tempFileSuffix,
@@ -351,7 +349,6 @@ actual class LocalAnimeSource(
         if (tempFile.length() > 0L) {
             updateImage(tempFile.inputStream())
         }
-        */
     }
 
     companion object {

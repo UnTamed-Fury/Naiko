@@ -45,7 +45,6 @@ flexible-adapter = { module = "com.github.arkon.FlexibleAdapter:flexible-adapter
 image-decoder = { module = "com.github.tachiyomiorg:image-decoder", version = "41c059e540" }
 sqlite-framework = { module = "androidx.sqlite:sqlite-framework", version.ref = "sqlite" }
 preferencektx = "androidx.preference:preference-ktx:1.2.1"
-injekt = "com.github.mihonapp:injekt:91edab2317"
 insetter = "dev.chrisbanes.insetter:insetter:0.6.1"
 materialmotion = { module = "io.github.fornewid:material-motion-compose-core", version = "2.0.1" }
 grid = { module = "io.woong.compose.grid:grid", version = "1.2.2" }
@@ -113,6 +112,10 @@ viewtooltip = { module = "com.github.CarlosEsco:ViewTooltip", version = "f79a895
 voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.ref = "voyager" }
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-screenmodel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
+
+naiko-mpv = "com.github.naikoorg:naiko-mpv-lib:1.17.n"
+ffmpeg-kit = "com.github.jmir1:ffmpeg-kit:1.17"
+arthenica-smartexceptions = "com.arthenica:smart-exception-java:0.2.1"
 
 [plugins]
 aboutlibraries = { id = "com.mikepenz.aboutlibraries.plugin", version.ref = "aboutlibraries" }
