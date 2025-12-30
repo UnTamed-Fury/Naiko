@@ -113,7 +113,7 @@ voyager-navigator = { module = "cafe.adriel.voyager:voyager-navigator", version.
 voyager-transitions = { module = "cafe.adriel.voyager:voyager-transitions", version.ref = "voyager" }
 voyager-screenmodel = { module = "cafe.adriel.voyager:voyager-screenmodel", version.ref = "voyager" }
 
-naiko-mpv = "com.github.naikoorg:naiko-mpv-lib:1.17.n"
+naiko-mpv = "com.github.aniyomiorg:mpv-android:1.17.n"
 ffmpeg-kit = "com.github.jmir1:ffmpeg-kit:1.17"
 arthenica-smartexceptions = "com.arthenica:smart-exception-java:0.2.1"
 
