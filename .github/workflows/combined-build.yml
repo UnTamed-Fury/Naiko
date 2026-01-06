@@ -1,0 +1,138 @@
+name: Combined Build
+
+on:
+  push:
+    branches:
+      - main
+  schedule:
+    - cron: '0 0 * * 0' # Weekly on Sunday
+  workflow_dispatch:
+
+jobs:
+  build-aniyomi:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: \${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
+
+      - name: Build Aniyomi Debug APK
+        run: |
+          cd aniyomi
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload Aniyomi Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: aniyomi-debug-apk
+          path: aniyomi/app/build/outputs/apk/debug/*.apk
+          retention-days: 7
+
+  build-mihon:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: \${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
+
+      - name: Build Mihon Debug APK
+        run: |
+          cd mihon
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload Mihon Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: mihon-debug-apk
+          path: mihon/app/build/outputs/apk/debug/*.apk
+          retention-days: 7
+
+  build-yokai:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: \${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
+
+      - name: Build Yokai Debug APK
+        run: |
+          cd yokai
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload Yokai Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: yokai-debug-apk
+          path: yokai/app/build/outputs/apk/debug/*.apk
+          retention-days: 7
+
+  build-aniyomi-mpv-lib:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: \${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
+
+      - name: Build Aniyomi-MPV-Lib Debug APK
+        run: |
+          cd aniyomi-mpv-lib
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload Aniyomi-MPV-Lib Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: aniyomi-mpv-lib-debug-apk
+          path: aniyomi-mpv-lib/app/build/outputs/apk/debug/*.apk
+          retention-days: 7

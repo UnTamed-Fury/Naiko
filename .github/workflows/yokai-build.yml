@@ -1,0 +1,49 @@
+name: Yokai Build
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'yokai/**'
+      - '.github/workflows/yokai-build.yml'
+  pull_request:
+    branches:
+      - main
+    paths:
+      - 'yokai/**'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      - name: Setup Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: 17
+
+      - name: Setup Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Setup Gradle
+        uses: gradle/actions/setup-gradle@v4
+        with:
+          cache-encryption-key: \${{ secrets.GRADLE_CACHE_ENCRYPTION_KEY }}
+
+      - name: Build Yokai Debug APK
+        run: |
+          cd yokai
+          ./gradlew assembleDebug --no-daemon
+
+      - name: Upload Yokai Debug APK
+        uses: actions/upload-artifact@v4
+        with:
+          name: yokai-debug-apk
+          path: yokai/app/build/outputs/apk/debug/*.apk
+          retention-days: 7
