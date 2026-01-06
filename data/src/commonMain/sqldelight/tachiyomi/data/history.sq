@@ -1,0 +1,224 @@
+CREATE TABLE history(
+    history_id INTEGER NOT NULL PRIMARY KEY,
+    history_chapter_id INTEGER NOT NULL UNIQUE,
+    history_last_read INTEGER,
+    history_time_read INTEGER,
+    FOREIGN KEY(history_chapter_id) REFERENCES chapters (_id)
+    ON DELETE CASCADE
+);
+
+CREATE INDEX history_history_chapter_id_index ON history(history_chapter_id);
+
+upsert:
+INSERT INTO history(history_chapter_id, history_last_read, history_time_read)
+VALUES(:historyChapterId, :historyLastRead, :historyTimeRead)
+ON CONFLICT(history_chapter_id)
+DO UPDATE
+SET
+    history_last_read = :historyLastRead,
+    history_time_read = ifnull(history_time_read, 0) + :historyTimeRead
+WHERE history_chapter_id = history_chapter_id;
+
+selectLastInsertedRowId:
+SELECT last_insert_rowid();
+
+deleteAll:
+DELETE FROM history;
+
+deleteAllUnread:
+DELETE FROM history WHERE history_last_read = 0;
+
+getByMangaId:
+SELECT history.*
+FROM history
+JOIN chapters
+ON history.history_chapter_id = chapters._id
+WHERE chapters.manga_id = :mangaId AND history.history_chapter_id = chapters._id;
+
+getByChapterUrl:
+SELECT history.*
+FROM history
+JOIN chapters
+ON history.history_chapter_id = chapters._id
+WHERE chapters.url = :chapterUrl AND history.history_chapter_id = chapters._id;
+
+getTotalReadDuration:
+SELECT sum(history_time_read) FROM history;
+
+getPerPeriod:
+SELECT mangas.*, chapters.*, history.*
+FROM mangas
+JOIN chapters
+ON mangas._id = chapters.manga_id
+JOIN history
+ON chapters._id = history.history_chapter_id
+AND history.history_last_read >= :startDate
+AND history.history_last_read <= :endDate
+ORDER BY history.history_last_read DESC;
+
+getRecentsUngrouped:
+SELECT
+    M.*,
+    C.*,
+    H.*
+FROM mangas AS M
+JOIN chapters AS C
+ON M._id = C.manga_id
+JOIN history AS H
+ON C._id = H.history_chapter_id
+AND H.history_last_read > 0
+LEFT JOIN scanlators_view AS S
+ON C.manga_id = S.manga_id
+AND C.scanlator = S.name
+WHERE lower(M.title) LIKE '%' || :search || '%'
+AND (
+    :apply_filter = 0 OR S.name IS NULL
+)
+ORDER BY H.history_last_read DESC
+LIMIT :limit OFFSET :offset;
+
+getRecentsBySeries:
+SELECT
+    M.*,
+    C.*,
+    H.*
+FROM mangas AS M
+JOIN chapters AS C
+ON M._id = C.manga_id
+JOIN history AS H
+ON C._id = H.history_chapter_id
+JOIN (
+    SELECT
+        C2.manga_id AS manga_id,
+        C2._id AS history_chapter_id,
+        MAX(H2.history_last_read) AS history_last_read
+    FROM chapters AS C2 JOIN history AS H2
+    ON C2._id = H2.history_chapter_id
+    GROUP BY C2.manga_id
+) AS max_last_read
+ON C.manga_id = max_last_read.manga_id
+AND max_last_read.history_chapter_id = H.history_chapter_id
+AND max_last_read.history_last_read > 0
+LEFT JOIN scanlators_view AS S
+ON C.manga_id = S.manga_id
+AND C.scanlator = S.name
+WHERE lower(M.title) LIKE '%' || :search || '%'
+AND (
+    :apply_filter = 0 OR S.name IS NULL
+)
+ORDER BY max_last_read.history_last_read DESC
+LIMIT :limit OFFSET :offset;
+
+getRecentsAll:
+SELECT  -- Recently read manga
+    M.*,
+    C.*,
+    history.history_id AS history_id,
+    history.history_chapter_id AS history_chapter_id,
+    history.history_last_read AS history_last_read,
+    history.history_time_read AS history_time_read
+FROM (  -- Check if there's any unread chapters and whether to include read chapters
+    SELECT M2.*
+    FROM mangas AS M2
+    LEFT JOIN (
+        SELECT manga_id, COUNT(*) AS value
+        FROM chapters
+        WHERE read = 0
+        GROUP BY manga_id
+    ) AS unread
+    ON M2._id = unread.manga_id
+    WHERE (
+        :include_read = 0 OR unread.value > 0
+    )
+    GROUP BY M2._id
+    ORDER BY title
+) AS M
+JOIN chapters AS C
+ON M._id = C.manga_id
+JOIN history
+ON C._id = history.history_chapter_id
+JOIN (
+    SELECT
+        C2.manga_id AS manga_id,
+        C2._id AS history_chapter_id,
+        MAX(H2.history_last_read) AS history_last_read
+    FROM chapters AS C2 JOIN history AS H2
+    ON C2._id = H2.history_chapter_id
+    GROUP BY C2.manga_id
+) AS max_last_read  -- Most recent chapters
+ON C.manga_id = max_last_read.manga_id
+AND max_last_read.history_chapter_id = history.history_chapter_id
+AND max_last_read.history_last_read > 0
+LEFT JOIN scanlators_view AS S
+ON C.manga_id = S.manga_id
+AND C.scanlator = S.name
+WHERE lower(title) LIKE '%' || :search || '%'
+AND (
+    :apply_filter = 0 OR S.name IS NULL
+)
+
+UNION  -- Newly fetched chapter
+
+SELECT
+    M.*,
+    C.*,
+    NULL AS history_id,
+    NULL AS history_chapter_id,
+    C.date_fetch AS history_last_read,
+    NULL AS history_time_read
+FROM mangas AS M
+JOIN chapters AS C
+ON M._id = C.manga_id
+JOIN (
+    SELECT
+        C2.manga_id,
+        C2._id,
+        max(date_upload)
+    FROM chapters AS C2 JOIN mangas AS M2
+    ON M2._id = C2.manga_id
+    WHERE C2.read = 0
+    GROUP BY C2.manga_id
+) AS newest_chapter
+ON C.manga_id = newest_chapter.manga_id
+LEFT JOIN scanlators_view AS S
+ON C.manga_id = S.manga_id
+AND C.scanlator = S.name
+WHERE favorite = 1
+AND C._id = newest_chapter._id
+AND C.date_fetch > M.date_added
+AND lower(title) LIKE '%' || :search || '%'
+AND (
+    :apply_filter = 0 OR S.name IS NULL
+)
+
+UNION  -- Newly added manga
+
+SELECT
+    M.*,
+    C.*,
+    NULL AS history_id,
+    NULL AS history_chapter_id,
+    M.date_added AS history_last_read,
+    NULL AS history_time_read
+FROM mangas AS M
+JOIN (
+    SELECT
+        NULL AS _id,
+        NULL AS manga_id,
+        NULL AS url,
+        NULL AS name,
+        NULL AS read,
+        NULL AS scanlator,
+        NULL AS bookmark,
+        NULL AS date_fetch,
+        NULL AS date_upload,
+        NULL AS last_page_read,
+        NULL AS pages_left,
+        NULL AS chapter_number,
+        NULL AS source_order
+) AS C
+WHERE favorite = 1
+AND lower(title) LIKE '%' || :search || '%'
+
+ORDER BY history_last_read DESC
+LIMIT :limit OFFSET :offset;

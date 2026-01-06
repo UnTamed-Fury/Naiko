@@ -1,0 +1,39 @@
+CREATE TABLE custom_manga_info (
+    manga_id INTEGER NOT NULL PRIMARY KEY,
+    title TEXT,
+    author TEXT,
+    artist TEXT,
+    description TEXT,
+    genre TEXT,
+    status INTEGER,
+    UNIQUE (manga_id) ON CONFLICT REPLACE,
+    FOREIGN KEY(manga_id) REFERENCES mangas (_id)
+    ON DELETE CASCADE
+);
+
+findAll:
+SELECT *
+FROM custom_manga_info;
+
+insert:
+INSERT INTO custom_manga_info(manga_id, title, author, artist, description, genre, status)
+VALUES (:manga_id, :title, :author, :artist, :description, :genre, :status)
+ON CONFLICT (manga_id)
+DO UPDATE
+SET
+    title = :title,
+    author = :author,
+    artist = :artist,
+    description = :description,
+    genre = :genre,
+    status = :status
+WHERE manga_id = :manga_id;
+
+delete:
+DELETE FROM custom_manga_info
+WHERE manga_id = :manga_id;
+
+relink:
+UPDATE custom_manga_info
+SET manga_id = :new_id
+WHERE manga_id = :old_id;

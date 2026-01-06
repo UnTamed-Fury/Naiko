@@ -1,0 +1,9 @@
+jdk:
+  - openjdk17
+env:
+  RELEASE_VERSION: "1.17.n"
+before_install:
+  - mkdir -p app/build/outputs/aar
+  - wget -O app/build/outputs/aar/aniyomi-mpv-lib-release.aar https://github.com/jmir1/mpv-android/releases/download/$RELEASE_VERSION/aniyomi-mpv-lib-$RELEASE_VERSION.aar
+install:
+  - ./gradlew app:publishBarPublicationToMavenLocal

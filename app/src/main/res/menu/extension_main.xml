@@ -1,0 +1,22 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_24dp"
+        android:title="@string/search"
+        app:actionViewClass="eu.kanade.tachiyomi.ui.base.MiniSearchView"
+        app:showAsAction="collapseActionView|ifRoom" />
+
+    <item
+        android:id="@+id/action_extension_repos_settings"
+        android:icon="@drawable/ic_tune_24dp"
+        android:title="@string/options"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_filter"
+        android:title="@string/filter_languages"
+        android:icon="@drawable/ic_language_24dp"
+        app:showAsAction="always"/>
+</menu>

@@ -1,0 +1,37 @@
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".CatalogueListActivity">
+
+    <item
+        android:id="@+id/action_search"
+        android:icon="@drawable/ic_search_24dp"
+        android:title="@string/search"
+        app:actionViewClass="eu.kanade.tachiyomi.ui.base.MiniSearchView"
+        app:showAsAction="collapseActionView|ifRoom" />
+
+    <item
+        android:id="@+id/action_popular_latest"
+        android:title="@string/popular"
+        android:icon="@drawable/ic_heart_24dp"
+        app:iconTint="?colorOnSurface"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_display_mode"
+        android:title="@string/display_as"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_open_in_web_view"
+        android:icon="@drawable/ic_open_in_webview_24dp"
+        android:title="@string/open_in_webview"
+        app:showAsAction="ifRoom" />
+
+    <item
+        android:id="@+id/action_local_source_help"
+        android:icon="@drawable/ic_help_24dp"
+        android:title="@string/local_source_help_guide"
+        app:showAsAction="ifRoom" />
+
+</menu>

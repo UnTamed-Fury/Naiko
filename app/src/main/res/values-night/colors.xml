@@ -1,0 +1,124 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="tachiyomi_primary">#AEC6FF</color>
+    <color name="tachiyomi_onPrimary">#002C71</color>
+    <color name="tachiyomi_primaryContainer">#00419E</color>
+    <color name="tachiyomi_onPrimaryContainer">#D8E2FF</color>
+    <color name="tachiyomi_secondary">#AEC6FF</color>
+    <color name="tachiyomi_onSecondary">#002C71</color>
+    <color name="tachiyomi_secondaryContainer">#00419E</color>
+    <color name="tachiyomi_onSecondaryContainer">#D8E2FF</color>
+    <color name="tachiyomi_tertiary">#7ADC77</color>
+    <color name="tachiyomi_onTertiary">#003907</color>
+    <color name="tachiyomi_tertiaryContainer">#00530D</color>
+    <color name="tachiyomi_onTertiaryContainer">#95F990</color>
+    <color name="tachiyomi_background">#1B1B1E</color>
+    <color name="tachiyomi_onBackground">#E4E2E6</color>
+    <color name="tachiyomi_surface">#1B1B1E</color>
+    <color name="tachiyomi_onSurface">#E4E2E6</color>
+    <color name="tachiyomi_surfaceVariant">#44464E</color>
+    <color name="tachiyomi_onSurfaceVariant">#C5C6D0</color>
+    <color name="tachiyomi_outline">#8E9099</color>
+    <color name="tachiyomi_inverseOnSurface">#1B1B1E</color>
+    <color name="tachiyomi_inverseSurface">#E4E2E6</color>
+    <color name="tachiyomi_primaryInverse">#0057CE</color>
+
+    <!-- Application Colors -->
+    <color name="primaryVariantTachiyomi">#202125</color>
+    <color name="colorPrimaryInactive">@color/md_white_1000_76</color>
+    <color name="onPrimaryTachiyomi">#071D39</color>
+    <color name="primaryTachiyomi">#78bcff</color>
+    <color name="primaryInverseTachiyomi">#2c517f</color>
+    <color name="legacyRippleColor">@color/md_white_1000_20</color>
+    <color name="colorOnSurface">@color/md_white_1000</color>
+    <color name="colorOnBackground">@color/md_white_1000</color>
+
+    <color name="rippleColorTachiyomi">#1F3399FF</color>
+    <color name="secondaryTachiyomi">#3399FF</color>
+    <color name="secondaryVariantTachiyomi">#cce5ff</color>
+    <color name="actionModeShadow">@color/md_white_1000_38</color>
+
+    <color name="textColorPrimaryInverse">@color/md_black_1000_87</color>
+    <color name="strong_divider">@color/md_white_1000_38</color>
+    <color name="divider">@color/md_white_1000_12</color>
+    <color name="download">@color/md_green_700</color>
+    <color name="holo_red">#cc4444</color>
+    <color name="splashIcon">@color/md_white_1000</color>
+    <color name="downloadBadgeDayNight">@color/download_badge_light</color>
+    <color name="downloadBadgeDayNightInverse">@color/pale_green</color>
+    <color name="colorOnDownloadBadgeDayNight">@color/md_white_1000</color>
+
+    <color name="background">#1C1C1D</color>
+    <color name="dialog">#212121</color>
+    <color name="gray_button">#BFBFBF</color>
+
+    <!-- Chocolate Strawberries Theme -->
+    <color name="primaryStrawberry">#e14e4e</color>
+    <color name="primaryInverseStrawberry">#9f1414</color>
+    <color name="onPrimaryStrawberry">#330303</color>
+    <color name="secondaryStrawberry">@color/holo_red</color>
+    <color name="rippleColorStrawberry">#1FAA2200</color>
+    <color name="secondaryVariantStrawberry">#f9bab2</color>
+    <color name="primaryVariantStrawberry">#2B2320</color>
+    <color name="backgroundStrawberries">#1a1716</color>
+
+    <!-- Flat Lime Theme -->
+    <color name="primaryLime">#7CF7A5</color>
+    <color name="secondaryLime">#4AF88A</color>
+    <color name="primaryVariantLime">@color/primaryVariantTachiyomi</color>
+    <color name="onPrimaryLime">#043314</color>
+    <color name="primaryInverseLime">#09933c</color>
+    <color name="backgroundLime">#202125</color>
+    <color name="secondaryVariantLime">#cbffe0</color>
+    <color name="downloadBadgeLime">#304E51</color>
+
+    <!-- Tako Theme -->
+    <color name="primaryTako">#fccd9f</color>
+    <color name="primaryVariantTako">#342F40</color>
+    <color name="primaryInverseTako">#a85d14</color>
+    <color name="onPrimaryTako">#3C2004</color>
+    <color name="secondaryTako">#F3B375</color>
+    <color name="onSecondaryTako">#242431</color>
+    <color name="secondaryVariantTako">#f4d1af</color>
+    <color name="tabBarIconColorTako">@color/secondaryTako</color>
+    <color name="rippleColorTako">#1FF3B375</color>
+    <color name="surfaceTako">#2A2A3C</color>
+    <color name="backgroundTako">#21212E</color>
+    <color name="actionTintTako">#f4ece5</color>
+    <color name="inactiveTabTako">#C2f4ece5</color>
+
+    <!-- Midnight Dusk Theme -->
+    <color name="secondaryDuskDawn">#F02475</color>
+    <color name="rippleColorDuskDawn">#1FF02475</color>
+    <color name="primaryInverseDuskDawn">#8d0c3f</color>
+    <color name="onPrimaryDuskDawn">#370318</color>
+    <color name="secondaryVariantDuskDawn">#ffc1da</color>
+    <color name="backgroundDuskDawn">#16151D</color>
+    <color name="primaryVariantDuskDawn">#272026</color>
+    <color name="primaryDuskDawn">#E570A0</color>
+    <color name="colorOnBackgroundDuskDawn">@color/md_white_1000</color>
+    <color name="appBarTextDuskDawn">@color/md_white_1000</color>
+
+    <!-- Teal/Sapphire Theme -->
+    <color name="secondaryTealSapphire">#589ab8</color>
+    <color name="rippleColorTealSapphire">#1F589ab8</color>
+    <color name="secondaryVariantTealSapphire">#b5ebff</color>
+    <color name="primaryTealSapphire">#80b8d1</color>
+    <color name="primaryInverseTealSapphire">#1d698b</color>
+    <color name="primaryVariantTealSapphire">#1d2528</color>
+    <color name="onPrimaryTealSapphire">#02212C</color>
+    <color name="backgroundTealSapphire">#14191b</color>
+    <color name="colorOnBackgroundTealSapphire">@color/md_white_1000</color>
+    <color name="tabBarIconColorTealSapphire">#589ab8</color>
+    <color name="appBarTextTealSapphire">@color/md_white_1000</color>
+
+    <!-- Yin Yang Theme -->
+    <color name="primaryYinYang">#dcdcdc</color>
+    <color name="primaryInverseYinYang">#000000</color>
+    <color name="onPrimaryYinYang">#191919</color>
+    <color name="secondaryYinYang">#FFFFFF</color>
+    <color name="rippleColorYinYang">#1FFFFFFF</color>
+    <color name="secondaryVariantYinYang">#FFFFFF</color>
+    <color name="onSecondaryYinYang">@color/md_black_1000</color>
+    <color name="primaryVariantYinYang">#2C2C2C</color>
+</resources>

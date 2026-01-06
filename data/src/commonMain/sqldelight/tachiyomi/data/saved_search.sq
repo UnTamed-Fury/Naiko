@@ -1,0 +1,35 @@
+CREATE TABLE saved_search(
+    -- TODO: Migrate the other tables to use 'id' instead of '_id'
+    id INTEGER NOT NULL PRIMARY KEY,
+    source_id INTEGER NOT NULL,
+    name TEXT NOT NULL,
+    query TEXT,
+    filters_json TEXT,
+    UNIQUE (source_id, name)
+);
+
+findAll:
+SELECT * FROM saved_search
+ORDER BY name COLLATE NOCASE ASC;
+
+findBySourceId:
+SELECT * FROM saved_search WHERE source_id = :sourceId
+ORDER BY name COLLATE NOCASE ASC;
+
+findBySourceIdAndName:
+SELECT * FROM saved_search WHERE source_id = :sourceId AND name = :name
+ORDER BY name COLLATE NOCASE ASC;
+
+findById:
+SELECT * FROM saved_search WHERE id = :id
+ORDER BY name COLLATE NOCASE ASC;
+
+deleteById:
+DELETE FROM saved_search WHERE id = :id;
+
+insert:
+INSERT INTO saved_search(source_id, name, query, filters_json)
+VALUES (:sourceId, :name, :query, :filtersJson);
+
+selectLastInsertedRowId:
+SELECT last_insert_rowid();

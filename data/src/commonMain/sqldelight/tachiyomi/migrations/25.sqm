@@ -1,0 +1,14 @@
+DROP VIEW IF EXISTS scanlators_view;
+CREATE VIEW scanlators_view AS
+SELECT S.* FROM (
+    WITH RECURSIVE split(seq, _id, name, str) AS (
+        SELECT 0, mangas._id, NULL, mangas.filtered_scanlators||' [.] ' FROM mangas WHERE mangas._id
+        UNION ALL SELECT
+            seq+1,
+            _id,
+            substr(str, 0, instr(str, ' [.] ')),
+            substr(str, instr(str, ' [.] ')+5)
+        FROM split WHERE str != ''
+    )
+    SELECT _id AS manga_id, name FROM split WHERE split.seq != 0 ORDER BY split.seq ASC
+) AS S;
