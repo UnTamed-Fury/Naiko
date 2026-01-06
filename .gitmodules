@@ -1,0 +1,12 @@
+[submodule "aniyomi"]
+	path = aniyomi
+	url = https://github.com/aniyomiorg/aniyomi.git
+[submodule "aniyomi-mpv-lib"]
+	path = aniyomi-mpv-lib
+	url = https://github.com/aniyomiorg/aniyomi-mpv-lib.git
+[submodule "mihon"]
+	path = mihon
+	url = https://github.com/mihonapp/mihon.git
+[submodule "yokai"]
+	path = yokai
+	url = https://github.com/null2264/yokai.git
